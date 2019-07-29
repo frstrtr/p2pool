@@ -139,6 +139,14 @@
         <p>Current block value: <span id="block_value"></span> <span class="symbol"></span> Expected time to block: <span id="time_to_block"></span></p>
         <div id="warnings"></div>
         
+
+        <!--Mooving up Recent blocks vidget due to large ammount of shares displayed-->
+        <h2>Blocks found recently:</h2>
+        <p>Note that blocks may have been orphaned from the P2Pool chain and so not be here.</p>
+        <table border="1" id="blocks">
+            <tr><th>time</th><th>number</th><th>hash/explorer link</th><th>share</th></tr>
+        </table>
+
         <h2>Share explorer</h2>
         <p>Best share: <span id="best_share"></span></p>
         <p>Verified heads: <span id="verified_heads"></span></p>
@@ -146,13 +154,7 @@
         <p>Verified tails: <span id="verified_tails"></span></p>
         <p>Tails: <span id="tails"></span></p>
         <p>My shares: <span id="my_share_hashes"></span></p>
-        
-        <h2>Blocks found recently:</h2>
-        <p>Note that blocks may have been orphaned from the P2Pool chain and so not be here.</p>
-        <table border="1" id="blocks">
-            <tr><th>time</th><th>number</th><th>hash/explorer link</th><th>share</th></tr>
-        </table>
-        
+             
         <h2>Payouts if a block were found NOW:</h2>
         <table border="1" id="payouts">
             <tr><th>address</th><th>amount in <span class="symbol"></span></th></tr>
