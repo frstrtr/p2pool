@@ -55,8 +55,10 @@
                     b.append('h2').text('Share data');
                     b.append('p').text('Timestamp: ' + new Date(1000*share.share_data.timestamp) + ' (' + share.share_data.timestamp + ')');
                     //marking Difficulty in Bold for better readings
-                    b.append('b').text('Difficulty: ' + target_to_difficulty(share.share_data.target));
+                    b.append('b').text('Share Difficulty: ' + target_to_difficulty(share.share_data.target));
                     b.append('p').text('Minimum difficulty: ' + target_to_difficulty(share.share_data.max_target));
+                    //Putting Network Difficulty here for batter analisys and difficulty comparison...
+                    b.append('b').text('Network Difficulty: ' + target_to_difficulty(share.block.header.target));
                     b.append('p').text('Payout address: ').append('a').text(share.share_data.payout_address).attr('href', currency_info.address_explorer_url_prefix+share.share_data.payout_address);
                     b.append('p').text('Donation amount: ' + d3.format('.3p')(share.share_data.donation));
                     b.append('p').text('Last stale: ' + share.share_data.stale_info);
@@ -76,8 +78,7 @@
                         prevblock.append('a').attr('href', currency_info.block_explorer_url_prefix + share.block.header.previous_block).text(share.block.header.previous_block);
                     b.append('p').text('Merkle root: ' + share.block.header.merkle_root);
                     b.append('p').text('Timestamp: ' + new Date(1000*share.block.header.timestamp) + ' (' + share.block.header.timestamp + ')');
-                    //marking Difficulty in Bold for better readings
-                    b.append('b').text('Difficulty: ' + target_to_difficulty(share.block.header.target));
+                    b.append('p').text('Difficulty: ' + target_to_difficulty(share.block.header.target));
                     b.append('p').text('Nonce: ' + share.block.header.nonce);
                     b.append('h3').text('Generation transaction');
                     b.append('p').text('Hash: ').append('a').text(share.block.gentx.hash).attr('href', currency_info.tx_explorer_url_prefix+share.block.gentx.hash);
