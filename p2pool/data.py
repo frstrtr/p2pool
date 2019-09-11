@@ -176,18 +176,19 @@ class BaseShare(object):
         transaction_hash_refs = []
         other_transaction_hashes = []
         t1 = time.time()
-        past_shares = list(tracker.get_chain(share_data['previous_share_hash'], min(height, 100)))
         tx_hash_to_this = {}
         if cls.VERSION < 34:
+            past_shares = list(tracker.get_chain(share_data['previous_share_hash'], min(height, 100)))
             for i, share in enumerate(past_shares):
                 for j, tx_hash in enumerate(share.new_transaction_hashes):
                     if tx_hash not in tx_hash_to_this:
                         tx_hash_to_this[tx_hash] = [1+i, j] # share_count, tx_count
+
         t2 = time.time()
         for tx_hash, fee in desired_other_transaction_hashes_and_fees:
             if known_txs is not None:
-                this_stripped_size = bitcoin_data.tx_id_type.packed_size(known_txs[tx_hash])
-                this_real_size     = bitcoin_data.tx_type.packed_size(known_txs[tx_hash])
+                this_stripped_size = bitcoin_data.get_stripped_size(known_txs[tx_hash])
+                this_real_size     = bitcoin_data.get_size(known_txs[tx_hash])
                 this_weight        = this_real_size + 3*this_stripped_size
             else: # we're just verifying someone else's share. We'll calculate sizes in should_punish_reason()
                 this_stripped_size = 0
@@ -612,8 +613,8 @@ class BaseShare(object):
             pass
         else:
             if not hasattr(self, 'all_tx_size'):
-                self.all_txs_size = sum(bitcoin_data.tx_type.packed_size(tx) for tx in other_txs)
-                self.stripped_txs_size = sum(bitcoin_data.tx_id_type.packed_size(tx) for tx in other_txs)
+                self.all_txs_size = sum(bitcoin_data.get_size(tx) for tx in other_txs)
+                self.stripped_txs_size = sum(bitcoin_data.get_stripped_size(tx) for tx in other_txs)
             if self.all_txs_size + 3 * self.stripped_txs_size + 4*80 + self.gentx_weight > tracker.net.BLOCK_MAX_WEIGHT:
                 return True, 'txs over block weight limit'
             if self.stripped_txs_size + 80 + self.gentx_size > tracker.net.BLOCK_MAX_SIZE:
@@ -797,8 +798,6 @@ class OkayTracker(forest.Tracker):
             -self.items[h].should_punish_reason(previous_block, bits, self, known_txs)[0],
         ), h) for h in self.verified.tails.get(best_tail, []))
         punish_aggressively = traditional_sort[-1][0][2] if traditional_sort else False
-        if punish_aggressively > 0:
-            print "Other nodes are going to follow a share we want to punish! Time to hulk up."
 
         if p2pool.DEBUG:
             print len(decorated_heads), 'heads. Top 10:'

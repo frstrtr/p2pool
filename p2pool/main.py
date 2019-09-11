@@ -293,7 +293,7 @@ def main(args, net, datadir_path, merged_urls, worker_endpoint):
         
         wb = work.WorkerBridge(node, my_address, args.donation_percentage,
                                merged_urls, args.worker_fee, args, pubkeys,
-                               bitcoind)
+                               bitcoind, args.share_rate)
         web_root = web.get_web_root(wb, datadir_path, bitcoind_getinfo_var, static_dir=args.web_static)
         caching_wb = worker_interface.CachingWorkerBridge(wb)
         worker_interface.WorkerInterface(caching_wb).attach_to(web_root, get_handler=lambda request: request.redirect('/static/'))
@@ -544,6 +544,9 @@ def run():
     worker_group.add_argument('-f', '--fee', metavar='FEE_PERCENTAGE',
         help='''charge workers mining to their own bitcoin address (by setting their miner's username to a bitcoin address) this percentage fee to mine on your p2pool instance. Amount displayed at http://127.0.0.1:WORKER_PORT/fee (default: 0)''',
         type=float, action='store', default=0, dest='worker_fee')
+    worker_group.add_argument('-s', '--share-rate', metavar='SECONDS_PER_SHARE',
+        help='Auto-adjust mining difficulty on each connection to target this many seconds per pseudoshare (default: %3.0f)' % 3.,
+        type=float, action='store', default=3., dest='share_rate')
     
     bitcoind_group = parser.add_argument_group('bitcoind interface')
     bitcoind_group.add_argument('--bitcoind-config-path', metavar='BITCOIND_CONFIG_PATH',

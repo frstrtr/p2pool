@@ -5,7 +5,7 @@ import random
 import sys
 import time
 
-from twisted.internet import defer, protocol, reactor
+from twisted.internet import defer, protocol, reactor, task
 from twisted.python import failure, log
 
 import p2pool
@@ -93,11 +93,16 @@ class Protocol(p2protocol.Protocol):
             print 'Peer %s:%i misbehaving, will drop and ban. Reason:' % self.addr, e.message
             self.badPeerHappened()
     
-    def badPeerHappened(self):
+    def badPeerHappened(self, bantime=3600):
         print "Bad peer banned:", self.addr
         self.disconnect()
         if self.transport.getPeer().host != '127.0.0.1': # never ban localhost
-            self.node.bans[self.transport.getPeer().host] = time.time() + 60*60
+            host = self.transport.getPeer().host
+            if not host in self.node.banscores:
+                self.node.banscores[host] = 1
+            else:
+                self.node.banscores[host] += 1
+            self.node.bans[self.transport.getPeer().host] = time.time() + bantime * self.node.banscores[host]**2
     
     def _timeout(self):
         self.timeout_delayed = None
@@ -688,6 +693,7 @@ class Node(object):
         self.nonce = random.randrange(2**64)
         self.peers = {}
         self.bans = {} # address -> end_time
+        self.banscores = {} # address -> how naughty this peer has been recently
         self.clientfactory = ClientFactory(self, desired_outgoing_conns, max_outgoing_attempts)
         self.serverfactory = ServerFactory(self, max_incoming_conns)
         self.running = False
@@ -703,6 +709,14 @@ class Node(object):
         self.running = True
         
         self._stop_thinking = deferral.run_repeatedly(self._think)
+        self.forgiveness_task = task.LoopingCall(self.forgive_transgressions)
+        self.forgiveness_task.start(3600.)
+
+    def forgive_transgressions(self):
+        for host in self.banscores:
+            self.banscore[host] -= 1
+            if self.banscore[host] < 0:
+                self.banscore[host] = 0
     
     def _think(self):
         try:

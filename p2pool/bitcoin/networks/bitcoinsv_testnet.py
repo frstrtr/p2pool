@@ -26,6 +26,6 @@ CONF_FILE_FUNC = lambda: os.path.join(os.path.join(os.environ['APPDATA'], 'Bitco
 BLOCK_EXPLORER_URL_PREFIX = 'https://test.whatsonchain.com/block-height/'
 ADDRESS_EXPLORER_URL_PREFIX = 'https://test.whatsonchain.com/tx/'
 TX_EXPLORER_URL_PREFIX = 'https://test.whatsonchain.com/address/'
-SANE_TARGET_RANGE = (2**256//2**32//1000 - 1, 2**256//2**32 - 1)
+SANE_TARGET_RANGE = (2**256//2**32//100000000 - 1, 2**256//2**32 - 1)
 DUMB_SCRYPT_DIFF = 1
 DUST_THRESHOLD = 1e8

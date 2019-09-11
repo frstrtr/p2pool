@@ -62,6 +62,7 @@ class P2PNode(p2p.Node):
             )
         except:
             log.err(None, 'in handle_share_hashes:')
+            peer.badPeerHappened(30)
         else:
             self.handle_shares([(share, []) for share in shares], peer)
     
@@ -126,6 +127,7 @@ class P2PNode(p2p.Node):
                     continue
                 except:
                     log.err(None, 'in download_shares:')
+                    peer.badPeerHappened(30)
                     continue
                 
                 if not shares:
