@@ -16,7 +16,7 @@ HUMAN_READABLE_PART = 'bchtest'
 RPC_PORT = 18332
 RPC_CHECK = defer.inlineCallbacks(lambda bitcoind: defer.returnValue(
             'getreceivedbyaddress' in (yield bitcoind.rpc_help()) and
-            (yield bitcoind.rpc_getinfo())['testnet']
+            (yield bitcoind.rpc_getblockchaininfo())['chain'] == 'test'
         ))
 SUBSIDY_FUNC = lambda height: 50*100000000 >> (height + 1)//210000
 POW_FUNC = data.hash256
