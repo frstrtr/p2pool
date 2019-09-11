@@ -8,6 +8,7 @@ from twisted.python import log
 from p2pool.bitcoin import data as bitcoin_data, getwork
 from p2pool.util import expiring_dict, jsonrpc, pack
 
+#function for auto adjust difficulty?
 def clip(num, bot, top):
     return min(top, max(bot, num))
 
@@ -129,13 +130,14 @@ class StratumRPCMiningProvider(object):
         )
         result = got_response(header, worker_name, coinb_nonce, self.target)
 
-        # adjust difficulty on this stratum to target ~10sec/pseudoshare
+        # adjust difficulty on this stratum to target ~10sec/pseudoshare!!!
         if not self.fixed_target:
             self.recent_shares.append(time.time())
             if len(self.recent_shares) > 12 or (time.time() - self.recent_shares[0]) > 10*len(self.recent_shares)*self.share_rate:
                 old_time = self.recent_shares[0]
                 del self.recent_shares[0]
                 olddiff = bitcoin_data.target_to_difficulty(self.target)
+                # calculate new target based on time needed for generating previous shares
                 self.target = int(self.target * clip((time.time() - old_time)/(len(self.recent_shares)*self.share_rate), 0.5, 2.) + 0.5)
                 newtarget = clip(self.target, self.wb.net.SANE_TARGET_RANGE[0], self.wb.net.SANE_TARGET_RANGE[1])
                 if newtarget != self.target:
