@@ -1,5 +1,6 @@
 import random
 import sys
+# we need this for difficulty calculations
 import time
 
 from twisted.internet import protocol, reactor
@@ -8,7 +9,11 @@ from twisted.python import log
 from p2pool.bitcoin import data as bitcoin_data, getwork
 from p2pool.util import expiring_dict, jsonrpc, pack
 
+<<<<<<< HEAD
 #function for auto adjust difficulty?
+=======
+# helper function for difficulty adjustments
+>>>>>>> stratum-autodiff
 def clip(num, bot, top):
     return min(top, max(bot, num))
 
@@ -24,6 +29,7 @@ class StratumRPCMiningProvider(object):
         
         self.watch_id = self.wb.new_work_event.watch(self._send_work)
 
+        # adding neccessary properties for dynamic difficulty adjustments
         self.recent_shares = []
         self.target = None
         self.share_rate = wb.share_rate
@@ -45,7 +51,7 @@ class StratumRPCMiningProvider(object):
             print '>>>Authorize: %s from %s' % (username, self.transport.getPeer().host)
             self.authorized = username
         self.username = username.strip()
-        
+        # Worker? details for difficulty adjustments from args?
         self.user, self.address, self.desired_share_target, self.desired_pseudoshare_target = self.wb.get_user_details(username)
         reactor.callLater(0, self._send_work)
         return True
@@ -74,8 +80,9 @@ class StratumRPCMiningProvider(object):
             log.err()
             self.transport.loseConnection()
             return
-        if self.desired_pseudoshare_target:
+        if self.desired_pseudoshare_target: # Not none or zero, if we calculate better Difficulty setting?
             self.fixed_target = True
+            # set new target for difficulty, based on time for it's generation?
             self.target = self.desired_pseudoshare_target
             self.target = max(self.target, int(x['bits'].target))
         else:
@@ -128,7 +135,7 @@ class StratumRPCMiningProvider(object):
             bits=x['bits'],
             nonce=pack.IntType(32).unpack(getwork._swap4(nonce.decode('hex'))),
         )
-        result = got_response(header, worker_name, coinb_nonce, self.target)
+        result = got_response(header, worker_name, coinb_nonce, self.target) # self.target from RPC response
 
         # adjust difficulty on this stratum to target ~10sec/pseudoshare!!!
         if not self.fixed_target:
