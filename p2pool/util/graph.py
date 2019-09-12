@@ -80,7 +80,7 @@ class DataView(object):
             return center, val, width, default
         return map(_, enumerate(bins))
 
-
+# Better graphing UI for workers multivalues_keep=10000
 class DataStreamDescription(object):
     def __init__(self, dataview_descriptions, is_gauge=True, multivalues=False, multivalues_keep=20, multivalues_squash_key=None, multivalue_undefined_means_0=False, default_func=None):
         self.dataview_descriptions = dataview_descriptions
