@@ -460,6 +460,7 @@ def run():
     realnets = dict((name, net) for name, net in networks.nets.iteritems() if '_testnet' not in name)
     
     parser = fixargparse.FixedArgumentParser(description='p2pool (version %s)' % (p2pool.__version__,), fromfile_prefix_chars='@')
+    # Calculate version from git in /p2pool/__init.py__/get_version()
     parser.add_argument('--version', action='version', version=p2pool.__version__)
     parser.add_argument('--net',
         help='use specified network (default: bitcoin)',
@@ -546,7 +547,7 @@ def run():
         type=float, action='store', default=0, dest='worker_fee')
     worker_group.add_argument('-s', '--share-rate', metavar='SECONDS_PER_SHARE',
         help='Auto-adjust mining difficulty on each connection to target this many seconds per pseudoshare (default: %3.0f)' % 3.,
-        type=float, action='store', default=3., dest='share_rate') # pseudoshare adjusted timing/difficulty
+        type=float, action='store', default=3., dest='share_rate') # pseudoshare adjusted timing/difficulty 
     
     bitcoind_group = parser.add_argument_group('bitcoind interface')
     bitcoind_group.add_argument('--bitcoind-config-path', metavar='BITCOIND_CONFIG_PATH',

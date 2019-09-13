@@ -99,7 +99,7 @@
                     total_tr.append('td').append('strong').text('Total');
                     total_tr.append('td').text(d3.sum(arr, function(addr){return pays[addr]}).toFixed(8));
                 });
-                
+                // Filling table o recent blocks id=blocks, time=block.ts, number = block.number, hash = block.hash, share = block.share
                 d3.json('../recent_blocks', function(blocks) {
                     var tr = d3.select('#blocks').selectAll().data(blocks).enter().append('tr');
                     tr.append('td').text(function(block){return new Date(1000*block.ts).toString()});
@@ -123,7 +123,7 @@
             fill('../web/heads', '#heads');
             fill('../web/verified_tails', '#verified_tails');
             fill('../web/tails', '#tails');
-		//replacing '../web/my_share_hashes50' with '../web/my_share_hashes' to display more than 50 my last shares
+		    //replacing '../web/my_share_hashes50' with '../web/my_share_hashes' to display more than 50 my last shares
             fill('../web/my_share_hashes', '#my_share_hashes');
         </script>
     </head>
@@ -154,7 +154,11 @@
         <p>Verified tails: <span id="verified_tails"></span></p>
         <p>Tails: <span id="tails"></span></p>
         <p>My shares: <span id="my_share_hashes"></span></p>
-             
+        <!--List shares in table!!!
+        <table border="1" id="blocks">
+            <tr><th>time</th><th>number</th><th>hash/explorer link</th><th>share</th></tr>
+        </table>
+        -->
         <h2>Payouts if a block were found NOW:</h2>
         <table border="1" id="payouts">
             <tr><th>address</th><th>amount in <span class="symbol"></span></th></tr>
