@@ -12,14 +12,23 @@ P2P_PORT = 13333
 ADDRESS_VERSION = 0
 RPC_PORT = 13332
 RPC_CHECK = defer.inlineCallbacks(lambda bitcoind: defer.returnValue(
-            'terracoin' in (yield bitcoind.rpc_help()) and
-            not (yield bitcoind.rpc_getinfo())['testnet']
-        ))
-SUBSIDY_FUNC = lambda height: 20*100000000 >> (height + 1)//1050000
+    'terracoin' in (yield bitcoind.rpc_help()) and
+    not (yield bitcoind.rpc_getinfo())['testnet']
+))
+
+
+def SUBSIDY_FUNC(height): return 20*100000000 >> (height + 1)//1050000
+
+
 POW_FUNC = data.hash256
-BLOCK_PERIOD = 120 # s
+BLOCK_PERIOD = 120  # s
 SYMBOL = 'TRC'
-CONF_FILE_FUNC = lambda: os.path.join(os.path.join(os.environ['APPDATA'], 'Terracoin') if platform.system() == 'Windows' else os.path.expanduser('~/Library/Application Support/Terracoin/') if platform.system() == 'Darwin' else os.path.expanduser('~/.terracoin'), 'terracoin.conf')
+
+
+def CONF_FILE_FUNC(): return os.path.join(os.path.join(os.environ['APPDATA'], 'Terracoin') if platform.system() == 'Windows' else os.path.expanduser(
+    '~/Library/Application Support/Terracoin/') if platform.system() == 'Darwin' else os.path.expanduser('~/.terracoin'), 'terracoin.conf')
+
+
 BLOCK_EXPLORER_URL_PREFIX = 'http://bitinfocharts.com/terracoin/blockhash/'
 ADDRESS_EXPLORER_URL_PREFIX = 'http://bitinfocharts.com/terracoin/address/'
 TX_EXPLORER_URL_PREFIX = 'http://bitinfocharts.com/terracoin/tx/'

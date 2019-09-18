@@ -12,14 +12,23 @@ P2P_PORT = 18334
 ADDRESS_VERSION = 111
 RPC_PORT = 18336
 RPC_CHECK = defer.inlineCallbacks(lambda bitcoind: defer.returnValue(
-            'namecoin' in (yield bitcoind.rpc_help()) and
-            (yield bitcoind.rpc_getinfo())['testnet']
-        ))
-SUBSIDY_FUNC = lambda height: 50*100000000 >> (height + 1)//210000
+    'namecoin' in (yield bitcoind.rpc_help()) and
+    (yield bitcoind.rpc_getinfo())['testnet']
+))
+
+
+def SUBSIDY_FUNC(height): return 50*100000000 >> (height + 1)//210000
+
+
 POW_FUNC = data.hash256
-BLOCK_PERIOD = 600 # s
+BLOCK_PERIOD = 600  # s
 SYMBOL = 'tNMC'
-CONF_FILE_FUNC = lambda: os.path.join(os.path.join(os.environ['APPDATA'], 'Namecoin') if platform.system() == 'Windows' else os.path.expanduser('~/Library/Application Support/Namecoin/') if platform.system() == 'Darwin' else os.path.expanduser('~/.namecoin'), 'namecoin.conf')
+
+
+def CONF_FILE_FUNC(): return os.path.join(os.path.join(os.environ['APPDATA'], 'Namecoin') if platform.system() == 'Windows' else os.path.expanduser(
+    '~/Library/Application Support/Namecoin/') if platform.system() == 'Darwin' else os.path.expanduser('~/.namecoin'), 'namecoin.conf')
+
+
 BLOCK_EXPLORER_URL_PREFIX = 'http://testnet.explorer.dot-bit.org/b/'
 ADDRESS_EXPLORER_URL_PREFIX = 'http://testnet.explorer.dot-bit.org/a/'
 TX_EXPLORER_URL_PREFIX = 'http://testnet.explorer.dot-bit.org/tx/'

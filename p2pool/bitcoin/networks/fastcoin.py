@@ -12,14 +12,26 @@ P2P_PORT = 9526
 ADDRESS_VERSION = 96
 RPC_PORT = 9527
 RPC_CHECK = defer.inlineCallbacks(lambda bitcoind: defer.returnValue(
-            'fastcoin' in (yield bitcoind.rpc_help()) and
-            not (yield bitcoind.rpc_getinfo())['testnet']
-        ))
-SUBSIDY_FUNC = lambda height: 32*100000000 >> (height + 1)//2592000
-POW_FUNC = lambda data: pack.IntType(256).unpack(__import__('ltc_scrypt').getPoWHash(data))
-BLOCK_PERIOD = 12 # s
+    'fastcoin' in (yield bitcoind.rpc_help()) and
+    not (yield bitcoind.rpc_getinfo())['testnet']
+))
+
+
+def SUBSIDY_FUNC(height): return 32*100000000 >> (height + 1)//2592000
+
+
+def POW_FUNC(data): return pack.IntType(256).unpack(
+    __import__('ltc_scrypt').getPoWHash(data))
+
+
+BLOCK_PERIOD = 12  # s
 SYMBOL = 'FST'
-CONF_FILE_FUNC = lambda: os.path.join(os.path.join(os.environ['APPDATA'], 'Fastcoin') if platform.system() == 'Windows' else os.path.expanduser('~/Library/Application Support/Fastcoin/') if platform.system() == 'Darwin' else os.path.expanduser('~/.fastcoin'), 'fastcoin.conf')
+
+
+def CONF_FILE_FUNC(): return os.path.join(os.path.join(os.environ['APPDATA'], 'Fastcoin') if platform.system() == 'Windows' else os.path.expanduser(
+    '~/Library/Application Support/Fastcoin/') if platform.system() == 'Darwin' else os.path.expanduser('~/.fastcoin'), 'fastcoin.conf')
+
+
 BLOCK_EXPLORER_URL_PREFIX = 'http://fst.blockexp.info/block/'
 ADDRESS_EXPLORER_URL_PREFIX = 'http://fst.blockexp.info/address/'
 TX_EXPLORER_URL_PREFIX = 'http://fst.blockexp.info/tx/'

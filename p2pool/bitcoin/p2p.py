@@ -102,6 +102,7 @@ class Protocol(p2protocol.Protocol):
         ]))),
     ])
     def handle_addr(self, addrs):
+        """UNUSED"""
         for addr in addrs:
             pass
     

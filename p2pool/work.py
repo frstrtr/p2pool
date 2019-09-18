@@ -50,9 +50,10 @@ class WorkerBridge(worker_interface.WorkerBridge):
         self.my_doa_share_hashes = set()
 
         self.address_throttle = 0
+        # share rate - seconds for generation of one share
         self.share_rate = share_rate
         
-        self.tracker_view = forest.TrackerView(self.node.tracker, forest.get_attributedelta_type(dict(forest.AttributeDelta.attrs,
+                self.tracker_view = forest.TrackerView(self.node.tracker, forest.get_attributedelta_type(dict(forest.AttributeDelta.attrs,
             my_count=lambda share: 1 if share.hash in self.my_share_hashes else 0,
             my_doa_count=lambda share: 1 if share.hash in self.my_doa_share_hashes else 0,
             my_orphan_announce_count=lambda share: 1 if share.hash in self.my_share_hashes and share.share_data['stale_info'] == 'orphan' else 0,
@@ -384,7 +385,7 @@ class WorkerBridge(worker_interface.WorkerBridge):
                 # Otherwise, we might get 1 PH/s of hashrate on difficulty settings appropriate for 1 GH/s.
                 # 1/3000th the difficulty of a full share should be a reasonable upper bound. That way, if
                 # one node has the whole p2pool hashrate, it will still only need to process one pseudoshare
-                # every ~0.01 seconds.
+                # every ~0.01 seconds!!!
                 block_subsidy = self.node.bitcoind_work.value['subsidy']
                 target = min(target, 3000 * bitcoin_data.average_attempts_to_target((bitcoin_data.target_to_average_attempts(
                     self.node.bitcoind_work.value['bits'].target)*self.node.net.SPREAD)*self.node.net.PARENT.DUST_THRESHOLD/block_subsidy))
@@ -500,7 +501,7 @@ class WorkerBridge(worker_interface.WorkerBridge):
 
                 if self.node.cur_share_ver < 34:
                     # node.py will sometimes forget transactions if bitcoind's work has changed since this stratum
-                    # job was assigned. Fortunately, the tx_map is still in in our scope from this job, so we can use that
+                    # job was assigned. Fortunately, the tx_map is still in our scope from this job, so we can use that
                     # to refill it if needed.
 
                     known_txs = self.node.known_txs_var.value

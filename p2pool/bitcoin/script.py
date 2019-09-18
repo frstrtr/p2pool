@@ -1,10 +1,15 @@
 from p2pool.util import math, pack
 import cStringIO as StringIO
 
+
 def reads_nothing(f):
     return None, f
+
+
 def protoPUSH(length):
     return lambda f: f.read(length)
+
+
 def protoPUSHDATA(size_len):
     def _(f):
         length_str = f.read(size_len)
@@ -12,6 +17,7 @@ def protoPUSHDATA(size_len):
         data = f.read(length)
         return data
     return _
+
 
 opcodes = {}
 for i in xrange(256):
@@ -32,6 +38,7 @@ opcodes[173] = 'CHECKSIGVERIFY', reads_nothing
 opcodes[174] = 'CHECKMULTISIG', reads_nothing
 opcodes[175] = 'CHECKMULTISIGVERIFY', reads_nothing
 
+
 def parse(script):
     f = StringIO.StringIO(script)
     while pack.remaining(f):
@@ -40,6 +47,7 @@ def parse(script):
         opcode_name, read_func = opcodes[opcode]
         opcode_arg = read_func(f)
         yield opcode_name, opcode_arg
+
 
 def get_sigop_count(script):
     weights = {
@@ -50,7 +58,8 @@ def get_sigop_count(script):
     }
     return sum(weights.get(opcode_name, 0) for opcode_name, opcode_arg in parse(script))
 
-def create_push_script(datums): # datums can be ints or strs
+
+def create_push_script(datums):  # datums can be ints or strs
     res = []
     for datum in datums:
         if isinstance(datum, (int, long)):

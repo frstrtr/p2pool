@@ -14,15 +14,27 @@ ADDRESS_P2SH_VERSION = 50
 HUMAN_READABLE_PART = 'ltc'
 RPC_PORT = 9332
 RPC_CHECK = defer.inlineCallbacks(lambda bitcoind: defer.returnValue(
-#            'litecoin' in (yield bitcoind.rpc_help()) and # new versions have "litecoinprivkey" but no "litecoinaddress"
-            (yield helper.check_block_header(bitcoind, '12a765e31ffd4059bada1e25190f6e98c99d9714d334efa41a195a7e7e04bfe2')) and
-                          (yield bitcoind.rpc_getblockchaininfo())['chain'] == 'main'
-        ))
-SUBSIDY_FUNC = lambda height: 50*100000000 >> (height + 1)//840000
-POW_FUNC = lambda data: pack.IntType(256).unpack(__import__('ltc_scrypt').getPoWHash(data))
-BLOCK_PERIOD = 150 # s
+    #            'litecoin' in (yield bitcoind.rpc_help()) and # new versions have "litecoinprivkey" but no "litecoinaddress"
+    (yield helper.check_block_header(bitcoind, '12a765e31ffd4059bada1e25190f6e98c99d9714d334efa41a195a7e7e04bfe2')) and
+    (yield bitcoind.rpc_getblockchaininfo())['chain'] == 'main'
+))
+
+
+def SUBSIDY_FUNC(height): return 50*100000000 >> (height + 1)//840000
+
+
+def POW_FUNC(data): return pack.IntType(256).unpack(
+    __import__('ltc_scrypt').getPoWHash(data))
+
+
+BLOCK_PERIOD = 150  # s
 SYMBOL = 'LTC'
-CONF_FILE_FUNC = lambda: os.path.join(os.path.join(os.environ['APPDATA'], 'Litecoin') if platform.system() == 'Windows' else os.path.expanduser('~/Library/Application Support/Litecoin/') if platform.system() == 'Darwin' else os.path.expanduser('~/.litecoin'), 'litecoin.conf')
+
+
+def CONF_FILE_FUNC(): return os.path.join(os.path.join(os.environ['APPDATA'], 'Litecoin') if platform.system() == 'Windows' else os.path.expanduser(
+    '~/Library/Application Support/Litecoin/') if platform.system() == 'Darwin' else os.path.expanduser('~/.litecoin'), 'litecoin.conf')
+
+
 BLOCK_EXPLORER_URL_PREFIX = 'https://chainz.cryptoid.info/ltc/block.dws?'
 ADDRESS_EXPLORER_URL_PREFIX = 'https://chainz.cryptoid.info/ltc/address.dws?'
 TX_EXPLORER_URL_PREFIX = 'https://chainz.cryptoid.info/ltc/tx.dws?'

@@ -9,57 +9,65 @@ import p2pool
 from p2pool.util import math, pack, segwit_addr, cash_addr
 import struct
 
-mask = (1<<64) - 1
+mask = (1 << 64) - 1
+
 
 def hash256(data):
     return pack.IntType(256).unpack(hashlib.sha256(hashlib.sha256(data).digest()).digest())
 
+
 def pack256(data):
     if data is None:
         data = 0
-    return struct.pack("<QQQQ", data & mask, data>>64 & mask, data>>128 & mask,
-                        data>>192 & mask)
+    return struct.pack("<QQQQ", data & mask, data >> 64 & mask, data >> 128 & mask,
+                       data >> 192 & mask)
+
 
 def unpack256(data):
     raw = struct.unpack("<QQQQ", data)
-    return (raw[3]<<192) + (raw[2]<<128) + (raw[1]<<64) + raw[0]
+    return (raw[3] << 192) + (raw[2] << 128) + (raw[1] << 64) + raw[0]
+
 
 def hash256d(data):
     return hashlib.sha256(hashlib.sha256(data).digest()).digest()
 
+
 def hash160(data):
     if data == '04ffd03de44a6e11b9917f3a29f9443283d9871c9d743ef30d5eddcd37094b64d1b3d8090496b53256786bf5c82932ec23c3b74d9f05a6f95a8b5529352656664b'.decode('hex'):
-        return 0x384f570ccc88ac2e7e00b026d1690a3fca63dd0 # hack for people who don't have openssl - this is the only value that p2pool ever hashes
+        # hack for people who don't have openssl - this is the only value that p2pool ever hashes
+        return 0x384f570ccc88ac2e7e00b026d1690a3fca63dd0
     return pack.IntType(160).unpack(hashlib.new('ripemd160', hashlib.sha256(data).digest()).digest())
+
 
 class ChecksummedType(pack.Type):
     def __init__(self, inner, checksum_func=lambda data: hashlib.sha256(hashlib.sha256(data).digest()).digest()[:4]):
         self.inner = inner
         self.checksum_func = checksum_func
-    
+
     def read(self, file):
         start = file.tell()
         obj = self.inner.read(file)
         end = file.tell()
         file.seek(start)
         data = file.read(end - start)
-        
+
         calculated_checksum = self.checksum_func(data)
         checksum = file.read(len(calculated_checksum))
         if checksum != calculated_checksum:
             raise ValueError('invalid checksum')
-        
+
         return obj
-    
+
     def write(self, file, item):
         data = self.inner.pack(item)
         file.write(data)
         file.write(self.checksum_func(data))
-        #return (file, data), self.checksum_func(data)
+        # return (file, data), self.checksum_func(data)
+
 
 class FloatingInteger(object):
     __slots__ = ['bits', '_target']
-    
+
     @classmethod
     def from_target_upper_bound(cls, target):
         n = math.natural_to_string(target)
@@ -68,44 +76,47 @@ class FloatingInteger(object):
         bits2 = (chr(len(n)) + (n + 3*chr(0))[:3])[::-1]
         bits = pack.IntType(32).unpack(bits2)
         return cls(bits)
-    
+
     def __init__(self, bits, target=None):
         self.bits = bits
         self._target = None
         if target is not None and self.target != target:
             raise ValueError('target does not match')
-    
+
     @property
     def target(self):
         res = self._target
         if res is None:
-            res = self._target = math.shift_left(self.bits & 0x00ffffff, 8 * ((self.bits >> 24) - 3))
+            res = self._target = math.shift_left(
+                self.bits & 0x00ffffff, 8 * ((self.bits >> 24) - 3))
         return res
-    
+
     def __hash__(self):
         return hash(self.bits)
-    
+
     def __eq__(self, other):
         return self.bits == other.bits
-    
+
     def __ne__(self, other):
         return not (self == other)
-    
+
     def __cmp__(self, other):
         assert False
-    
+
     def __repr__(self):
         return 'FloatingInteger(bits=%s, target=%s)' % (hex(self.bits), hex(self.target))
 
+
 class FloatingIntegerType(pack.Type):
     _inner = pack.IntType(32)
-    
+
     def read(self, file):
         bits = self._inner.read(file)
         return FloatingInteger(bits)
-    
+
     def write(self, file, item):
         return self._inner.write(file, item.bits)
+
 
 address_type = pack.ComposedType([
     ('services', pack.IntType(64)),
@@ -113,8 +124,10 @@ address_type = pack.ComposedType([
     ('port', pack.IntType(16, 'big')),
 ])
 
+
 def is_segwit_tx(tx):
     return tx.get('marker', -1) == 0 and tx.get('flag', -1) >= 1
+
 
 tx_in_type = pack.ComposedType([
     ('previous_output', pack.PossiblyNoneType(dict(hash=0, index=2**32 - 1), pack.ComposedType([
@@ -137,14 +150,6 @@ tx_id_type = pack.ComposedType([
     ('lock_time', pack.IntType(32))
 ])
 
-def get_stripped_size(tx):
-    if not 'stripped_size' in tx:
-        tx['stripped_size'] = tx_id_type.packed_size(tx)
-    return tx['stripped_size']
-def get_size(tx):
-    if not 'size' in tx:
-        tx['size'] = tx_id_type.packed_size(tx)
-    return tx['size']
 
 class TransactionType(pack.Type):
     _int_type = pack.IntType(32)
@@ -183,7 +188,7 @@ class TransactionType(pack.Type):
                 tx_ins[i] = tx_in_type.read(file)
             next = self._ntx_type.read(file)
             return dict(version=version, tx_ins=tx_ins, tx_outs=next['tx_outs'], lock_time=next['lock_time'])
-    
+
     def write(self, file, item):
         if is_segwit_tx(item):
             assert len(item['tx_ins']) == len(item['witness'])
@@ -194,6 +199,7 @@ class TransactionType(pack.Type):
             return
         return tx_id_type.write(file, item)
 
+
 tx_type = TransactionType()
 
 merkle_link_type = pack.ComposedType([
@@ -202,7 +208,7 @@ merkle_link_type = pack.ComposedType([
 ])
 
 merkle_tx_type = pack.ComposedType([
-    ('tx', tx_id_type), # used only in aux_pow_type
+    ('tx', tx_id_type),  # used only in aux_pow_type
     ('block_hash', pack.IntType(256)),
     ('merkle_link', merkle_link_type),
 ])
@@ -240,6 +246,7 @@ aux_pow_coinbase_type = pack.ComposedType([
     ('nonce', pack.IntType(32)),
 ])
 
+
 def make_auxpow_tree(chain_ids):
     for size in (2**i for i in xrange(31)):
         if size < len(chain_ids):
@@ -256,10 +263,12 @@ def make_auxpow_tree(chain_ids):
 
 # merkle trees
 
+
 merkle_record_type = pack.ComposedType([
     ('left', pack.IntType(256)),
     ('right', pack.IntType(256)),
 ])
+
 
 class MerkleNode(object):
     """Class for building a merkle tree."""
@@ -301,14 +310,16 @@ class MerkleNode(object):
             ret += self.right.__str__(level=level+1)
         return ret
 
+
 def merkle_hash(hashes):
     if not hashes:
         return 0
     hash_list = list(hashes)
     while len(hash_list) > 1:
         hash_list = [hash256(merkle_record_type.pack(dict(left=left, right=right)))
-            for left, right in zip(hash_list[::2], hash_list[1::2] + [hash_list[::2][-1]])]
+                     for left, right in zip(hash_list[::2], hash_list[1::2] + [hash_list[::2][-1]])]
     return hash_list[0]
+
 
 def build_merkle_tree(nodes):
     """Build a merkle tree from a list of hashes
@@ -339,6 +350,7 @@ def build_merkle_tree(nodes):
         new_nodes.append(new_node)
     return build_merkle_tree(new_nodes)
 
+
 def calculate_merkle_link(hashes, index):
     assert index < len(hashes)
     merkle_nodes = [MerkleNode(pack256(x)) for x in hashes]
@@ -350,6 +362,7 @@ def calculate_merkle_link(hashes, index):
         index_node = index_node.parent
     return {'index': index, 'branch': merkle_branch}
 
+
 def check_merkle_link(tip_hash, link):
     if link['index'] >= 2**len(link['branch']):
         raise ValueError('index too large')
@@ -360,41 +373,53 @@ def check_merkle_link(tip_hash, link):
 
 # targets
 
+
 def target_to_average_attempts(target):
     assert 0 <= target and isinstance(target, (int, long)), target
-    if target >= 2**256: warnings.warn('target >= 2**256!')
+    if target >= 2**256:
+        warnings.warn('target >= 2**256!')
     return 2**256//(target + 1)
+
 
 def average_attempts_to_target(average_attempts):
     assert average_attempts > 0
     return min(int(2**256/average_attempts - 1 + 0.5), 2**256-1)
 
+
 def target_to_difficulty(target):
     assert 0 <= target and isinstance(target, (int, long)), target
-    if target >= 2**256: warnings.warn('target >= 2**256!')
+    if target >= 2**256:
+        warnings.warn('target >= 2**256!')
     return (0xffff0000 * 2**(256-64) + 1)/(target + 1)
+
 
 def difficulty_to_target(difficulty):
     assert difficulty >= 0
-    if difficulty == 0: return 2**256-1
+    if difficulty == 0:
+        return 2**256-1
     return min(int((0xffff0000 * 2**(256-64) + 1)/difficulty - 1 + 0.5), 2**256-1)
 
 # human addresses
 
+
 base58_alphabet = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz'
+
 
 def base58_encode(bindata):
     bindata2 = bindata.lstrip(chr(0))
     return base58_alphabet[0]*(len(bindata) - len(bindata2)) + math.natural_to_string(math.string_to_natural(bindata2), base58_alphabet)
 
+
 def base58_decode(b58data):
     b58data2 = b58data.lstrip(base58_alphabet[0])
     return chr(0)*(len(b58data) - len(b58data2)) + math.natural_to_string(math.string_to_natural(b58data2, base58_alphabet))
+
 
 human_address_type = ChecksummedType(pack.ComposedType([
     ('version', pack.IntType(8)),
     ('pubkey_hash', pack.IntType(160)),
 ]))
+
 
 def pubkey_hash_to_address(pubkey_hash, addr_ver, bech32_ver, net):
     if addr_ver == -1:
@@ -408,15 +433,19 @@ def pubkey_hash_to_address(pubkey_hash, addr_ver, bech32_ver, net):
             return segwit_addr.encode(net.HUMAN_READABLE_PART, bech32_ver, data)
     return base58_encode(human_address_type.pack(dict(version=addr_ver, pubkey_hash=pubkey_hash)))
 
+
 def pubkey_to_address(pubkey, net):
     return pubkey_hash_to_address(hash160(pubkey), net.ADDRESS_VERSION, -1, net)
+
 
 class AddrError(Exception):
     __slots__ = ()
 
+
 def address_to_script2(address, net):
     res = address_to_pubkey_hash(address, net)
     return pubkey_hash_to_script2(res[0], res[1], res[2], net)
+
 
 def address_to_pubkey_hash(address, net):
     try:
@@ -436,6 +465,7 @@ def address_to_pubkey_hash(address, net):
             pass
     raise ValueError('invalid addr')
 
+
 def get_legacy_pubkey_hash(address, net):
     # P2PKH or P2SH address
     try:
@@ -448,6 +478,7 @@ def get_legacy_pubkey_hash(address, net):
             raise ValueError('address not for this net!')
         return x['pubkey_hash'], x['version'], -1
 
+
 def get_bech32_pubkey_hash(address, net):
     try:
         witver, witprog = segwit_addr.decode(net.HUMAN_READABLE_PART, address)
@@ -457,6 +488,7 @@ def get_bech32_pubkey_hash(address, net):
         raise AddrError
     else:
         return int(''.join('{:02x}'.format(x) for x in witprog), 16), -1, witver
+
 
 def get_cashaddr_pubkey_hash(address, net):
     try:
@@ -470,8 +502,10 @@ def get_cashaddr_pubkey_hash(address, net):
 
 # transactions
 
+
 def get_witness_commitment_hash(witness_root_hash, witness_reserved_value):
     return hash256(merkle_record_type.pack(dict(left=witness_root_hash, right=witness_reserved_value)))
+
 
 def get_wtxid(tx, txid=None, txhash=None):
     has_witness = False
@@ -483,12 +517,15 @@ def get_wtxid(tx, txid=None, txhash=None):
     else:
         return hash256(tx_id_type.pack(tx)) if txid is None else txid
 
+
 def get_txid(tx):
     return hash256(tx_id_type.pack(tx))
+
 
 def pubkey_to_script2(pubkey):
     assert len(pubkey) <= 75
     return (chr(len(pubkey)) + pubkey) + '\xac'
+
 
 def pubkey_hash_to_script2(pubkey_hash, version, bech32_version, net):
     if version == -1 and bech32_version >= 0:
@@ -508,12 +545,14 @@ def pubkey_hash_to_script2(pubkey_hash, version, bech32_version, net):
                 # P2SH
                 return '\xa9%s%s\x87' % (hsize, ehash)
             else:
-                raise NotImplementedError("Invalid cashaddr type %d" % bech32_version)
+                raise NotImplementedError(
+                    "Invalid cashaddr type %d" % bech32_version)
         else:
             return '\x00%s%s' % (hsize, ehash)
     if version == net.ADDRESS_P2SH_VERSION:
         return ('\xa9\x14' + pack.IntType(160).pack(pubkey_hash)) + '\x87'
     return '\x76\xa9' + ('\x14' + pack.IntType(160).pack(pubkey_hash)) + '\x88\xac'
+
 
 def script2_to_address(script2, addr_ver, bech32_ver, net):
     try:
@@ -528,6 +567,7 @@ def script2_to_address(script2, addr_ver, bech32_ver, net):
             pass
     raise ValueError("Invalid script2 hash %s" % binascii.hexlify(script2))
 
+
 def script2_to_pubkey_address(script2, net):
     try:
         pubkey = script2[1:-1]
@@ -537,7 +577,8 @@ def script2_to_pubkey_address(script2, net):
     except:
         raise AddrError
     return pubkey_to_address(pubkey, net)
-    
+
+
 def script2_to_pubkey_hash_address(script2, addr_ver, bech32_ver, net):
     # TODO: Check for BCH and BSV length, could be longer than 20 bytes
     try:
@@ -548,6 +589,7 @@ def script2_to_pubkey_hash_address(script2, addr_ver, bech32_ver, net):
     except Exception as e:
         raise AddrError
     return pubkey_hash_to_address(pubkey_hash, addr_ver, bech32_ver, net)
+
 
 def script2_to_cashaddress(script2, addr_ver, ca_ver, net):
     try:
@@ -565,6 +607,7 @@ def script2_to_cashaddress(script2, addr_ver, ca_ver, net):
         raise AddrError
     return pubkey_hash_to_address(pubkey_hash, addr_ver, ca_ver, net)
 
+
 def script2_to_bech32_address(script2, addr_ver, bech32_ver, net):
     try:
         pubkey_hash = int(script2[2:].encode('hex'), 16)
@@ -574,6 +617,7 @@ def script2_to_bech32_address(script2, addr_ver, bech32_ver, net):
     except Exception as e:
         raise AddrError
     return pubkey_hash_to_address(pubkey_hash, addr_ver, bech32_ver, net)
+
 
 def script2_to_p2sh_address(script2, addr_ver, bech32_ver, net):
     # TODO: Check for BCH and BSV length, could be longer than 20 bytes
@@ -586,6 +630,7 @@ def script2_to_p2sh_address(script2, addr_ver, bech32_ver, net):
         raise AddrError
     return pubkey_hash_to_address(pubkey_hash, addr_ver, bech32_ver, net)
 
+
 def script2_to_human(script2, net):
     try:
         pubkey = script2[1:-1]
@@ -595,7 +640,7 @@ def script2_to_human(script2, net):
     else:
         if script2_test == script2:
             return 'Pubkey. Address: %s' % (pubkey_to_address(pubkey, net),)
-    
+
     try:
         pubkey_hash = pack.IntType(160).unpack(script2[3:-2])
         script2_test2 = pubkey_hash_to_script2(pubkey_hash)
@@ -604,8 +649,9 @@ def script2_to_human(script2, net):
     else:
         if script2_test2 == script2:
             return 'Address. Address: %s' % (pubkey_hash_to_address(pubkey_hash, net),)
-    
-    return 'Unknown. Script: %s'  % (script2.encode('hex'),)
+
+    return 'Unknown. Script: %s' % (script2.encode('hex'),)
+
 
 def is_segwit_script(script):
     return script.startswith('\x00\x14') or script.startswith('\xa9\x14')
