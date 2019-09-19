@@ -416,18 +416,19 @@ def get_web_root(wb, datadir_path, bitcoind_getinfo_var, stop_event=variable.Eve
                       '%064x' % x for t in node.tracker.verified.tails for x in node.tracker.verified.reverse.get(t, set())]))
     new_root.putChild('best_share_hash', WebInterface(
         lambda: '%064x' % node.best_share_var.value))
-    
+
     # Allshares here, need to sort share hashes by genereation timestamp list()[:]
-    new_root.putChild('my_share_hashes', WebInterface(lambda: ['%064x' % my_share_hash for my_share_hash in list(wb.my_share_hashes)[:]]))
+    new_root.putChild('my_share_hashes', WebInterface(lambda: [
+                      '%064x' % my_share_hash for my_share_hash in list(wb.my_share_hashes)[:]]))
     # Sort share hashes by genereation timestamp
 
-    # Last 50 shares
-    new_root.putChild('my_share_hashes50', WebInterface(lambda: ['%064x' % my_share_hash for my_share_hash in list(wb.my_share_hashes)[:50]]))
+    # Last 50 shares, unused ATM
+    new_root.putChild('my_share_hashes50', WebInterface(lambda: [
+                      '%064x' % my_share_hash for my_share_hash in list(wb.my_share_hashes)[:50]]))
 
-    
-    # Adding only one last share hash to show
-    new_root.putChild('my_share_hashes1', WebInterface(lambda: ['%064x' % my_share_hash for my_share_hash in list(wb.my_share_hashes)[:1]]))
-    
+    # Adding only one last share hash to show, unused ATM
+    new_root.putChild('my_share_hashes1', WebInterface(lambda: [
+                      '%064x' % my_share_hash for my_share_hash in list(wb.my_share_hashes)[:1]]))
 
     def get_share_data(share_hash_str):
         if int(share_hash_str, 16) not in node.tracker.items:
