@@ -1,3 +1,12 @@
+**P2pool wiki pages**
+https://en.bitcoin.it/wiki/P2Pool
+
+https://en.bitcoinwiki.org/wiki/P2Pool_code_documentation
+https://en.bitcoin.it/wiki/P2Pool_code_documentation
+
+https://en.bitcoin.it/wiki/P2pool_util_forest
+
+
 **P2pool installation with pypy -- Windows**
 
 
