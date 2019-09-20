@@ -418,7 +418,8 @@ def get_web_root(wb, datadir_path, bitcoind_getinfo_var, stop_event=variable.Eve
         lambda: '%064x' % node.best_share_var.value))
 
     def SortShareHashesByTimestamp(hash):
-        share = get_share(hash)
+        print(type(hash))
+        share = get_share(str(hash))
         return share['share_data']['timestamp']
 
     # Allshares here, need to sort share hashes by genereation timestamp list()[:]
