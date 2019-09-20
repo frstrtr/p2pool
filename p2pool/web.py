@@ -417,9 +417,13 @@ def get_web_root(wb, datadir_path, bitcoind_getinfo_var, stop_event=variable.Eve
     new_root.putChild('best_share_hash', WebInterface(
         lambda: '%064x' % node.best_share_var.value))
 
+    def SortShareHashesByTimestamp(hash):
+        share = get_share(hash)
+        return share['share_data']['timestamp']
+
     # Allshares here, need to sort share hashes by genereation timestamp list()[:]
     new_root.putChild('my_share_hashes', WebInterface(lambda: [
-                      '%064x' % my_share_hash for my_share_hash in list(wb.my_share_hashes)[:]]))
+                      '%064x' % my_share_hash for my_share_hash in list(sorted(wb.my_share_hashes,key = SortShareHashesByTimestamp, reverse=True))[:]]))
     # Sort share hashes by genereation timestamp
 
     # Last 50 shares, unused ATM
