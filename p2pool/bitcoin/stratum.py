@@ -9,11 +9,7 @@ from twisted.python import log
 from p2pool.bitcoin import data as bitcoin_data, getwork
 from p2pool.util import expiring_dict, jsonrpc, pack
 
-<<<<<<< HEAD
-#function for auto adjust difficulty?
-=======
 # helper function for difficulty adjustments
->>>>>>> stratum-autodiff
 def clip(num, bot, top):
     return min(top, max(bot, num))
 
