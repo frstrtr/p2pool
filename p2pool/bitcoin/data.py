@@ -150,6 +150,14 @@ tx_id_type = pack.ComposedType([
     ('lock_time', pack.IntType(32))
 ])
 
+def get_stripped_size(tx):
+    if not 'stripped_size' in tx:
+        tx['stripped_size'] = tx_id_type.packed_size(tx)
+    return tx['stripped_size']
+def get_size(tx):
+    if not 'size' in tx:
+        tx['size'] = tx_id_type.packed_size(tx)
+    return tx['size']
 
 class TransactionType(pack.Type):
     _int_type = pack.IntType(32)
