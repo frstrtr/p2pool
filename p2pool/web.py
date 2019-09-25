@@ -418,12 +418,13 @@ def get_web_root(wb, datadir_path, bitcoind_getinfo_var, stop_event=variable.Eve
         lambda: '%064x' % node.best_share_var.value))
 
     def KeyForSortShareHashesByTimestamp(hash):
-        share = get_share('%064x' % hash)
-        return share['share_data']['timestamp']
+        share = get_share('%064x' % hash) #get share data
+        return share['share_data']['timestamp'] #get timestamp from share_data
 
     def SortShareHashes():
-        list_sorted_shares = list(sorted(wb.my_share_hashes, key=KeyForSortShareHashesByTimestamp, reverse=True))
-        return ['%064x' % my_share_hash for my_share_hash in list_sorted_shares]
+        alive_hashes = [hash for hash in wb.my_share_hashes if int('%064x' % hash, 16) in node.tracker.items] #hashes alive shares
+        list_sorted_shares = sorted(alive_hashes, key=KeyForSortShareHashesByTimestamp, reverse=True) #sort alive share hashes by timestamp
+        return ['%064x' % my_share_hash for my_share_hash in list_sorted_shares] #return sorted alive share hashes
 
     
 
