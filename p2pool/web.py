@@ -421,12 +421,27 @@ def get_web_root(wb, datadir_path, bitcoind_getinfo_var, stop_event=variable.Eve
         share = get_share('%064x' % hash) #get share data
         return share['share_data']['timestamp'] #get timestamp from share_data
 
+    def GetAliveShareHashes():
+        return [hash for hash in wb.my_share_hashes if int('%064x' % hash, 16) in node.tracker.items] #hashes alive shares
+
     def SortShareHashes():
-        alive_hashes = [hash for hash in wb.my_share_hashes if int('%064x' % hash, 16) in node.tracker.items] #hashes alive shares
-        list_sorted_shares = sorted(alive_hashes, key=KeyForSortShareHashesByTimestamp, reverse=True) #sort alive share hashes by timestamp
+        alive_share_hashes = GetAliveShareHashes()
+        list_sorted_shares = sorted(alive_share_hashes, key=KeyForSortShareHashesByTimestamp, reverse=True) #sort alive share hashes by timestamp
         return ['%064x' % my_share_hash for my_share_hash in list_sorted_shares] #return sorted alive share hashes
 
-    
+    def ShareInfoForList(hash):
+        share = get_share(hash)
+        return dict(
+            hash=hash, 
+            number=share['share_data']['absheight'],
+            time=share['share_data']['timestamp'],
+            time_first_seen=share['local']['time_first_seen'],
+            difficulty=share['share_data']['target'],
+            difficulty_network=share['block']['header']['target'])
+
+    def GenerateShareList():
+        alive_share_hashes = GetAliveShareHashes()
+        return [ShareInfoForList('%064x' % share_hash) for share_hash in alive_share_hashes]
 
 
     # Allshares here, need to sort share hashes by genereation timestamp list()[:]
@@ -440,21 +455,6 @@ def get_web_root(wb, datadir_path, bitcoind_getinfo_var, stop_event=variable.Eve
     # Adding only one last share hash to show, unused ATM
     new_root.putChild('my_share_hashes1', WebInterface(lambda: [
                       '%064x' % my_share_hash for my_share_hash in list(wb.my_share_hashes)[:1]]))
-
-    def ShareInfoForList(hash):
-        share = get_share(hash)
-        return dict(
-            hash=hash, 
-            number=share['share_data']['absheight'],
-            time=share['share_data']['timestamp'],
-            time_first_seen=share['local']['time_first_seen'],
-            difficulty=share['share_data']['target'],
-            difficulty_network=share['block']['header']['target'])
-
-    def GenerateShareList():
-        share_hashes = SortShareHashes()
-        return [ShareInfoForList(share_hash) for share_hash in share_hashes]
-
 
     # my_share_hashes table
     new_root.putChild('my_shares_list', WebInterface(GenerateShareList))

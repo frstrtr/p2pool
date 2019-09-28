@@ -2,6 +2,17 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
     <head>
+        <style type="text/css">
+            .my_shares_list {
+                width: 1000px;
+                background: #ccc;
+                padding: 5px;
+                padding-right: 20px;
+                border: solid 1px black;
+                float: left;
+            }
+        </style>
+        
         <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
         <title>P2Pool</title>
         <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
@@ -143,10 +154,23 @@
 
         </script>
         <script>
-            $(document).ready(function () {
-                $('#my_shares').DataTable();
-            });
-        </script>
+                function target_to_difficulty(target) { return (0xffff0000 * Math.pow(2, 256 - 64) + 1) / (target + 1); }
+        
+                d3.json('../web/my_shares_list', function (shares) {
+                    var tr = d3.select('#my_shares_body').selectAll().data(shares).enter().append('tr');
+        
+                    tr.append('td').append('a').text(function (share) { return share.hash.substr(-8) }).attr('href', function (share) { return 'share.html#' + share.hash });
+                    tr.append('td').text(function (share) { return share.number });
+                    tr.append('td').text(function (share) { return new Date(1000 * share.time).toString().split(" ").slice(0, 5).join(" ") });
+                    tr.append('td').text(function (share) { return new Date(1000 * share.time_first_seen).toString().split(" ").slice(0, 5).join(" ") });
+                    tr.append('td').text(function (share) { return target_to_difficulty(share.difficulty) });
+                    tr.append('td').text(function (share) { return target_to_difficulty(share.difficulty_network) });
+        
+                    $(document).ready(function () {
+                        var table = $('#shares_list').DataTable({"order":[[2,"desc"]]});
+                    })
+                });
+            </script>
     </head>
     <body>
         <h1>P2Pool <span class="symbol"></span></h1>
@@ -178,21 +202,23 @@
         <!-- Share explorer links -->
         <p>My shares: <span id="my_share_hashes"></span></p>
         
-        <p>New shares list: </p>
-        <table id="my_shares" class="display">
-            <thead>
-                <tr>
-                    <th>Hash</th>
-                    <th>Share number</th>
-                    <th>Time</th>
-                    <th>Time first seen</th>
-                    <th>Difficulty</th>
-                    <th>Difficulty network</th>
-                </tr>
-            </thead>
-            <tbody id="my_shares_body">
-            </tbody>
-        </table>
+        <p>Last shares list: </p>
+        <div class="my_shares_list">
+            <table id="shares_list" class="cell-border compact">
+                <thead>
+                    <tr>
+                        <th>Hash</th>
+                        <th>Share number</th>
+                        <th>Time</th>
+                        <th>Time first seen</th>
+                        <th>Difficulty</th>
+                        <th>Difficulty network</th>
+                    </tr>
+                </thead>
+                <tbody id="my_shares_body">
+                </tbody>
+            </table>
+        </div>
         <!--List shares in table!!!
         <table border="1" id="blocks">
             <tr><th>time</th><th>number</th><th>hash/explorer link</th><th>share</th></tr>
