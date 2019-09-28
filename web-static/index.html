@@ -9,7 +9,7 @@
                 padding: 5px;
                 padding-right: 20px;
                 border: solid 1px black;
-                float: left;
+                float: inline-end;
             }
         </style>
         
@@ -138,20 +138,6 @@
             fill('../web/tails', '#tails');
 		    //replacing '../web/my_share_hashes50' with '../web/my_share_hashes' to display more than 50 my last shares
             fill('../web/my_share_hashes', '#my_share_hashes');
-
-
-            //share table
-            d3.json('../web/my_shares_list', function(shares) {
-                    var tr = d3.select('#my_shares_body').selectAll().data(shares).enter().append('tr');
-
-                    tr.append('td').text(function(share){return share.hash}).attr('href', function(share){return 'share.html#' + share.hash});
-                    tr.append('td').text(function(share){return share.number});
-                    tr.append('td').text(function(share){return new Date(1000*share.time).toString()});
-                    tr.append('td').text(function(share){return new Date(1000*share.time_first_seen).toString()});
-                    tr.append('td').text(function(share){return share.difficulty});
-                    tr.append('td').text(function(share){return share.difficulty_network});
-            });
-
         </script>
         <script>
                 function target_to_difficulty(target) { return (0xffff0000 * Math.pow(2, 256 - 64) + 1) / (target + 1); }
@@ -224,9 +210,11 @@
             <tr><th>time</th><th>number</th><th>hash/explorer link</th><th>share</th></tr>
         </table>
         -->
-        <h2>Payouts if a block were found NOW:</h2>
-        <table border="1" id="payouts">
-            <tr><th>address</th><th>amount in <span class="symbol"></span></th></tr>
-        </table>
+        <div>
+            <h2>Payouts if a block were found NOW:</h2>
+            <table border="1" id="payouts">
+                <tr><th>address</th><th>amount in <span class="symbol"></span></th></tr>
+            </table>
+        </div>
     </body>
 </html>
