@@ -6,6 +6,14 @@
         <title>P2Pool</title>
         <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
         <script type="text/javascript" src="d3.v2.min.js"></script>
+        <script src="http://code.jquery.com/jquery-1.11.2.min.js" type="text/javascript"></script>
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+        <script>
+            $(document).ready(function () {
+                $('#my_shares').DataTable();
+            });
+        </script>
         <script type="text/javascript">
             // based on goblin's p2pool-stats project
             
@@ -124,6 +132,20 @@
             fill('../web/tails', '#tails');
 		    //replacing '../web/my_share_hashes50' with '../web/my_share_hashes' to display more than 50 my last shares
             fill('../web/my_share_hashes', '#my_share_hashes');
+
+
+            //share table
+            d3.json('../web/my_shares_list', function(shares) {
+                    var tr = d3.select('#my_shares_body').selectAll().data(shares).enter().append('tr');
+
+                    tr.append('td').text(function(share){return share.hash}).attr('href', function(block){return 'share.html#' + share.hash});
+                    tr.append('td').text(function(share){return share.number});
+                    tr.append('td').text(function(share){return new Date(1000*share.time).toString()});
+                    tr.append('td').text(function(share){return new Date(1000*share.time_first_seen).toString()});
+                    tr.append('td').text(function(share){return share.difficulty});
+                    tr.append('td').text(function(share){return share.difficulty_network});
+            });
+
         </script>
     </head>
     <body>
@@ -155,6 +177,22 @@
         <p>Tails: <span id="tails"></span></p>
         <!-- Share explorer links -->
         <p>My shares: <span id="my_share_hashes"></span></p>
+        
+        <p>New shares list: </p>
+        <table id="my_shares" class="display">
+            <thead>
+                <tr>
+                    <th>Hash</th>
+                    <th>Share number</th>
+                    <th>Time</th>
+                    <th>Time first seen</th>
+                    <th>Difficulty</th>
+                    <th>Difficulty network</th>
+                </tr>
+            </thead>
+            <tbody id="my_shares_body">
+            </tbody>
+        </table>
         <!--List shares in table!!!
         <table border="1" id="blocks">
             <tr><th>time</th><th>number</th><th>hash/explorer link</th><th>share</th></tr>

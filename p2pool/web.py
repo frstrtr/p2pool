@@ -441,6 +441,24 @@ def get_web_root(wb, datadir_path, bitcoind_getinfo_var, stop_event=variable.Eve
     new_root.putChild('my_share_hashes1', WebInterface(lambda: [
                       '%064x' % my_share_hash for my_share_hash in list(wb.my_share_hashes)[:1]]))
 
+    def ShareInfoForList(hash):
+        share = get_share(hash)
+        return dict(
+            hash=hash, 
+            number=share['share_data']['absheight'],
+            time=share['share_data']['timestamp'],
+            time_first_seen=share['local']['time_first_seen'],
+            difficulty=share['share_data']['target'],
+            difficulty_network=share['block']['header']['target'])
+
+    def GenerateShareList():
+        share_hashes = SortShareHashes()
+        return [ShareInfoForList(share_hash) for share_hash in share_hashes]
+
+
+    # my_share_hashes table
+    new_root.putChild('my_shares_list', WebInterface(GenerateShareList))
+
     def get_share_data(share_hash_str):
         if int(share_hash_str, 16) not in node.tracker.items:
             return ''
