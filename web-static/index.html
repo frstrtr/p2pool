@@ -141,7 +141,17 @@
         </script>
         <script>
                 function target_to_difficulty(target) { return (0xffff0000 * Math.pow(2, 256 - 64) + 1) / (target + 1); }
-                function convert_date(seconds){date = new Date(1000 * seconds); return "(" + seconds.toString() + ") " + date.toString().split(" ").slice(1, 5).join(" ");}
+                function convert_num(num){
+                    if (num < 10){
+                        return "0"+num.toString();
+                    } else {
+                        return num.toString();
+                    }
+                }
+                function convert_date(seconds){
+                    date = new Date(1000 * seconds);
+                    return convert_num(date.getMonth()+1) + "/" + convert_num(date.getDate()) + "/" +  date.toString().split(" ").slice(3, 5).join(" ");
+                }
         
                 d3.json('../web/my_shares_list', function (shares) {
                     var tr = d3.select('#my_shares_body').selectAll().data(shares).enter().append('tr');
