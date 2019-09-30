@@ -10,7 +10,6 @@ def share_parser(share_json_string):
     share_json = json.loads(share_json_string)
 
     for n in share_json:
-        print n
         if n == 'share_data':
             print 'SHARE DATA:', '\n'
             for n1 in share_json[n]:
@@ -30,8 +29,9 @@ def share_parser(share_json_string):
                     print '\t', 'GENTX:', '\n'
                     for n4 in share_json[n][n3]:
                         if n4 == 'coinbase':
-                            r_string = share_json[n][n3][n4].decode("hex")
-                            print '\t\t', n4, ':', r_string, '\n'
+                            # Add esc symbols for string output (better look)
+                            repr_string = repr(share_json[n][n3][n4].decode("hex"))
+                            print '\t\t', n4, ':', repr_string, '\n'
                         else:
                             print '\t\t', n4, ':', share_json[n][n3][n4], '\n'
                 else:
