@@ -93,11 +93,11 @@ class VarIntType(Type):
         if first < 0xfd:
             return first
         if first == 0xfd:
-            desc, length, minimum = '<H', 2, 0xfd
+            desc, length, minimum = '<H', 2, 0xfd #unsigned short
         elif first == 0xfe:
-            desc, length, minimum = '<I', 4, 2**16
+            desc, length, minimum = '<I', 4, 2**16 #unsigned int
         elif first == 0xff:
-            desc, length, minimum = '<Q', 8, 2**32
+            desc, length, minimum = '<Q', 8, 2**32 #unsigned long long
         else:
             raise AssertionError()
         data2 = file.read(length)

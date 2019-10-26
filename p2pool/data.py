@@ -89,9 +89,9 @@ def donation_script_to_address(net):
 
 
 class BaseShare(object):
-    VERSION = 0
-    VOTING_VERSION = 0
-    SUCCESSOR = None
+    VERSION = 0 #Версия шары.
+    VOTING_VERSION = 0 #desired version
+    SUCCESSOR = None #None/SegwitMiningShare
 
     small_block_header_type = pack.ComposedType([
         ('version', pack.VarIntType()),
@@ -680,7 +680,7 @@ class BaseShare(object):
 
         return [known_txs[tx_hash] for tx_hash in other_tx_hashes]
 
-    def should_punish_reason(self, previous_block, bits, tracker, known_txs):
+    def should_punish_reason(self, previous_block, bits, tracker, known_txs): #TODO
         if self.pow_hash <= self.header['bits'].target:
             return -1, 'block solution'
         if self.naughty == 1:
@@ -1109,11 +1109,12 @@ class ShareStore(object):
     """Store shares in files and retrieve it."""
 
     def __init__(self, prefix, net, share_cb, verified_hash_cb):
-        self.dirname = os.path.dirname(os.path.abspath(prefix))
-        self.filename = os.path.basename(os.path.abspath(prefix))
+        self.dirname = os.path.dirname(os.path.abspath(prefix)) #Путь к папке с файлами данных шар.
+        self.filename = os.path.basename(os.path.abspath(prefix)) #Название файла данных шар ['shares.']
+        self.archive_dirname = os.path.abspath(dirname + '/archive') #Путь к папке-архиву с данными шар.
         self.net = net
 
-        start = time.time()
+        start = time.time() # start loading time
 
         known = {}
         filenames, next = self.get_filenames_and_next()
@@ -1159,10 +1160,13 @@ class ShareStore(object):
     def _add_line(self, line):
         filenames, next = self.get_filenames_and_next()
         if filenames and os.path.getsize(filenames[-1]) < 10e6:
+            #Если последний в списке файл меньше 1.000.000 байт [976,5625‬KB/0.95MB] 
             filename = filenames[-1]
         else:
+            #В противном случае создаем следующий
             filename = next
 
+        #'ab' mode = opens a file for appending in binary format
         with open(filename, 'ab') as f:
             f.write(line + '\n')
 
@@ -1171,7 +1175,7 @@ class ShareStore(object):
     def add_share(self, share):
         for filename, (share_hashes, verified_hashes) in self.known.iteritems():
             if share.hash in share_hashes:
-                break
+                break #Если такой хэш уже есть, то шара не сохраняется.
         else:
             filename = self._add_line("%i %s" % (
                 5, share_type.pack(share.as_share()).encode('hex')))
@@ -1196,6 +1200,7 @@ class ShareStore(object):
         verified_hashes.add(share_hash)
 
     def get_filenames_and_next(self):
+        ''' Метод возвращает список доступных файлов и название следующего, если доступные будут заполнены. '''
         suffixes = sorted(int(x[len(self.filename):]) for x in os.listdir(
             self.dirname) if x.startswith(self.filename) and x[len(self.filename):].isdigit())
         return [os.path.join(self.dirname, self.filename + str(suffix)) for suffix in suffixes], os.path.join(self.dirname, self.filename + (str(suffixes[-1] + 1) if suffixes else str(0)))
@@ -1213,7 +1218,13 @@ class ShareStore(object):
                 verified_hashes.remove(share_hash)
         self.check_remove()
 
+    def check_archive_dirname(self):
+        ''' Проверка на существование папки-архива, если её нет - создает. '''
+        if not os.path.exists(self.archive_dirname):
+            os.makedirs(self.archive_dirname)
+
     def check_remove(self):
+        ''' Проверка файла. Если share_hashes и verified_hashes - пустые, то файл архивируется. '''
         to_remove = set()
         for filename, (share_hashes, verified_hashes) in self.known_desired.iteritems():
             #print filename, len(share_hashes) + len(verified_hashes)
@@ -1222,5 +1233,7 @@ class ShareStore(object):
         for filename in to_remove:
             self.known.pop(filename)
             self.known_desired.pop(filename)
-            os.remove(filename)
-            print "REMOVED", filename
+            os.rename(filename, os.path.join(self.archive_dirname, 'shares.'+ str(len(os.listdir(self.archive_dirname)))))
+            #os.remove(filename)
+            #print "REMOVED", filename
+            print "ARCHIVED", filename
