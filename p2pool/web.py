@@ -13,7 +13,8 @@ from twisted.web import resource, static
 
 import p2pool
 from bitcoin import data as bitcoin_data
-from . import data as p2pool_data, p2p
+#from . import data as p2pool_data, p2p
+import data as p2pool_data, p2p
 from util import deferral, deferred_resource, graph, math, memory, pack, variable
 
 
@@ -418,12 +419,12 @@ def get_web_root(wb, datadir_path, bitcoind_getinfo_var, stop_event=variable.Eve
         lambda: '%064x' % node.best_share_var.value))
 
     def KeyForSortShareHashesByTimestamp(hash):
-        ''' Метод-ключ для сортировки списка хэшей по timestamp шар.'''
+        ''' Key method for sorting a list of hashes by timestamp share.'''
         share = get_share('%064x' % hash) #get share data
         return share['share_data']['timestamp'] #get timestamp from share_data
 
     def GetAliveShareHashes():
-        ''' Возвращает массив хэшей живых шар. '''
+        ''' Return array hashes alive shares. '''
         return [hash for hash in wb.my_share_hashes if int('%064x' % hash, 16) in node.tracker.items] #hashes alive shares
 
     def SortShareHashes():
@@ -432,7 +433,7 @@ def get_web_root(wb, datadir_path, bitcoind_getinfo_var, stop_event=variable.Eve
         return ['%064x' % my_share_hash for my_share_hash in list_sorted_shares] #return sorted alive share hashes
 
     def ShareInfoForList(hash):
-        ''' Формирование словаря данных таблицы для шары с хэшем = hash '''
+        ''' Generating a table data dictionary for share '''
         share = get_share(hash)
         return dict(
             hash=hash, 
@@ -443,7 +444,7 @@ def get_web_root(wb, datadir_path, bitcoind_getinfo_var, stop_event=variable.Eve
             difficulty_network=share['block']['header']['target'])
 
     def GenerateShareList():
-        ''' Создание массива словарей из данных, которые используются в таблице шар '''
+        ''' Creating an array of dictionaries from the data used in the shares table '''
         alive_share_hashes = GetAliveShareHashes()
         return [ShareInfoForList('%064x' % share_hash) for share_hash in alive_share_hashes]
 

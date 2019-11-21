@@ -89,10 +89,33 @@ def donation_script_to_address(net):
 
 
 class BaseShare(object):
-    VERSION = 0 #Версия шары.
-    VOTING_VERSION = 0 #desired version
-    SUCCESSOR = None #None/SegwitMiningShare
+    """
+    Base class for Shares
 
+    :param object: [description]
+    :type object: [type]
+    :raises ValueError: [description]
+    :raises ValueError: [description]
+    :raises ValueError: [description]
+    :raises ValueError: [description]
+    :raises p2p.PeerMisbehavingError: [description]
+    :raises p2p.PeerMisbehavingError: [description]
+    :raises ValueError: [description]
+    :raises p2p.PeerMisbehavingError: [description]
+    :raises p2p.PeerMisbehavingError: [description]
+    :raises p2p.PeerMisbehavingError: [description]
+    :raises ValueError: [description]
+    :raises ValueError: [description]
+    :raises ValueError: [description]
+    """
+    #: Share version
+    VERSION = 0
+    #: desired version
+    VOTING_VERSION = 0
+    #: None/SegwitMiningShare
+    SUCCESSOR = None
+
+    
     small_block_header_type = pack.ComposedType([
         ('version', pack.VarIntType()),
         ('previous_block', pack.PossiblyNoneType(0, pack.IntType(256))),
@@ -100,17 +123,91 @@ class BaseShare(object):
         ('bits', bitcoin_data.FloatingIntegerType()),
         ('nonce', pack.IntType(32)),
     ])
+    ''' 
+        :version: 2/4 bytes \n
+        :previuos_block: int 32 bytes \n
+        :timestamp: int 4 bytes \n
+        :bits: 4 bytes \n
+        :nonce: 4 bytes \n '''
     share_info_type = None
-    share_type = None
-    ref_type = None
+    ''' 
+        :share_data: \n
+        :previuos_block: int 32 bytes \n
+        :coinbase: VarStrType, maximum number of Str characters is equal to the maximum value of unsigned long long. \n
+        :nonce: 4 bytes \n
+        
+        if Share.Version >= 34: \n
+            :address: VarStrType \n
+        else \n
+            :pubkey_hash: int 20 bytes \n
 
+        :subsidy: int 8 bytes \n
+        :donation: int 2 bytes \n
+        :stale_info: orphan/doa/None | Enum 1 byte \n
+        :desired_version: unsigned (long long/int) \n
+
+        if [Segwit active in this version share [check is_segwit_activated]] \n
+            segwit_data: \n
+
+                segwit_data \n
+
+                    txid_merkle_link \n
+
+                        branch: list int 32 bytes * the number of objects in the list \n
+                        
+                        index:  always 0 \n
+                    
+                    wtxid_merkle_root: int 32 bytes \n
+                
+                txid_merkle_link: \n
+                    
+                    branch: list int 32 bytes * the number of objects in the list \n
+                    
+                    index:  0 \n
+                
+                wtxid_merkle_root: int 32 bytes \n
+                
+        
+        if Share.Version < 34: \n
+            :new_transaction_hashes: list int 32 bytes * the number of objects in the list \n
+            :transaction_hash_refs: list unsigned long long/unsigned int * the number of objects in the list \n
+        
+        :far_share_hash: int 32 bytes \n
+        :max_bits: 4 bytes \n
+        :bits: 4 bytes \n
+        :timestamp: 4 bytes \n
+        :absheight: 4 bytes \n
+        :abswork: 16 bytes \n '''
+    share_type = None
+    '''
+        :share_info: share_info_type \n
+        :ref_merkle_link: \n
+            :branch: list int 32 bytes * the number of objects in the list \n
+            :index: always 0 \n
+        :last_txout_nonce: int 8 bytes \n
+        :hash_link: \n
+            :state: FixedStr 8 bytes \n
+            :extra_data: FixedStr 0 bytes \n
+            :lenght: 4 bytes \n
+        :merkle_link: \n
+            :branch: list int 32 bytes * the number of objects in the list \n
+            :index: always 0 \n '''
+
+    ref_type = None
+    '''
+        :identifier: FixedStr, 1 byte(?)
+        :share_info: share_info_type '''
+
+    #: DONATION_SCRIPT is packed here, which is used in def generate_transaction [data.py, line 387]
     gentx_before_refhash = pack.VarStrType().pack(DONATION_SCRIPT) + pack.IntType(64).pack(0) + \
         pack.VarStrType().pack('\x6a\x28' + pack.IntType(256).pack(0) +
                                pack.IntType(64).pack(0))[:3]
 
-    gentx_size = 50000  # conservative estimate, will be overwritten during execution
+    #:conservative estimate, will be overwritten during execution
+    gentx_size = 50000  
     gentx_weight = 200000
     cached_types = None
+    
     @classmethod
     def get_dynamic_types(cls, net):
         if not cls.cached_types == None:
@@ -1109,9 +1206,9 @@ class ShareStore(object):
     """Store shares in files and retrieve it."""
 
     def __init__(self, prefix, net, share_cb, verified_hash_cb):
-        self.dirname = os.path.dirname(os.path.abspath(prefix)) #Путь к папке с файлами данных шар.
-        self.filename = os.path.basename(os.path.abspath(prefix)) #Название файла данных шар ['shares.']
-        self.archive_dirname = os.path.abspath(self.dirname + '/archive') #Путь к папке-архиву с данными шар.
+        self.dirname = os.path.dirname(os.path.abspath(prefix)) #Path to dir with share data.
+        self.filename = os.path.basename(os.path.abspath(prefix)) #name of share data file ['shares.']
+        self.archive_dirname = os.path.abspath(self.dirname + '/archive') #path to share data archive folder   
         self.net = net
 
         start = time.time() # start loading time
@@ -1160,10 +1257,11 @@ class ShareStore(object):
     def _add_line(self, line):
         filenames, next = self.get_filenames_and_next()
         if filenames and os.path.getsize(filenames[-1]) < 10e6:
-            #Если последний в списке файл меньше 1.000.000 байт [976,5625‬KB/0.95MB] 
+            
+            #last in filenames less than 1.000.000 bytes (976.5625kb; 0.95mb)
             filename = filenames[-1]
         else:
-            #В противном случае создаем следующий
+            #create new
             filename = next
 
         #'ab' mode = opens a file for appending in binary format
@@ -1175,7 +1273,7 @@ class ShareStore(object):
     def add_share(self, share):
         for filename, (share_hashes, verified_hashes) in self.known.iteritems():
             if share.hash in share_hashes:
-                break #Если такой хэш уже есть, то шара не сохраняется.
+                break
         else:
             filename = self._add_line("%i %s" % (
                 5, share_type.pack(share.as_share()).encode('hex')))
@@ -1200,7 +1298,7 @@ class ShareStore(object):
         verified_hashes.add(share_hash)
 
     def get_filenames_and_next(self):
-        ''' Метод возвращает список доступных файлов и название следующего, если доступные будут заполнены. '''
+        ''' The method returns a list of available files and the name of the next if available will be filled. '''
         suffixes = sorted(int(x[len(self.filename):]) for x in os.listdir(
             self.dirname) if x.startswith(self.filename) and x[len(self.filename):].isdigit())
         return [os.path.join(self.dirname, self.filename + str(suffix)) for suffix in suffixes], os.path.join(self.dirname, self.filename + (str(suffixes[-1] + 1) if suffixes else str(0)))
@@ -1219,12 +1317,15 @@ class ShareStore(object):
         self.check_remove()
 
     def check_archive_dirname(self):
-        ''' Проверка на существование папки-архива, если её нет - создает. '''
+        """ Checking for the existence of an archive folder, if it does not exist, creates it. """
+        
         if not os.path.exists(self.archive_dirname):
             os.makedirs(self.archive_dirname)
 
     def check_remove(self):
-        ''' Проверка файла. Если share_hashes и verified_hashes - пустые, то файл архивируется. '''
+        """
+        File check. If share_hashes and verified_hashes are empty, then the file is archived.
+        """
         to_remove = set()
         for filename, (share_hashes, verified_hashes) in self.known_desired.iteritems():
             #print filename, len(share_hashes) + len(verified_hashes)

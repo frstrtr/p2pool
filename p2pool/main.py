@@ -5,7 +5,7 @@ import p2pool.data as p2pool_data
 import p2pool
 import bitcoin.data as bitcoin_data
 import bitcoin.p2p as bitcoin_p2p
-from . import networks, web, work
+import networks, web, work
 from util import fixargparse, jsonrpc, variable, deferral, math, logging, switchprotocol
 from bitcoin import stratum, worker_interface, helper
 from nattraverso import portmapper, ipdiscover
@@ -83,6 +83,85 @@ gnode = None  # for debugging via rconsole/rfoo only
 
 @defer.inlineCallbacks
 def main(args, net, datadir_path, merged_urls, worker_endpoint):
+    """
+    This does all the startup tasks.
+
+    1. Tests connection to bitcoind.
+    2. Prints hash of latest block to show bitcoind is up to date.
+    3. Tests connection to p2pool network.
+    4. Gets address to use for payout either from file or bitcoind.
+    5. Validates address and checks local bitcoind owns it.
+    6. Create a "tracker" and loads know shares from files in data/bitcoin/sharesX where X is a number.
+    7. poll_bitcoind then gets work from bitcoind (i.e. block header to hash). Does this by calling getwork function explained below.
+    8. The work_poller() function then polls bitcoind every 15 seconds for new work.
+    9. Check for work from peers. This is new code to try to reduce stales. It gets new block headers from peers if they arrive before they arrive from bitcoind.
+    10. Set up merged work for merged mining.
+    11. Sets up combined work.
+    12. Sets up Longpoll to trigger when current_work changes (transitions).
+    13. Creates Node class that handles connections to other p2pool nodes (see p2p.py also).
+    14. Read p2pool node address from addrs file else use bootstrap addresses.
+    15. Create node object and start it connecting/sending/receiving data.
+    16. Setup loop to save shares to disk every 60 seconds.
+    17. Create tunnel through routers using upnp if enabled.
+    18. Start listening for workers using WorkerBridge Class (e.g. cgminers).
+    19. Create web_root and start web server. This is the monitoring web pages. (see web.py)
+    20. Start IRC connection for announcing blocks.
+    21. Start Status process that output to screen data every 3 seconds.
+    
+    :param args: 
+        --version - version \n
+        --net - use specified network (default: bitcoin) \n
+        --testnet - use the network's testnet \n
+        --debug - enable debugging mode \n
+        --bench - enable CPU performance profiling mode \n
+        --rconsole - enable rconsole debugging mode (requires rfoo) \n
+        --address - generate payouts to this address (default: <address requested from bitcoind>), or (dynamic) \n
+        -a --address - generate payouts to this address (default: <address requested from bitcoind>), or (dynamic) \n
+        -i --numaddresses - number of bitcoin auto-generated addresses to maintain for getwork dynamic address allocation \n
+        -t --timeaddresses - seconds between acquisition of new address and removal of single old (default: 2 days or 172800s) \n
+        --datadir - store data in this directory (default: <directory run_p2pool.py is in>/data) \n
+        --logfile - log to this file (default: data/<NET>/log) \n
+        --web-static - use an alternative web frontend in this directory (otherwise use the built-in frontend) \n
+        --merged - call getauxblock on this url to get work for merged mining (example: http://ncuser:ncpass@127.0.0.1:10332/) \n
+        --coinbtext - append this text to the coinbase  \n
+        --give-author - donate this percentage of work towards the development of p2pool (default: 0.0) \n
+        --iocp - use Windows IOCP API in order to avoid errors due to large number of sockets being open \n
+        --irc-announce - announce any blocks found on irc://irc.freenode.net/#p2pool \n
+        --no-bugreport - disable submitting caught exceptions to the author \n
+        
+        p2pool interface: \n
+            -- p2pool-port PORT - use port PORT to listen for connections (forward this port from your router!) \n
+            -n -- p2pool-node ADDR[:PORT] - connect to existing p2pool node at ADDR listening on port PORT (defaults to default p2pool P2P port) in addition to builtin addresses \n
+            -- disable-upnp - don't attempt to use UPnP to forward p2pool's P2P port from the Internet to this computer \n
+            -- max-conns CONNS - maximum incoming connections (default: 40) \n
+            -- outgoing-conns CONNS - outgoing connections (default: 6) \n
+            -- external-ip ADDR[:PORT] - specify your own public IP address instead of asking peers to discover it, useful for running dual WAN or asymmetric routing \n
+            -- disable-advertise - don't advertise local IP address as being available for incoming connections. useful for running a dark node, along with multiple -n ADDR's and --outgoing-conns 0 \n
+        
+        worker interface: \n
+
+        -w --worker-port [PORT or ADDR:PORT] - listen on PORT on interface with ADDR for RPC connections from miners (default: all interfaces)  \n
+        -f --fee [FEE_PERCENTAGE] - charge workers mining to their own bitcoin address (by setting their miner's username to a bitcoin address) this percentage fee to mine on your p2pool instance. Amount displayed at http://127.0.0.1:WORKER_PORT/fee (default: 0) \n
+        -s --share-rate [SECONDS_PER_SHARE] - Auto-adjust mining difficulty on each connection to target this many seconds per pseudoshare (default: 3) \n
+        
+        bitcoind interface: \n
+        
+        --bitcoind-config-path BITCOIND_CONFIG_PATH - custom configuration file path (when bitcoind -conf option used) \n
+        --bitcoind-address BITCOIND_ADDRESS - connect to this address (default: 127.0.0.1) \n
+        --bitcoind-rpc-port BITCOIND_RPC_PORT - connect to JSON-RPC interface at this port (default: <read from bitcoin.conf if password not provided>) \n
+        --bitcoind-rpc-ssl - connect to JSON-RPC interface using SSL \n
+        --bitcoind-p2p-port BITCOIND_P2P_PORT - connect to P2P interface at this port (default: <read from bitcoin.conf if password not provided>) \n
+        --allow-obsolete-bitcoind - allow the use of coin daemons (bitcoind) that do not support all of the required softforks for this network (e.g. Bitcoin Core and segwit2x) \n
+
+    :type args: str
+    :param net: Definitions of P2Pool networks (eg. Bitcoin, Bitcoin-testnet, Litecoin, ...) 
+    :param datadir_path: store data in this directory (default: <directory run_p2pool.py is in>/data)
+    :type datadir_path: str
+    :param merged_urls: works for merged mining (example: http://ncuser:ncpass@127.0.0.1:10332/)
+    :type merged_urls: list
+    :param worker_endpoint: net.WORKER_PORT
+    :type worker_endpoint: tuple
+    """
     try:
         print 'p2pool (version %s)' % (p2pool.__version__,)
         print
@@ -503,6 +582,21 @@ def main(args, net, datadir_path, merged_urls, worker_endpoint):
 
 
 def run():
+    """
+
+    This is the initially executed function.
+
+    Parses arguments
+    Reads user/password from bitcoin config file
+    Sets up log file
+    Sets up logger that reports errors to http://u.forre.st/p2pool_error.cgi (If you are concerned this is a privacy issue add --no-bugreport to command line.)
+
+    Finally it adds the main function to the Twister Reactor and start the reactor. (i.e. runs the function main!
+    
+    :return: [description]
+    :rtype: [type]
+
+    """
     if not hasattr(tcp.Client, 'abortConnection'):
         print "Twisted doesn't have abortConnection! Upgrade to a newer version of Twisted to avoid memory leaks!"
         print 'Pausing for 3 seconds...'
