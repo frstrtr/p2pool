@@ -1,0 +1,368 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>forest &mdash; P2Pool 34.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'../../',
+              VERSION:'34.0',
+              LANGUAGE:'None',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: '.txt'
+          };
+      </script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="graph" href="graph.html" />
+    <link rel="prev" title="fixargparse" href="fixargparse.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> P2Pool
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../info.html">Information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../engine/info.html">P2Pool Code Documentaion</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="info.html">Util</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="cash_addr.html">cash_addr</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datachunker.html">datachunker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deferral.html">deferral</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deferred_resource.html">deferred_resource</a></li>
+<li class="toctree-l2"><a class="reference internal" href="expiring_dict.html">expiring_dict</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fixargparse.html">fixargparse</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">forest</a></li>
+<li class="toctree-l2"><a class="reference internal" href="graph.html">graph</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsonrpc.html">jsonrpc</a></li>
+<li class="toctree-l2"><a class="reference internal" href="memoize.html">memoize</a></li>
+<li class="toctree-l2"><a class="reference internal" href="math.html">math</a></li>
+<li class="toctree-l2"><a class="reference internal" href="logging.html">logging</a></li>
+<li class="toctree-l2"><a class="reference internal" href="memory.html">memory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="p2protocol.html">p2protocol</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pack.html">pack</a></li>
+<li class="toctree-l2"><a class="reference internal" href="segwit_addr.html">segwit_addr</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skiplist.html">skiplist</a></li>
+<li class="toctree-l2"><a class="reference internal" href="switchprotocol.html">switchprotocol</a></li>
+<li class="toctree-l2"><a class="reference internal" href="variable.html">variable</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">P2Pool</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="info.html">Util</a> &raquo;</li>
+        
+      <li>forest</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/p2pool/utildoc/forest.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-util.forest">
+<span id="forest"></span><h1>forest<a class="headerlink" href="#module-util.forest" title="Permalink to this headline">¶</a></h1>
+<p>forest data structure</p>
+<dl class="attribute">
+<dt id="util.forest.AttributeDelta">
+<code class="descclassname">util.forest.</code><code class="descname">AttributeDelta</code><a class="headerlink" href="#util.forest.AttributeDelta" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">util.forest.ProtoAttributeDelta</span></code></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="util.forest.DistanceSkipList">
+<em class="property">class </em><code class="descclassname">util.forest.</code><code class="descname">DistanceSkipList</code><span class="sig-paren">(</span><em>tracker</em><span class="sig-paren">)</span><a class="headerlink" href="#util.forest.DistanceSkipList" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="util.forest.DistanceSkipList.apply_delta">
+<code class="descname">apply_delta</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#util.forest.DistanceSkipList.apply_delta" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="util.forest.DistanceSkipList.combine_deltas">
+<code class="descname">combine_deltas</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#util.forest.DistanceSkipList.combine_deltas" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="util.forest.DistanceSkipList.finalize">
+<code class="descname">finalize</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#util.forest.DistanceSkipList.finalize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="util.forest.DistanceSkipList.get_delta">
+<code class="descname">get_delta</code><span class="sig-paren">(</span><em>element</em><span class="sig-paren">)</span><a class="headerlink" href="#util.forest.DistanceSkipList.get_delta" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="util.forest.DistanceSkipList.initial_solution">
+<code class="descname">initial_solution</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#util.forest.DistanceSkipList.initial_solution" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="util.forest.DistanceSkipList.judge">
+<code class="descname">judge</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#util.forest.DistanceSkipList.judge" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="util.forest.SubsetTracker">
+<em class="property">class </em><code class="descclassname">util.forest.</code><code class="descname">SubsetTracker</code><span class="sig-paren">(</span><em>subset_of</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#util.forest.SubsetTracker" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="util.forest.SubsetTracker.add">
+<code class="descname">add</code><span class="sig-paren">(</span><em>item</em><span class="sig-paren">)</span><a class="headerlink" href="#util.forest.SubsetTracker.add" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="util.forest.SubsetTracker.remove">
+<code class="descname">remove</code><span class="sig-paren">(</span><em>item_hash</em><span class="sig-paren">)</span><a class="headerlink" href="#util.forest.SubsetTracker.remove" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="util.forest.Tracker">
+<em class="property">class </em><code class="descclassname">util.forest.</code><code class="descname">Tracker</code><span class="sig-paren">(</span><em>items=[]</em>, <em>delta_type=&lt;class 'util.forest.ProtoAttributeDelta'&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#util.forest.Tracker" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="util.forest.Tracker.add">
+<code class="descname">add</code><span class="sig-paren">(</span><em>item</em><span class="sig-paren">)</span><a class="headerlink" href="#util.forest.Tracker.add" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="util.forest.Tracker.get_chain">
+<code class="descname">get_chain</code><span class="sig-paren">(</span><em>start_hash</em>, <em>length</em><span class="sig-paren">)</span><a class="headerlink" href="#util.forest.Tracker.get_chain" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="util.forest.Tracker.is_child_of">
+<code class="descname">is_child_of</code><span class="sig-paren">(</span><em>item_hash</em>, <em>possible_child_hash</em><span class="sig-paren">)</span><a class="headerlink" href="#util.forest.Tracker.is_child_of" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="util.forest.Tracker.remove">
+<code class="descname">remove</code><span class="sig-paren">(</span><em>item_hash</em><span class="sig-paren">)</span><a class="headerlink" href="#util.forest.Tracker.remove" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="util.forest.TrackerSkipList">
+<em class="property">class </em><code class="descclassname">util.forest.</code><code class="descname">TrackerSkipList</code><span class="sig-paren">(</span><em>tracker</em><span class="sig-paren">)</span><a class="headerlink" href="#util.forest.TrackerSkipList" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="util.forest.TrackerSkipList.previous">
+<code class="descname">previous</code><span class="sig-paren">(</span><em>element</em><span class="sig-paren">)</span><a class="headerlink" href="#util.forest.TrackerSkipList.previous" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="util.forest.TrackerView">
+<em class="property">class </em><code class="descclassname">util.forest.</code><code class="descname">TrackerView</code><span class="sig-paren">(</span><em>tracker</em>, <em>delta_type</em><span class="sig-paren">)</span><a class="headerlink" href="#util.forest.TrackerView" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="util.forest.TrackerView.get_delta">
+<code class="descname">get_delta</code><span class="sig-paren">(</span><em>item</em>, <em>ancestor</em><span class="sig-paren">)</span><a class="headerlink" href="#util.forest.TrackerView.get_delta" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="util.forest.TrackerView.get_delta_to_last">
+<code class="descname">get_delta_to_last</code><span class="sig-paren">(</span><em>item_hash</em><span class="sig-paren">)</span><a class="headerlink" href="#util.forest.TrackerView.get_delta_to_last" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="util.forest.TrackerView.get_height">
+<code class="descname">get_height</code><span class="sig-paren">(</span><em>item_hash</em><span class="sig-paren">)</span><a class="headerlink" href="#util.forest.TrackerView.get_height" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="util.forest.TrackerView.get_height_and_last">
+<code class="descname">get_height_and_last</code><span class="sig-paren">(</span><em>item_hash</em><span class="sig-paren">)</span><a class="headerlink" href="#util.forest.TrackerView.get_height_and_last" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="util.forest.TrackerView.get_last">
+<code class="descname">get_last</code><span class="sig-paren">(</span><em>item_hash</em><span class="sig-paren">)</span><a class="headerlink" href="#util.forest.TrackerView.get_last" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="util.forest.TrackerView.get_work">
+<code class="descname">get_work</code><span class="sig-paren">(</span><em>item_hash</em><span class="sig-paren">)</span><a class="headerlink" href="#util.forest.TrackerView.get_work" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="util.forest.get_attributedelta_type">
+<code class="descclassname">util.forest.</code><code class="descname">get_attributedelta_type</code><span class="sig-paren">(</span><em>attrs</em><span class="sig-paren">)</span><a class="headerlink" href="#util.forest.get_attributedelta_type" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="graph.html" class="btn btn-neutral float-right" title="graph" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="fixargparse.html" class="btn btn-neutral float-left" title="fixargparse" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, frstrtr
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

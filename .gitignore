@@ -10,7 +10,7 @@ Makefile.local
 .pkglist
 .pyenv/
 .coverage
-build/
+/build/
 ltc_scrypt.so
 *.json
 .vscode/
