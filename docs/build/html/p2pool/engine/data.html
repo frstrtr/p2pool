@@ -1,0 +1,933 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Data &mdash;
+ P2Pool 34.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'../../',
+              VERSION:'34.0',
+              LANGUAGE:'None',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: '.txt'
+          };
+
+      </script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Node" href="node.html" />
+    <link rel="prev" title="Work" href="work.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> P2Pool
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../info.html">Information</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="info.html">P2Pool Code Documentaion</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="main.html">Main</a></li>
+<li class="toctree-l2"><a class="reference internal" href="work.html">Work</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="node.html">Node</a></li>
+<li class="toctree-l2"><a class="reference internal" href="p2p.html">P2P</a></li>
+<li class="toctree-l2"><a class="reference internal" href="web.html">Web</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../utildoc/info.html">Util</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">P2Pool</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;
+</li>
+        
+          <li><a href="info.html">P2Pool Code Documentaion</a> &raquo;
+</li>
+        
+      <li>Data</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/p2pool/engine/data.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-data">
+<span id="data"></span><h1>Data<a class="headerlink" href="#module-data" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="data.BaseShare">
+<em class="property">class </em><code class="descclassname">data.</code><code class="descname">BaseShare</code><span class="sig-paren">(</span><em>net</em>, <em>peer_addr</em>, <em>contents</em><span class="sig-paren">)</span><a class="headerlink" href="#data.BaseShare" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base class for Shares</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>object</strong> (<em>[</em><em>type</em><em>]</em>) -- [description]</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
+<li><strong>ValueError</strong> -- [description]</li>
+<li><strong>ValueError</strong> -- [description]</li>
+<li><strong>ValueError</strong> -- [description]</li>
+<li><strong>ValueError</strong> -- [description]</li>
+<li><a class="reference internal" href="p2p.html#p2p.PeerMisbehavingError" title="p2p.PeerMisbehavingError"><strong>p2p.PeerMisbehavingError</strong></a> -- [description]</li>
+<li><a class="reference internal" href="p2p.html#p2p.PeerMisbehavingError" title="p2p.PeerMisbehavingError"><strong>p2p.PeerMisbehavingError</strong></a> -- [description]</li>
+<li><strong>ValueError</strong> -- [description]</li>
+<li><a class="reference internal" href="p2p.html#p2p.PeerMisbehavingError" title="p2p.PeerMisbehavingError"><strong>p2p.PeerMisbehavingError</strong></a> -- [description]</li>
+<li><a class="reference internal" href="p2p.html#p2p.PeerMisbehavingError" title="p2p.PeerMisbehavingError"><strong>p2p.PeerMisbehavingError</strong></a> -- [description]</li>
+<li><a class="reference internal" href="p2p.html#p2p.PeerMisbehavingError" title="p2p.PeerMisbehavingError"><strong>p2p.PeerMisbehavingError</strong></a> -- [description]</li>
+<li><strong>ValueError</strong> -- [description]</li>
+<li><strong>ValueError</strong> -- [description]</li>
+<li><strong>ValueError</strong> -- [description]</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="data.BaseShare.SUCCESSOR">
+<code class="descname">SUCCESSOR</code><em class="property"> = None</em><a class="headerlink" href="#data.BaseShare.SUCCESSOR" title="Permalink to this definition">¶</a></dt>
+<dd><p>None/SegwitMiningShare</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="data.BaseShare.VERSION">
+<code class="descname">VERSION</code><em class="property"> = 0</em><a class="headerlink" href="#data.BaseShare.VERSION" title="Permalink to this definition">¶</a></dt>
+<dd><p>Share version</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="data.BaseShare.VOTING_VERSION">
+<code class="descname">VOTING_VERSION</code><em class="property"> = 0</em><a class="headerlink" href="#data.BaseShare.VOTING_VERSION" title="Permalink to this definition">¶</a></dt>
+<dd><p>desired version</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="data.BaseShare.absheight">
+<code class="descname">absheight</code><a class="headerlink" href="#data.BaseShare.absheight" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="data.BaseShare.abswork">
+<code class="descname">abswork</code><a class="headerlink" href="#data.BaseShare.abswork" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="data.BaseShare.as_block">
+<code class="descname">as_block</code><span class="sig-paren">(</span><em>tracker</em>, <em>known_txs</em><span class="sig-paren">)</span><a class="headerlink" href="#data.BaseShare.as_block" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="data.BaseShare.as_share">
+<code class="descname">as_share</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#data.BaseShare.as_share" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="data.BaseShare.cached_types">
+<code class="descname">cached_types</code><em class="property"> = None</em><a class="headerlink" href="#data.BaseShare.cached_types" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="data.BaseShare.check">
+<code class="descname">check</code><span class="sig-paren">(</span><em>tracker</em>, <em>known_txs=None</em>, <em>block_abs_height_func=None</em>, <em>feecache=None</em><span class="sig-paren">)</span><a class="headerlink" href="#data.BaseShare.check" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="data.BaseShare.contents">
+<code class="descname">contents</code><a class="headerlink" href="#data.BaseShare.contents" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="data.BaseShare.desired_version">
+<code class="descname">desired_version</code><a class="headerlink" href="#data.BaseShare.desired_version" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="data.BaseShare.generate_transaction">
+<em class="property">classmethod </em><code class="descname">generate_transaction</code><span class="sig-paren">(</span><em>tracker</em>, <em>share_data</em>, <em>block_target</em>, <em>desired_timestamp</em>, <em>desired_target</em>, <em>ref_merkle_link</em>, <em>desired_other_transaction_hashes_and_fees</em>, <em>net</em>, <em>known_txs=None</em>, <em>last_txout_nonce=0</em>, <em>base_subsidy=None</em>, <em>segwit_data=None</em><span class="sig-paren">)</span><a class="headerlink" href="#data.BaseShare.generate_transaction" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="data.BaseShare.gentx_before_refhash">
+<code class="descname">gentx_before_refhash</code><em class="property"> = 'CA\x04\xff\xd0=\xe4Jn\x11\xb9\x91\x7f:)\xf9D2\x83\xd9\x87\x1c\x9dt&gt;
+\xf3\r^\xdd\xcd7\tKd\xd1\xb3\xd8\t\x04\x96\xb52Vxk\xf5\xc8)2\xec#\xc3\xb7M\x9f\x05\xa6\xf9Z\x8bU)5&amp;
+VfK\xac\x00\x00\x00\x00\x00\x00\x00\x00*j('</em><a class="headerlink" href="#data.BaseShare.gentx_before_refhash" title="Permalink to this definition">¶</a></dt>
+<dd><p>DONATION_SCRIPT is packed here, which is used in def generate_transaction [data.py, line 387]</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="data.BaseShare.gentx_hash">
+<code class="descname">gentx_hash</code><a class="headerlink" href="#data.BaseShare.gentx_hash" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="data.BaseShare.gentx_size">
+<code class="descname">gentx_size</code><em class="property"> = 50000</em><a class="headerlink" href="#data.BaseShare.gentx_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>conservative estimate, will be overwritten during execution</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="data.BaseShare.gentx_weight">
+<code class="descname">gentx_weight</code><em class="property"> = 200000</em><a class="headerlink" href="#data.BaseShare.gentx_weight" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="data.BaseShare.get_dynamic_types">
+<em class="property">classmethod </em><code class="descname">get_dynamic_types</code><span class="sig-paren">(</span><em>net</em><span class="sig-paren">)</span><a class="headerlink" href="#data.BaseShare.get_dynamic_types" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="data.BaseShare.get_other_tx_hashes">
+<code class="descname">get_other_tx_hashes</code><span class="sig-paren">(</span><em>tracker</em><span class="sig-paren">)</span><a class="headerlink" href="#data.BaseShare.get_other_tx_hashes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="data.BaseShare.get_ref_hash">
+<em class="property">classmethod </em><code class="descname">get_ref_hash</code><span class="sig-paren">(</span><em>net</em>, <em>share_info</em>, <em>ref_merkle_link</em><span class="sig-paren">)</span><a class="headerlink" href="#data.BaseShare.get_ref_hash" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="data.BaseShare.hash">
+<code class="descname">hash</code><a class="headerlink" href="#data.BaseShare.hash" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="data.BaseShare.hash_link">
+<code class="descname">hash_link</code><a class="headerlink" href="#data.BaseShare.hash_link" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="data.BaseShare.header">
+<code class="descname">header</code><a class="headerlink" href="#data.BaseShare.header" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="data.BaseShare.header_hash">
+<code class="descname">header_hash</code><a class="headerlink" href="#data.BaseShare.header_hash" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="data.BaseShare.iter_transaction_hash_refs">
+<code class="descname">iter_transaction_hash_refs</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#data.BaseShare.iter_transaction_hash_refs" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="data.BaseShare.max_target">
+<code class="descname">max_target</code><a class="headerlink" href="#data.BaseShare.max_target" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="data.BaseShare.merkle_link">
+<code class="descname">merkle_link</code><a class="headerlink" href="#data.BaseShare.merkle_link" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="data.BaseShare.min_header">
+<code class="descname">min_header</code><a class="headerlink" href="#data.BaseShare.min_header" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="data.BaseShare.net">
+<code class="descname">net</code><a class="headerlink" href="#data.BaseShare.net" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="data.BaseShare.new_script">
+<code class="descname">new_script</code><a class="headerlink" href="#data.BaseShare.new_script" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="data.BaseShare.new_transaction_hashes">
+<code class="descname">new_transaction_hashes</code><a class="headerlink" href="#data.BaseShare.new_transaction_hashes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="data.BaseShare.peer_addr">
+<code class="descname">peer_addr</code><a class="headerlink" href="#data.BaseShare.peer_addr" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="data.BaseShare.pow_hash">
+<code class="descname">pow_hash</code><a class="headerlink" href="#data.BaseShare.pow_hash" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="data.BaseShare.previous_hash">
+<code class="descname">previous_hash</code><a class="headerlink" href="#data.BaseShare.previous_hash" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="data.BaseShare.ref_type">
+<code class="descname">ref_type</code><em class="property"> = None</em><a class="headerlink" href="#data.BaseShare.ref_type" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Identifier:</th><td class="field-body">FixedStr, 1 byte(?)</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Share_info:</th><td class="field-body">share_info_type</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="data.BaseShare.share_data">
+<code class="descname">share_data</code><a class="headerlink" href="#data.BaseShare.share_data" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="data.BaseShare.share_info">
+<code class="descname">share_info</code><a class="headerlink" href="#data.BaseShare.share_info" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="data.BaseShare.share_info_type">
+<code class="descname">share_info_type</code><em class="property"> = None</em><a class="headerlink" href="#data.BaseShare.share_info_type" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Share_data:</th><td class="field-body"></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Previuos_block:</th><td class="field-body">int 32 bytes</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Coinbase:</th><td class="field-body">VarStrType, maximum number of Str characters is equal to the maximum value of unsigned long long.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Nonce:</th><td class="field-body">4 bytes</td>
+</tr>
+</tbody>
+</table>
+<p>if Share.Version &gt;
+= 34:</p>
+<blockquote>
+<div><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">address:</th><td class="field-body">VarStrType</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p>else</p>
+<blockquote>
+<div><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">pubkey_hash:</th><td class="field-body">int 20 bytes</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Subsidy:</th><td class="field-body">int 8 bytes</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Donation:</th><td class="field-body">int 2 bytes</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Stale_info:</th><td class="field-body">orphan/doa/None | Enum 1 byte</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">Desired_version:</th></tr>
+<tr class="field-even field"><td>&#160;
+</td><td class="field-body">unsigned (long long/int)</td>
+</tr>
+</tbody>
+</table>
+<p>if [Segwit active in this version share [check is_segwit_activated]]</p>
+<blockquote>
+<div><p>segwit_data:</p>
+<blockquote>
+<div><p>segwit_data</p>
+<blockquote>
+<div><p>txid_merkle_link</p>
+<blockquote>
+<div><p>branch: list int 32 bytes * the number of objects in the list</p>
+<p>index:  always 0</p>
+</div></blockquote>
+<p>wtxid_merkle_root: int 32 bytes</p>
+</div></blockquote>
+<p>txid_merkle_link:</p>
+<blockquote>
+<div><p>branch: list int 32 bytes * the number of objects in the list</p>
+<p>index:  0</p>
+</div></blockquote>
+<p>wtxid_merkle_root: int 32 bytes</p>
+</div></blockquote>
+</div></blockquote>
+<p>if Share.Version &lt;
+ 34:</p>
+<blockquote>
+<div><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name" colspan="2">new_transaction_hashes:</th></tr>
+<tr class="field-odd field"><td>&#160;
+</td><td class="field-body">list int 32 bytes * the number of objects in the list</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">transaction_hash_refs:</th></tr>
+<tr class="field-even field"><td>&#160;
+</td><td class="field-body">list unsigned long long/unsigned int * the number of objects in the list</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Far_share_hash:</th><td class="field-body">int 32 bytes</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Max_bits:</th><td class="field-body">4 bytes</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Bits:</th><td class="field-body">4 bytes</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Timestamp:</th><td class="field-body">4 bytes</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Absheight:</th><td class="field-body">4 bytes</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Abswork:</th><td class="field-body">16 bytes</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="data.BaseShare.share_type">
+<code class="descname">share_type</code><em class="property"> = None</em><a class="headerlink" href="#data.BaseShare.share_type" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Share_info:</th><td class="field-body"><p class="first">share_info_type</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">Ref_merkle_link:</th></tr>
+<tr class="field-even field"><td>&#160;
+</td><td class="field-body"><table class="first docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">branch:</th><td class="field-body">list int 32 bytes * the number of objects in the list</td>
+</tr>
+<tr class="field-even field"><th class="field-name">index:</th><td class="field-body">always 0</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name" colspan="2">Last_txout_nonce:</th></tr>
+<tr class="field-odd field"><td>&#160;
+</td><td class="field-body"><p class="first">int 8 bytes</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Hash_link:</th><td class="field-body"><table class="first docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">state:</th><td class="field-body">FixedStr 8 bytes</td>
+</tr>
+<tr class="field-even field"><th class="field-name">extra_data:</th><td class="field-body">FixedStr 0 bytes</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">lenght:</th><td class="field-body">4 bytes</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Merkle_link:</th><td class="field-body"><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">branch:</th><td class="field-body">list int 32 bytes * the number of objects in the list</td>
+</tr>
+<tr class="field-even field"><th class="field-name">index:</th><td class="field-body">always 0</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="data.BaseShare.should_punish_reason">
+<code class="descname">should_punish_reason</code><span class="sig-paren">(</span><em>previous_block</em>, <em>bits</em>, <em>tracker</em>, <em>known_txs</em><span class="sig-paren">)</span><a class="headerlink" href="#data.BaseShare.should_punish_reason" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="data.BaseShare.small_block_header_type">
+<code class="descname">small_block_header_type</code><em class="property"> = &lt;
+p2pool.util.pack.ComposedType object&gt;
+</em><a class="headerlink" href="#data.BaseShare.small_block_header_type" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Version:</th><td class="field-body">2/4 bytes</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Previuos_block:</th><td class="field-body">int 32 bytes</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Timestamp:</th><td class="field-body">int 4 bytes</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Bits:</th><td class="field-body">4 bytes</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Nonce:</th><td class="field-body">4 bytes</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="data.BaseShare.target">
+<code class="descname">target</code><a class="headerlink" href="#data.BaseShare.target" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="data.BaseShare.time_seen">
+<code class="descname">time_seen</code><a class="headerlink" href="#data.BaseShare.time_seen" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="data.BaseShare.timestamp">
+<code class="descname">timestamp</code><a class="headerlink" href="#data.BaseShare.timestamp" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="data.NewShare">
+<em class="property">class </em><code class="descclassname">data.</code><code class="descname">NewShare</code><span class="sig-paren">(</span><em>net</em>, <em>peer_addr</em>, <em>contents</em><span class="sig-paren">)</span><a class="headerlink" href="#data.NewShare" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="data.NewShare.SUCCESSOR">
+<code class="descname">SUCCESSOR</code><a class="headerlink" href="#data.NewShare.SUCCESSOR" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#data.SegwitMiningShare" title="data.SegwitMiningShare"><code class="xref py py-class docutils literal notranslate"><span class="pre">SegwitMiningShare</span></code></a></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="data.NewShare.VERSION">
+<code class="descname">VERSION</code><em class="property"> = 33</em><a class="headerlink" href="#data.NewShare.VERSION" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="data.NewShare.VOTING_VERSION">
+<code class="descname">VOTING_VERSION</code><em class="property"> = 33</em><a class="headerlink" href="#data.NewShare.VOTING_VERSION" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="data.OkayTracker">
+<em class="property">class </em><code class="descclassname">data.</code><code class="descname">OkayTracker</code><span class="sig-paren">(</span><em>net</em><span class="sig-paren">)</span><a class="headerlink" href="#data.OkayTracker" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="data.OkayTracker.attempt_verify">
+<code class="descname">attempt_verify</code><span class="sig-paren">(</span><em>share</em>, <em>block_abs_height_func</em>, <em>known_txs</em>, <em>feecache</em><span class="sig-paren">)</span><a class="headerlink" href="#data.OkayTracker.attempt_verify" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="data.OkayTracker.score">
+<code class="descname">score</code><span class="sig-paren">(</span><em>share_hash</em>, <em>block_rel_height_func</em><span class="sig-paren">)</span><a class="headerlink" href="#data.OkayTracker.score" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="data.OkayTracker.think">
+<code class="descname">think</code><span class="sig-paren">(</span><em>block_rel_height_func</em>, <em>block_abs_height_func</em>, <em>previous_block</em>, <em>bits</em>, <em>known_txs</em>, <em>feecache</em><span class="sig-paren">)</span><a class="headerlink" href="#data.OkayTracker.think" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="data.PreSegwitShare">
+<em class="property">class </em><code class="descclassname">data.</code><code class="descname">PreSegwitShare</code><span class="sig-paren">(</span><em>net</em>, <em>peer_addr</em>, <em>contents</em><span class="sig-paren">)</span><a class="headerlink" href="#data.PreSegwitShare" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="data.PreSegwitShare.SUCCESSOR">
+<code class="descname">SUCCESSOR</code><a class="headerlink" href="#data.PreSegwitShare.SUCCESSOR" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#data.SegwitMiningShare" title="data.SegwitMiningShare"><code class="xref py py-class docutils literal notranslate"><span class="pre">SegwitMiningShare</span></code></a></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="data.PreSegwitShare.VERSION">
+<code class="descname">VERSION</code><em class="property"> = 32</em><a class="headerlink" href="#data.PreSegwitShare.VERSION" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="data.PreSegwitShare.VOTING_VERSION">
+<code class="descname">VOTING_VERSION</code><em class="property"> = 32</em><a class="headerlink" href="#data.PreSegwitShare.VOTING_VERSION" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="data.SegwitMiningShare">
+<em class="property">class </em><code class="descclassname">data.</code><code class="descname">SegwitMiningShare</code><span class="sig-paren">(</span><em>net</em>, <em>peer_addr</em>, <em>contents</em><span class="sig-paren">)</span><a class="headerlink" href="#data.SegwitMiningShare" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="data.SegwitMiningShare.SUCCESSOR">
+<code class="descname">SUCCESSOR</code><em class="property"> = None</em><a class="headerlink" href="#data.SegwitMiningShare.SUCCESSOR" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="data.SegwitMiningShare.VERSION">
+<code class="descname">VERSION</code><em class="property"> = 34</em><a class="headerlink" href="#data.SegwitMiningShare.VERSION" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="data.SegwitMiningShare.VOTING_VERSION">
+<code class="descname">VOTING_VERSION</code><em class="property"> = 34</em><a class="headerlink" href="#data.SegwitMiningShare.VOTING_VERSION" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="data.Share">
+<em class="property">class </em><code class="descclassname">data.</code><code class="descname">Share</code><span class="sig-paren">(</span><em>net</em>, <em>peer_addr</em>, <em>contents</em><span class="sig-paren">)</span><a class="headerlink" href="#data.Share" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="data.Share.SUCCESSOR">
+<code class="descname">SUCCESSOR</code><a class="headerlink" href="#data.Share.SUCCESSOR" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#data.SegwitMiningShare" title="data.SegwitMiningShare"><code class="xref py py-class docutils literal notranslate"><span class="pre">SegwitMiningShare</span></code></a></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="data.Share.VERSION">
+<code class="descname">VERSION</code><em class="property"> = 17</em><a class="headerlink" href="#data.Share.VERSION" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="data.Share.VOTING_VERSION">
+<code class="descname">VOTING_VERSION</code><em class="property"> = 17</em><a class="headerlink" href="#data.Share.VOTING_VERSION" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="data.ShareStore">
+<em class="property">class </em><code class="descclassname">data.</code><code class="descname">ShareStore</code><span class="sig-paren">(</span><em>prefix</em>, <em>net</em>, <em>share_cb</em>, <em>verified_hash_cb</em><span class="sig-paren">)</span><a class="headerlink" href="#data.ShareStore" title="Permalink to this definition">¶</a></dt>
+<dd><p>Store shares in files and retrieve it.</p>
+<dl class="method">
+<dt id="data.ShareStore.add_share">
+<code class="descname">add_share</code><span class="sig-paren">(</span><em>share</em><span class="sig-paren">)</span><a class="headerlink" href="#data.ShareStore.add_share" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="data.ShareStore.add_verified_hash">
+<code class="descname">add_verified_hash</code><span class="sig-paren">(</span><em>share_hash</em><span class="sig-paren">)</span><a class="headerlink" href="#data.ShareStore.add_verified_hash" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="data.ShareStore.check_archive_dirname">
+<code class="descname">check_archive_dirname</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#data.ShareStore.check_archive_dirname" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checking for the existence of an archive folder, if it does not exist, creates it.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="data.ShareStore.check_remove">
+<code class="descname">check_remove</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#data.ShareStore.check_remove" title="Permalink to this definition">¶</a></dt>
+<dd><p>File check. If share_hashes and verified_hashes are empty, then the file is archived.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="data.ShareStore.forget_share">
+<code class="descname">forget_share</code><span class="sig-paren">(</span><em>share_hash</em><span class="sig-paren">)</span><a class="headerlink" href="#data.ShareStore.forget_share" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="data.ShareStore.forget_verified_share">
+<code class="descname">forget_verified_share</code><span class="sig-paren">(</span><em>share_hash</em><span class="sig-paren">)</span><a class="headerlink" href="#data.ShareStore.forget_verified_share" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="data.ShareStore.get_filenames_and_next">
+<code class="descname">get_filenames_and_next</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#data.ShareStore.get_filenames_and_next" title="Permalink to this definition">¶</a></dt>
+<dd><p>The method returns a list of available files and the name of the next if available will be filled.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="data.WeightsSkipList">
+<em class="property">class </em><code class="descclassname">data.</code><code class="descname">WeightsSkipList</code><span class="sig-paren">(</span><em>tracker</em><span class="sig-paren">)</span><a class="headerlink" href="#data.WeightsSkipList" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="data.WeightsSkipList.apply_delta">
+<code class="descname">apply_delta</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#data.WeightsSkipList.apply_delta" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="data.WeightsSkipList.combine_deltas">
+<code class="descname">combine_deltas</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#data.WeightsSkipList.combine_deltas" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="data.WeightsSkipList.finalize">
+<code class="descname">finalize</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#data.WeightsSkipList.finalize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="data.WeightsSkipList.get_delta">
+<code class="descname">get_delta</code><span class="sig-paren">(</span><em>element</em><span class="sig-paren">)</span><a class="headerlink" href="#data.WeightsSkipList.get_delta" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="data.WeightsSkipList.initial_solution">
+<code class="descname">initial_solution</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#data.WeightsSkipList.initial_solution" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="data.WeightsSkipList.judge">
+<code class="descname">judge</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#data.WeightsSkipList.judge" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="data.check_hash_link">
+<code class="descclassname">data.</code><code class="descname">check_hash_link</code><span class="sig-paren">(</span><em>hash_link</em>, <em>data</em>, <em>const_ending=''</em><span class="sig-paren">)</span><a class="headerlink" href="#data.check_hash_link" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="data.donation_script_to_address">
+<code class="descclassname">data.</code><code class="descname">donation_script_to_address</code><span class="sig-paren">(</span><em>net</em><span class="sig-paren">)</span><a class="headerlink" href="#data.donation_script_to_address" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="data.format_hash">
+<code class="descclassname">data.</code><code class="descname">format_hash</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="headerlink" href="#data.format_hash" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="data.get_average_stale_prop">
+<code class="descclassname">data.</code><code class="descname">get_average_stale_prop</code><span class="sig-paren">(</span><em>tracker</em>, <em>share_hash</em>, <em>lookbehind</em><span class="sig-paren">)</span><a class="headerlink" href="#data.get_average_stale_prop" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="data.get_desired_version_counts">
+<code class="descclassname">data.</code><code class="descname">get_desired_version_counts</code><span class="sig-paren">(</span><em>tracker</em>, <em>best_share_hash</em>, <em>dist</em><span class="sig-paren">)</span><a class="headerlink" href="#data.get_desired_version_counts" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="data.get_expected_payouts">
+<code class="descclassname">data.</code><code class="descname">get_expected_payouts</code><span class="sig-paren">(</span><em>tracker</em>, <em>best_share_hash</em>, <em>block_target</em>, <em>subsidy</em>, <em>net</em><span class="sig-paren">)</span><a class="headerlink" href="#data.get_expected_payouts" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="data.get_pool_attempts_per_second">
+<code class="descclassname">data.</code><code class="descname">get_pool_attempts_per_second</code><span class="sig-paren">(</span><em>tracker</em>, <em>previous_share_hash</em>, <em>dist</em>, <em>min_work=False</em>, <em>integer=False</em><span class="sig-paren">)</span><a class="headerlink" href="#data.get_pool_attempts_per_second" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="data.get_stale_counts">
+<code class="descclassname">data.</code><code class="descname">get_stale_counts</code><span class="sig-paren">(</span><em>tracker</em>, <em>share_hash</em>, <em>lookbehind</em>, <em>rates=False</em><span class="sig-paren">)</span><a class="headerlink" href="#data.get_stale_counts" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="data.get_user_stale_props">
+<code class="descclassname">data.</code><code class="descname">get_user_stale_props</code><span class="sig-paren">(</span><em>tracker</em>, <em>share_hash</em>, <em>lookbehind</em>, <em>net</em><span class="sig-paren">)</span><a class="headerlink" href="#data.get_user_stale_props" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="data.get_warnings">
+<code class="descclassname">data.</code><code class="descname">get_warnings</code><span class="sig-paren">(</span><em>tracker</em>, <em>best_share</em>, <em>net</em>, <em>bitcoind_getinfo</em>, <em>bitcoind_work_value</em><span class="sig-paren">)</span><a class="headerlink" href="#data.get_warnings" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="data.is_segwit_activated">
+<code class="descclassname">data.</code><code class="descname">is_segwit_activated</code><span class="sig-paren">(</span><em>version</em>, <em>net</em><span class="sig-paren">)</span><a class="headerlink" href="#data.is_segwit_activated" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="data.load_share">
+<code class="descclassname">data.</code><code class="descname">load_share</code><span class="sig-paren">(</span><em>share</em>, <em>net</em>, <em>peer_addr</em><span class="sig-paren">)</span><a class="headerlink" href="#data.load_share" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="data.parse_bip0034">
+<code class="descclassname">data.</code><code class="descname">parse_bip0034</code><span class="sig-paren">(</span><em>coinbase</em><span class="sig-paren">)</span><a class="headerlink" href="#data.parse_bip0034" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="data.prefix_to_hash_link">
+<code class="descclassname">data.</code><code class="descname">prefix_to_hash_link</code><span class="sig-paren">(</span><em>prefix</em>, <em>const_ending=''</em><span class="sig-paren">)</span><a class="headerlink" href="#data.prefix_to_hash_link" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="data.update_min_protocol_version">
+<code class="descclassname">data.</code><code class="descname">update_min_protocol_version</code><span class="sig-paren">(</span><em>counts</em>, <em>share</em><span class="sig-paren">)</span><a class="headerlink" href="#data.update_min_protocol_version" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="node.html" class="btn btn-neutral float-right" title="Node" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="work.html" class="btn btn-neutral float-left" title="Work" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy;
+ Copyright 2019, frstrtr
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+
+      });
+
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

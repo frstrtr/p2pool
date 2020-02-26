@@ -151,7 +151,8 @@ def urlopen(url, timeout=20, redirects=None):
 
     if not scheme in ('http', 'https'):
         return urllib.urlopen(url)
-    if params: path = '%s;%s' % (path, params)
+    if params: path = '%s;
+%s' % (path, params)
     if query:  path = '%s?%s' % (path, query)
     if frag:   path = '%s#%s' % (path, frag)
 

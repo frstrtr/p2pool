@@ -1,0 +1,642 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>P2P &mdash;
+ P2Pool 34.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'../../',
+              VERSION:'34.0',
+              LANGUAGE:'None',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: '.txt'
+          };
+
+      </script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Web" href="web.html" />
+    <link rel="prev" title="Node" href="node.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> P2Pool
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../info.html">Information</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="info.html">P2Pool Code Documentaion</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="main.html">Main</a></li>
+<li class="toctree-l2"><a class="reference internal" href="work.html">Work</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data.html">Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="node.html">Node</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">P2P</a></li>
+<li class="toctree-l2"><a class="reference internal" href="web.html">Web</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../utildoc/info.html">Util</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">P2Pool</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;
+</li>
+        
+          <li><a href="info.html">P2Pool Code Documentaion</a> &raquo;
+</li>
+        
+      <li>P2P</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/p2pool/engine/p2p.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-p2p">
+<span id="p2p"></span><h1>P2P<a class="headerlink" href="#module-p2p" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="p2p.ClientFactory">
+<em class="property">class </em><code class="descclassname">p2p.</code><code class="descname">ClientFactory</code><span class="sig-paren">(</span><em>node</em>, <em>desired_conns</em>, <em>max_attempts</em><span class="sig-paren">)</span><a class="headerlink" href="#p2p.ClientFactory" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="p2p.ClientFactory.buildProtocol">
+<code class="descname">buildProtocol</code><span class="sig-paren">(</span><em>addr</em><span class="sig-paren">)</span><a class="headerlink" href="#p2p.ClientFactory.buildProtocol" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="p2p.ClientFactory.clientConnectionFailed">
+<code class="descname">clientConnectionFailed</code><span class="sig-paren">(</span><em>connector</em>, <em>reason</em><span class="sig-paren">)</span><a class="headerlink" href="#p2p.ClientFactory.clientConnectionFailed" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="p2p.ClientFactory.clientConnectionLost">
+<code class="descname">clientConnectionLost</code><span class="sig-paren">(</span><em>connector</em>, <em>reason</em><span class="sig-paren">)</span><a class="headerlink" href="#p2p.ClientFactory.clientConnectionLost" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="p2p.ClientFactory.proto_connected">
+<code class="descname">proto_connected</code><span class="sig-paren">(</span><em>proto</em><span class="sig-paren">)</span><a class="headerlink" href="#p2p.ClientFactory.proto_connected" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="p2p.ClientFactory.proto_disconnected">
+<code class="descname">proto_disconnected</code><span class="sig-paren">(</span><em>proto</em>, <em>reason</em><span class="sig-paren">)</span><a class="headerlink" href="#p2p.ClientFactory.proto_disconnected" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="p2p.ClientFactory.proto_lost_connection">
+<code class="descname">proto_lost_connection</code><span class="sig-paren">(</span><em>proto</em>, <em>reason</em><span class="sig-paren">)</span><a class="headerlink" href="#p2p.ClientFactory.proto_lost_connection" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="p2p.ClientFactory.proto_made_connection">
+<code class="descname">proto_made_connection</code><span class="sig-paren">(</span><em>proto</em><span class="sig-paren">)</span><a class="headerlink" href="#p2p.ClientFactory.proto_made_connection" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="p2p.ClientFactory.start">
+<code class="descname">start</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#p2p.ClientFactory.start" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="p2p.ClientFactory.startedConnecting">
+<code class="descname">startedConnecting</code><span class="sig-paren">(</span><em>connector</em><span class="sig-paren">)</span><a class="headerlink" href="#p2p.ClientFactory.startedConnecting" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="p2p.ClientFactory.stop">
+<code class="descname">stop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#p2p.ClientFactory.stop" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="p2p.Node">
+<em class="property">class </em><code class="descclassname">p2p.</code><code class="descname">Node</code><span class="sig-paren">(</span><em>best_share_hash_func</em>, <em>port</em>, <em>net</em>, <em>addr_store={}</em>, <em>connect_addrs=set([])</em>, <em>desired_outgoing_conns=10</em>, <em>max_outgoing_attempts=30</em>, <em>max_incoming_conns=50</em>, <em>preferred_storage=1000</em>, <em>known_txs_var=&lt;
+p2pool.util.variable.VariableDict object&gt;
+</em>, <em>mining_txs_var=&lt;
+p2pool.util.variable.VariableDict object&gt;
+</em>, <em>mining2_txs_var=&lt;
+p2pool.util.variable.VariableDict object&gt;
+</em>, <em>advertise_ip=True</em>, <em>external_ip=None</em><span class="sig-paren">)</span><a class="headerlink" href="#p2p.Node" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="p2p.Node.forgive_transgressions">
+<code class="descname">forgive_transgressions</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#p2p.Node.forgive_transgressions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="p2p.Node.get_good_peers">
+<code class="descname">get_good_peers</code><span class="sig-paren">(</span><em>max_count</em><span class="sig-paren">)</span><a class="headerlink" href="#p2p.Node.get_good_peers" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="p2p.Node.got_addr">
+<code class="descname">got_addr</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#p2p.Node.got_addr" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="p2p.Node.got_conn">
+<code class="descname">got_conn</code><span class="sig-paren">(</span><em>conn</em><span class="sig-paren">)</span><a class="headerlink" href="#p2p.Node.got_conn" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="p2p.Node.handle_bestblock">
+<code class="descname">handle_bestblock</code><span class="sig-paren">(</span><em>header</em>, <em>peer</em><span class="sig-paren">)</span><a class="headerlink" href="#p2p.Node.handle_bestblock" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="p2p.Node.handle_get_shares">
+<code class="descname">handle_get_shares</code><span class="sig-paren">(</span><em>hashes</em>, <em>parents</em>, <em>stops</em>, <em>peer</em><span class="sig-paren">)</span><a class="headerlink" href="#p2p.Node.handle_get_shares" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="p2p.Node.handle_share_hashes">
+<code class="descname">handle_share_hashes</code><span class="sig-paren">(</span><em>hashes</em>, <em>peer</em><span class="sig-paren">)</span><a class="headerlink" href="#p2p.Node.handle_share_hashes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="p2p.Node.handle_shares">
+<code class="descname">handle_shares</code><span class="sig-paren">(</span><em>shares</em>, <em>peer</em><span class="sig-paren">)</span><a class="headerlink" href="#p2p.Node.handle_shares" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="p2p.Node.lost_conn">
+<code class="descname">lost_conn</code><span class="sig-paren">(</span><em>conn</em>, <em>reason</em><span class="sig-paren">)</span><a class="headerlink" href="#p2p.Node.lost_conn" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="p2p.Node.start">
+<code class="descname">start</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#p2p.Node.start" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="p2p.Node.stop">
+<code class="descname">stop</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#p2p.Node.stop" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="exception">
+<dt id="p2p.PeerMisbehavingError">
+<em class="property">exception </em><code class="descclassname">p2p.</code><code class="descname">PeerMisbehavingError</code><a class="headerlink" href="#p2p.PeerMisbehavingError" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="p2p.Protocol">
+<em class="property">class </em><code class="descclassname">p2p.</code><code class="descname">Protocol</code><span class="sig-paren">(</span><em>node</em>, <em>incoming</em><span class="sig-paren">)</span><a class="headerlink" href="#p2p.Protocol" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="exception">
+<dt id="p2p.Protocol.ShareReplyError">
+<em class="property">exception </em><code class="descname">ShareReplyError</code><a class="headerlink" href="#p2p.Protocol.ShareReplyError" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="p2p.Protocol.VERSION">
+<code class="descname">VERSION</code><em class="property"> = 3301</em><a class="headerlink" href="#p2p.Protocol.VERSION" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="p2p.Protocol.badPeerHappened">
+<code class="descname">badPeerHappened</code><span class="sig-paren">(</span><em>bantime=3600</em><span class="sig-paren">)</span><a class="headerlink" href="#p2p.Protocol.badPeerHappened" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="p2p.Protocol.connectionLost">
+<code class="descname">connectionLost</code><span class="sig-paren">(</span><em>reason</em><span class="sig-paren">)</span><a class="headerlink" href="#p2p.Protocol.connectionLost" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="p2p.Protocol.connectionMade">
+<code class="descname">connectionMade</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#p2p.Protocol.connectionMade" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="p2p.Protocol.do_ping">
+<code class="descname">do_ping</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#p2p.Protocol.do_ping" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="p2p.Protocol.handle_addrme">
+<code class="descname">handle_addrme</code><span class="sig-paren">(</span><em>port</em><span class="sig-paren">)</span><a class="headerlink" href="#p2p.Protocol.handle_addrme" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="p2p.Protocol.handle_addrs">
+<code class="descname">handle_addrs</code><span class="sig-paren">(</span><em>addrs</em><span class="sig-paren">)</span><a class="headerlink" href="#p2p.Protocol.handle_addrs" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="p2p.Protocol.handle_bestblock">
+<code class="descname">handle_bestblock</code><span class="sig-paren">(</span><em>header</em><span class="sig-paren">)</span><a class="headerlink" href="#p2p.Protocol.handle_bestblock" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="p2p.Protocol.handle_forget_tx">
+<code class="descname">handle_forget_tx</code><span class="sig-paren">(</span><em>tx_hashes</em><span class="sig-paren">)</span><a class="headerlink" href="#p2p.Protocol.handle_forget_tx" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="p2p.Protocol.handle_getaddrs">
+<code class="descname">handle_getaddrs</code><span class="sig-paren">(</span><em>count</em><span class="sig-paren">)</span><a class="headerlink" href="#p2p.Protocol.handle_getaddrs" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="p2p.Protocol.handle_have_tx">
+<code class="descname">handle_have_tx</code><span class="sig-paren">(</span><em>tx_hashes</em><span class="sig-paren">)</span><a class="headerlink" href="#p2p.Protocol.handle_have_tx" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="p2p.Protocol.handle_losing_tx">
+<code class="descname">handle_losing_tx</code><span class="sig-paren">(</span><em>tx_hashes</em><span class="sig-paren">)</span><a class="headerlink" href="#p2p.Protocol.handle_losing_tx" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="p2p.Protocol.handle_ping">
+<code class="descname">handle_ping</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#p2p.Protocol.handle_ping" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="p2p.Protocol.handle_remember_tx">
+<code class="descname">handle_remember_tx</code><span class="sig-paren">(</span><em>tx_hashes</em>, <em>txs</em><span class="sig-paren">)</span><a class="headerlink" href="#p2p.Protocol.handle_remember_tx" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="p2p.Protocol.handle_sharereply">
+<code class="descname">handle_sharereply</code><span class="sig-paren">(</span><em>id</em>, <em>result</em>, <em>shares</em><span class="sig-paren">)</span><a class="headerlink" href="#p2p.Protocol.handle_sharereply" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="p2p.Protocol.handle_sharereq">
+<code class="descname">handle_sharereq</code><span class="sig-paren">(</span><em>id</em>, <em>hashes</em>, <em>parents</em>, <em>stops</em><span class="sig-paren">)</span><a class="headerlink" href="#p2p.Protocol.handle_sharereq" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="p2p.Protocol.handle_shares">
+<code class="descname">handle_shares</code><span class="sig-paren">(</span><em>shares</em><span class="sig-paren">)</span><a class="headerlink" href="#p2p.Protocol.handle_shares" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="p2p.Protocol.handle_version">
+<code class="descname">handle_version</code><span class="sig-paren">(</span><em>version</em>, <em>services</em>, <em>addr_to</em>, <em>addr_from</em>, <em>nonce</em>, <em>sub_version</em>, <em>mode</em>, <em>best_share_hash</em><span class="sig-paren">)</span><a class="headerlink" href="#p2p.Protocol.handle_version" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="p2p.Protocol.max_remembered_txs_size">
+<code class="descname">max_remembered_txs_size</code><em class="property"> = 25000000</em><a class="headerlink" href="#p2p.Protocol.max_remembered_txs_size" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="p2p.Protocol.message_addrme">
+<code class="descname">message_addrme</code><em class="property"> = &lt;
+p2pool.util.pack.ComposedType object&gt;
+</em><a class="headerlink" href="#p2p.Protocol.message_addrme" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="p2p.Protocol.message_addrs">
+<code class="descname">message_addrs</code><em class="property"> = &lt;
+p2pool.util.pack.ComposedType object&gt;
+</em><a class="headerlink" href="#p2p.Protocol.message_addrs" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="p2p.Protocol.message_bestblock">
+<code class="descname">message_bestblock</code><em class="property"> = &lt;
+p2pool.util.pack.ComposedType object&gt;
+</em><a class="headerlink" href="#p2p.Protocol.message_bestblock" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="p2p.Protocol.message_forget_tx">
+<code class="descname">message_forget_tx</code><em class="property"> = &lt;
+p2pool.util.pack.ComposedType object&gt;
+</em><a class="headerlink" href="#p2p.Protocol.message_forget_tx" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="p2p.Protocol.message_getaddrs">
+<code class="descname">message_getaddrs</code><em class="property"> = &lt;
+p2pool.util.pack.ComposedType object&gt;
+</em><a class="headerlink" href="#p2p.Protocol.message_getaddrs" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="p2p.Protocol.message_have_tx">
+<code class="descname">message_have_tx</code><em class="property"> = &lt;
+p2pool.util.pack.ComposedType object&gt;
+</em><a class="headerlink" href="#p2p.Protocol.message_have_tx" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="p2p.Protocol.message_losing_tx">
+<code class="descname">message_losing_tx</code><em class="property"> = &lt;
+p2pool.util.pack.ComposedType object&gt;
+</em><a class="headerlink" href="#p2p.Protocol.message_losing_tx" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="p2p.Protocol.message_ping">
+<code class="descname">message_ping</code><em class="property"> = &lt;
+p2pool.util.pack.ComposedType object&gt;
+</em><a class="headerlink" href="#p2p.Protocol.message_ping" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="p2p.Protocol.message_remember_tx">
+<code class="descname">message_remember_tx</code><em class="property"> = &lt;
+p2pool.util.pack.ComposedType object&gt;
+</em><a class="headerlink" href="#p2p.Protocol.message_remember_tx" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="p2p.Protocol.message_sharereply">
+<code class="descname">message_sharereply</code><em class="property"> = &lt;
+p2pool.util.pack.ComposedType object&gt;
+</em><a class="headerlink" href="#p2p.Protocol.message_sharereply" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="p2p.Protocol.message_sharereq">
+<code class="descname">message_sharereq</code><em class="property"> = &lt;
+p2pool.util.pack.ComposedType object&gt;
+</em><a class="headerlink" href="#p2p.Protocol.message_sharereq" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="p2p.Protocol.message_shares">
+<code class="descname">message_shares</code><em class="property"> = &lt;
+p2pool.util.pack.ComposedType object&gt;
+</em><a class="headerlink" href="#p2p.Protocol.message_shares" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="p2p.Protocol.message_version">
+<code class="descname">message_version</code><em class="property"> = &lt;
+p2pool.util.pack.ComposedType object&gt;
+</em><a class="headerlink" href="#p2p.Protocol.message_version" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="p2p.Protocol.packetReceived">
+<code class="descname">packetReceived</code><span class="sig-paren">(</span><em>command</em>, <em>payload2</em><span class="sig-paren">)</span><a class="headerlink" href="#p2p.Protocol.packetReceived" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="p2p.Protocol.sendAdvertisement">
+<code class="descname">sendAdvertisement</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#p2p.Protocol.sendAdvertisement" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="p2p.Protocol.sendShares">
+<code class="descname">sendShares</code><span class="sig-paren">(</span><em>shares</em>, <em>tracker</em>, <em>known_txs</em>, <em>include_txs_with=[]</em><span class="sig-paren">)</span><a class="headerlink" href="#p2p.Protocol.sendShares" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="p2p.ServerFactory">
+<em class="property">class </em><code class="descclassname">p2p.</code><code class="descname">ServerFactory</code><span class="sig-paren">(</span><em>node</em>, <em>max_conns</em><span class="sig-paren">)</span><a class="headerlink" href="#p2p.ServerFactory" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="p2p.ServerFactory.buildProtocol">
+<code class="descname">buildProtocol</code><span class="sig-paren">(</span><em>addr</em><span class="sig-paren">)</span><a class="headerlink" href="#p2p.ServerFactory.buildProtocol" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="p2p.ServerFactory.proto_connected">
+<code class="descname">proto_connected</code><span class="sig-paren">(</span><em>proto</em><span class="sig-paren">)</span><a class="headerlink" href="#p2p.ServerFactory.proto_connected" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="p2p.ServerFactory.proto_disconnected">
+<code class="descname">proto_disconnected</code><span class="sig-paren">(</span><em>proto</em>, <em>reason</em><span class="sig-paren">)</span><a class="headerlink" href="#p2p.ServerFactory.proto_disconnected" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="p2p.ServerFactory.proto_lost_connection">
+<code class="descname">proto_lost_connection</code><span class="sig-paren">(</span><em>proto</em>, <em>reason</em><span class="sig-paren">)</span><a class="headerlink" href="#p2p.ServerFactory.proto_lost_connection" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="p2p.ServerFactory.proto_made_connection">
+<code class="descname">proto_made_connection</code><span class="sig-paren">(</span><em>proto</em><span class="sig-paren">)</span><a class="headerlink" href="#p2p.ServerFactory.proto_made_connection" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="p2p.ServerFactory.start">
+<code class="descname">start</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#p2p.ServerFactory.start" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="p2p.ServerFactory.stop">
+<code class="descname">stop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#p2p.ServerFactory.stop" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="p2p.SingleClientFactory">
+<em class="property">class </em><code class="descclassname">p2p.</code><code class="descname">SingleClientFactory</code><span class="sig-paren">(</span><em>node</em><span class="sig-paren">)</span><a class="headerlink" href="#p2p.SingleClientFactory" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="p2p.SingleClientFactory.buildProtocol">
+<code class="descname">buildProtocol</code><span class="sig-paren">(</span><em>addr</em><span class="sig-paren">)</span><a class="headerlink" href="#p2p.SingleClientFactory.buildProtocol" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="p2p.SingleClientFactory.proto_connected">
+<code class="descname">proto_connected</code><span class="sig-paren">(</span><em>proto</em><span class="sig-paren">)</span><a class="headerlink" href="#p2p.SingleClientFactory.proto_connected" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="p2p.SingleClientFactory.proto_disconnected">
+<code class="descname">proto_disconnected</code><span class="sig-paren">(</span><em>proto</em>, <em>reason</em><span class="sig-paren">)</span><a class="headerlink" href="#p2p.SingleClientFactory.proto_disconnected" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="p2p.SingleClientFactory.proto_lost_connection">
+<code class="descname">proto_lost_connection</code><span class="sig-paren">(</span><em>proto</em>, <em>reason</em><span class="sig-paren">)</span><a class="headerlink" href="#p2p.SingleClientFactory.proto_lost_connection" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="p2p.SingleClientFactory.proto_made_connection">
+<code class="descname">proto_made_connection</code><span class="sig-paren">(</span><em>proto</em><span class="sig-paren">)</span><a class="headerlink" href="#p2p.SingleClientFactory.proto_made_connection" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="p2p.fragment">
+<code class="descclassname">p2p.</code><code class="descname">fragment</code><span class="sig-paren">(</span><em>f</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#p2p.fragment" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="web.html" class="btn btn-neutral float-right" title="Web" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="node.html" class="btn btn-neutral float-left" title="Node" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy;
+ Copyright 2019, frstrtr
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+
+      });
+
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

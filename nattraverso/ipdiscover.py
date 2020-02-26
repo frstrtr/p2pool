@@ -96,7 +96,8 @@ class _LocalNetworkMulticast(DatagramProtocol):
     
     def datagramReceived(self, dgram, addr):
         """Datagram received, we callback the IP address."""
-        logging.debug("Received multicast pong: %s; addr:%r", dgram, addr)
+        logging.debug("Received multicast pong: %s;
+ addr:%r", dgram, addr)
         if dgram != self.nonce:
             return
         self.address_received.happened(addr[0])

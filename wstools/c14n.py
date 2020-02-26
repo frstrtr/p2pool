@@ -146,7 +146,8 @@ class _implementation:
     '''Implementation class for C14N. This accompanies a node during it's
     processing and includes the parameters and processing state.'''
 
-    # Handler for each node type; populated during module instantiation.
+    # Handler for each node type;
+ populated during module instantiation.
     handlers = {}
 
     def __init__(self, node, write, **kw):
@@ -226,10 +227,14 @@ class _implementation:
         Process a text or CDATA node.  Render various special characters
         as their C14N entity representations.'''
         if not _in_subset(self.subset, node): return
-        s = string.replace(node.data, "&", "&amp;")
-        s = string.replace(s, "<", "&lt;")
-        s = string.replace(s, ">", "&gt;")
-        s = string.replace(s, "\015", "&#xD;")
+        s = string.replace(node.data, "&", "&amp;
+")
+        s = string.replace(s, "<", "&lt;
+")
+        s = string.replace(s, ">", "&gt;
+")
+        s = string.replace(s, "\015", "&#xD;
+")
         if s: self.write(s)
     handlers[Node.TEXT_NODE] = _do_text
     handlers[Node.CDATA_SECTION_NODE] = _do_text
@@ -280,9 +285,12 @@ class _implementation:
         W(' ')
         W(n)
         W('="')
-        s = string.replace(value, "&", "&amp;")
-        s = string.replace(s, "<", "&lt;")
-        s = string.replace(s, '"', '&quot;')
+        s = string.replace(value, "&", "&amp;
+")
+        s = string.replace(s, "<", "&lt;
+")
+        s = string.replace(s, '"', '&quot;
+')
         s = string.replace(s, '\011', '&#x9')
         s = string.replace(s, '\012', '&#xA')
         s = string.replace(s, '\015', '&#xD')
@@ -414,7 +422,8 @@ def Canonicalize(node, output=None, **kw):
     '''Canonicalize(node, output=None, **kw) -> UTF-8
 
     Canonicalize a DOM document/element node and all descendents.
-    Return the text; if output is specified then output.write will
+    Return the text;
+ if output is specified then output.write will
     be called to output the text and None will be returned
     Keyword parameters:
         nsdict: a dictionary of prefix:uri namespace entries

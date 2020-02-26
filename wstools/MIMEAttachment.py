@@ -48,7 +48,8 @@ class MIMEMessage:
         #ok we have everything let's start to spit the message out
         #first the XML
         returnstr = NL + "--" + self._boundary + NL
-        returnstr += "Content-Type: text/xml; charset=\"us-ascii\"" + NL
+        returnstr += "Content-Type: text/xml;
+ charset=\"us-ascii\"" + NL
         returnstr += "Content-Transfer-Encoding: 7bit" + NL
         returnstr += "Content-Id: " + self._startCID + NL + NL
         returnstr += self._xmlMessage + NL

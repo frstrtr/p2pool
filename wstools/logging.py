@@ -63,7 +63,8 @@ class BasicLogger(ILogger):
     ERROR = '[ERROR]'
 
     def write(self, *args):
-        '''Write convenience function; writes strings.
+        '''Write convenience function;
+ writes strings.
         '''
         for s in args: self.out.write(s)
         event = ''.join(*args)
@@ -124,7 +125,8 @@ class GLRecord(dict):
     levels = dict(FATAL='Component cannot continue, or system is unusable.',
         ALERT='Action must be taken immediately.',
         CRITICAL='Critical conditions (on the system).',
-        ERROR='Errors in the component; not errors from elsewhere.',
+        ERROR='Errors in the component;
+ not errors from elsewhere.',
         WARNING='Problems that are recovered from, usually.',
         NOTICE='Normal but significant condition.',
         INFO='Informational messages that would be useful to a deployer or administrator.',
@@ -141,8 +143,11 @@ class GLRecord(dict):
         """
         """
         from cStringIO import StringIO
-        s = StringIO(); n = " "
-        reserved = self.reserved; omitname = self.omitname; levels = self.levels
+        s = StringIO();
+ n = " "
+        reserved = self.reserved;
+ omitname = self.omitname;
+ levels = self.levels
 
         for k in ( list(filter(lambda i: self.has_key(i), reserved)) + 
             list(filter(lambda i: i not in reserved, self.keys()))
@@ -211,7 +216,8 @@ def gridLog(**kw):
 
 def sendUDP(url, outputStr):
     from socket import socket, AF_INET, SOCK_DGRAM
-    idx1 = url.find('://') + 3; idx2 = url.find('/', idx1)
+    idx1 = url.find('://') + 3;
+ idx2 = url.find('/', idx1)
     if idx2 < idx1: idx2 = len(url)
     netloc = url[idx1:idx2]
     host,port = (netloc.split(':')+[80])[0:2]

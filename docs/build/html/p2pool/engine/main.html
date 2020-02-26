@@ -1,0 +1,419 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Main &mdash;
+ P2Pool 34.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'../../',
+              VERSION:'34.0',
+              LANGUAGE:'None',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: '.txt'
+          };
+
+      </script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Work" href="work.html" />
+    <link rel="prev" title="P2Pool Code Documentaion" href="info.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> P2Pool
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../info.html">Information</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="info.html">P2Pool Code Documentaion</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Main</a></li>
+<li class="toctree-l2"><a class="reference internal" href="work.html">Work</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data.html">Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="node.html">Node</a></li>
+<li class="toctree-l2"><a class="reference internal" href="p2p.html">P2P</a></li>
+<li class="toctree-l2"><a class="reference internal" href="web.html">Web</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../utildoc/info.html">Util</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">P2Pool</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;
+</li>
+        
+          <li><a href="info.html">P2Pool Code Documentaion</a> &raquo;
+</li>
+        
+      <li>Main</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/p2pool/engine/main.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-main">
+<span id="main"></span><h1>Main<a class="headerlink" href="#module-main" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="main.keypool">
+<em class="property">class </em><code class="descclassname">main.</code><code class="descname">keypool</code><a class="headerlink" href="#main.keypool" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="main.keypool.addkey">
+<code class="descname">addkey</code><span class="sig-paren">(</span><em>n</em><span class="sig-paren">)</span><a class="headerlink" href="#main.keypool.addkey" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="main.keypool.delkey">
+<code class="descname">delkey</code><span class="sig-paren">(</span><em>n</em><span class="sig-paren">)</span><a class="headerlink" href="#main.keypool.delkey" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="main.keypool.getpaytotal">
+<code class="descname">getpaytotal</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.keypool.getpaytotal" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="main.keypool.keys">
+<code class="descname">keys</code><em class="property"> = []</em><a class="headerlink" href="#main.keypool.keys" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="main.keypool.keyweights">
+<code class="descname">keyweights</code><em class="property"> = []</em><a class="headerlink" href="#main.keypool.keyweights" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="main.keypool.payouttotal">
+<code class="descname">payouttotal</code><em class="property"> = 0.0</em><a class="headerlink" href="#main.keypool.payouttotal" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="main.keypool.paytotal">
+<code class="descname">paytotal</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.keypool.paytotal" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="main.keypool.popleft">
+<code class="descname">popleft</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.keypool.popleft" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="main.keypool.stamp">
+<code class="descname">stamp</code><em class="property"> = 1574359176.65</em><a class="headerlink" href="#main.keypool.stamp" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="main.keypool.updatestamp">
+<code class="descname">updatestamp</code><span class="sig-paren">(</span><em>n</em><span class="sig-paren">)</span><a class="headerlink" href="#main.keypool.updatestamp" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="main.keypool.weighted">
+<code class="descname">weighted</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.keypool.weighted" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="main.main">
+<code class="descclassname">main.</code><code class="descname">main</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#main.main" title="Permalink to this definition">¶</a></dt>
+<dd><p>This does all the startup tasks.</p>
+<ol class="arabic simple">
+<li>Tests connection to bitcoind.</li>
+<li>Prints hash of latest block to show bitcoind is up to date.</li>
+<li>Tests connection to p2pool network.</li>
+<li>Gets address to use for payout either from file or bitcoind.</li>
+<li>Validates address and checks local bitcoind owns it.</li>
+<li>Create a &quot;
+tracker&quot;
+ and loads know shares from files in data/bitcoin/sharesX where X is a number.</li>
+<li>poll_bitcoind then gets work from bitcoind (i.e. block header to hash). Does this by calling getwork function explained below.</li>
+<li>The work_poller() function then polls bitcoind every 15 seconds for new work.</li>
+<li>Check for work from peers. This is new code to try to reduce stales. It gets new block headers from peers if they arrive before they arrive from bitcoind.</li>
+<li>Set up merged work for merged mining.</li>
+<li>Sets up combined work.</li>
+<li>Sets up Longpoll to trigger when current_work changes (transitions).</li>
+<li>Creates Node class that handles connections to other p2pool nodes (see p2p.py also).</li>
+<li>Read p2pool node address from addrs file else use bootstrap addresses.</li>
+<li>Create node object and start it connecting/sending/receiving data.</li>
+<li>Setup loop to save shares to disk every 60 seconds.</li>
+<li>Create tunnel through routers using upnp if enabled.</li>
+<li>Start listening for workers using WorkerBridge Class (e.g. cgminers).</li>
+<li>Create web_root and start web server. This is the monitoring web pages. (see web.py)</li>
+<li>Start IRC connection for announcing blocks.</li>
+<li>Start Status process that output to screen data every 3 seconds.</li>
+</ol>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>args</strong> (<em>str</em>) -- <p>--version - version</p>
+<p>--net - use specified network (default: bitcoin)</p>
+<p>--testnet - use the network's testnet</p>
+<p>--debug - enable debugging mode</p>
+<p>--bench - enable CPU performance profiling mode</p>
+<p>--rconsole - enable rconsole debugging mode (requires rfoo)</p>
+<p>--address - generate payouts to this address (default: &lt;
+address requested from bitcoind&gt;
+), or (dynamic)</p>
+<p>-a --address - generate payouts to this address (default: &lt;
+address requested from bitcoind&gt;
+), or (dynamic)</p>
+<p>-i --numaddresses - number of bitcoin auto-generated addresses to maintain for getwork dynamic address allocation</p>
+<p>-t --timeaddresses - seconds between acquisition of new address and removal of single old (default: 2 days or 172800s)</p>
+<p>--datadir - store data in this directory (default: &lt;
+directory run_p2pool.py is in&gt;
+/data)</p>
+<p>--logfile - log to this file (default: data/&lt;
+NET&gt;
+/log)</p>
+<p>--web-static - use an alternative web frontend in this directory (otherwise use the built-in frontend)</p>
+<p>--merged - call getauxblock on this url to get work for merged mining (example: <a class="reference external" href="http://ncuser:ncpass&#64;
+127.0.0.1:10332/">http://ncuser:ncpass&#64;
+127.0.0.1:10332/</a>)</p>
+<p>--coinbtext - append this text to the coinbase</p>
+<p>--give-author - donate this percentage of work towards the development of p2pool (default: 0.0)</p>
+<p>--iocp - use Windows IOCP API in order to avoid errors due to large number of sockets being open</p>
+<p>--irc-announce - announce any blocks found on <a class="reference external" href="irc://irc.freenode.net/#p2pool">irc://irc.freenode.net/#p2pool</a></p>
+<p>--no-bugreport - disable submitting caught exceptions to the author</p>
+<p>p2pool interface:</p>
+<blockquote>
+<div>-- p2pool-port PORT - use port PORT to listen for connections (forward this port from your router!)<p>-n -- p2pool-node ADDR[:PORT] - connect to existing p2pool node at ADDR listening on port PORT (defaults to default p2pool P2P port) in addition to builtin addresses</p>
+<p class="attribution">&mdash;
+disable-upnp - don't attempt to use UPnP to forward p2pool's P2P port from the Internet to this computer</p>
+</div></blockquote>
+<blockquote>
+<div>-- max-conns CONNS - maximum incoming connections (default: 40)<p class="attribution">&mdash;
+outgoing-conns CONNS - outgoing connections (default: 6)</p>
+</div></blockquote>
+<blockquote>
+<div>-- external-ip ADDR[:PORT] - specify your own public IP address instead of asking peers to discover it, useful for running dual WAN or asymmetric routing<p class="attribution">&mdash;
+disable-advertise - don't advertise local IP address as being available for incoming connections. useful for running a dark node, along with multiple -n ADDR's and --outgoing-conns 0</p>
+</div></blockquote>
+<p>worker interface:</p>
+<p>-w --worker-port [PORT or ADDR:PORT] - listen on PORT on interface with ADDR for RPC connections from miners (default: all interfaces)</p>
+<p>-f --fee [FEE_PERCENTAGE] - charge workers mining to their own bitcoin address (by setting their miner's username to a bitcoin address) this percentage fee to mine on your p2pool instance. Amount displayed at <a class="reference external" href="http://127.0.0.1:WORKER_PORT/fee">http://127.0.0.1:WORKER_PORT/fee</a> (default: 0)</p>
+<p>-s --share-rate [SECONDS_PER_SHARE] - Auto-adjust mining difficulty on each connection to target this many seconds per pseudoshare (default: 3)</p>
+<p>bitcoind interface:</p>
+<p>--bitcoind-config-path BITCOIND_CONFIG_PATH - custom configuration file path (when bitcoind -conf option used)</p>
+<p>--bitcoind-address BITCOIND_ADDRESS - connect to this address (default: 127.0.0.1)</p>
+<p>--bitcoind-rpc-port BITCOIND_RPC_PORT - connect to JSON-RPC interface at this port (default: &lt;
+read from bitcoin.conf if password not provided&gt;
+)</p>
+<p>--bitcoind-rpc-ssl - connect to JSON-RPC interface using SSL</p>
+<p>--bitcoind-p2p-port BITCOIND_P2P_PORT - connect to P2P interface at this port (default: &lt;
+read from bitcoin.conf if password not provided&gt;
+)</p>
+<p>--allow-obsolete-bitcoind - allow the use of coin daemons (bitcoind) that do not support all of the required softforks for this network (e.g. Bitcoin Core and segwit2x)</p>
+</li>
+<li><strong>net</strong> -- Definitions of P2Pool networks (eg. Bitcoin, Bitcoin-testnet, Litecoin, ...)</li>
+<li><strong>datadir_path</strong> (<em>str</em>) -- store data in this directory (default: &lt;
+directory run_p2pool.py is in&gt;
+/data)</li>
+<li><strong>merged_urls</strong> (<em>list</em>) -- works for merged mining (example: <a class="reference external" href="http://ncuser:ncpass&#64;
+127.0.0.1:10332/">http://ncuser:ncpass&#64;
+127.0.0.1:10332/</a>)</li>
+<li><strong>worker_endpoint</strong> (<em>tuple</em>) -- net.WORKER_PORT</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="main.run">
+<code class="descclassname">main.</code><code class="descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is the initially executed function.</p>
+<p>Parses arguments
+Reads user/password from bitcoin config file
+Sets up log file
+Sets up logger that reports errors to <a class="reference external" href="http://u.forre.st/p2pool_error.cgi">http://u.forre.st/p2pool_error.cgi</a> (If you are concerned this is a privacy issue add --no-bugreport to command line.)</p>
+<p>Finally it adds the main function to the Twister Reactor and start the reactor. (i.e. runs the function main!</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">[description]</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">[type]</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="work.html" class="btn btn-neutral float-right" title="Work" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="info.html" class="btn btn-neutral float-left" title="P2Pool Code Documentaion" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy;
+ Copyright 2019, frstrtr
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+
+      });
+
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

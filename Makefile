@@ -39,7 +39,8 @@ distclean: clean
 
 .PHONY: maintainer-clean
 maintainer-clean: distclean
-	@echo 'This command is intended for maintainers to use; it'
+	@echo 'This command is intended for maintainers to use;
+ it'
 	@echo 'deletes files that may need special tools to rebuild.'
 
 .PHONY: dist
@@ -49,7 +50,9 @@ dist:
 
 ${CACHE}/pyenv/virtualenv-1.11.6.tar.gz:
 	mkdir -p "${CACHE}"/pyenv
-	curl -L 'https://pypi.python.org/packages/source/v/virtualenv/virtualenv-1.11.6.tar.gz' >'$@' || { rm -f '$@'; exit 1; }
+	curl -L 'https://pypi.python.org/packages/source/v/virtualenv/virtualenv-1.11.6.tar.gz' >'$@' || { rm -f '$@';
+ exit 1;
+ }
 
 ${CACHE}/pyenv/pyenv-1.11.6-base.tar.gz: ${CACHE}/pyenv/virtualenv-1.11.6.tar.gz
 	-rm -rf "${PYENV}"
@@ -85,18 +88,23 @@ ${CACHE}/pyenv/pyenv-1.11.6-extras.tar.gz: ${CACHE}/pyenv/pyenv-1.11.6-base.tar.
 	# which is causing readline to not build properly if installed
 	# from pip, and the fact that a different package must be used
 	# to support it on Windows/Cygwin.
-	if [ "x`uname -s`" = "xCygwin" ]; then \
-	    "${PYENV}"/bin/pip install pyreadline; \
+	if [ "x`uname -s`" = "xCygwin" ];
+ then \
+	    "${PYENV}"/bin/pip install pyreadline;
+ \
 	else \
-	    "${PYENV}"/bin/easy_install readline; \
+	    "${PYENV}"/bin/easy_install readline;
+ \
 	fi
 	
 	# pip is used to install Python dependencies for this project.
 	for reqfile in "${ROOT}"/requirements.txt \
-	               "${CONF}"/requirements*.txt; do \
+	               "${CONF}"/requirements*.txt;
+ do \
 	    "${PYENV}"/bin/python "${PYENV}"/bin/pip install \
 	        --download-cache="${CACHE}"/pypi \
-	        -r "$$reqfile" || exit 1; \
+	        -r "$$reqfile" || exit 1;
+ \
 	done
 	
 	# Snapshot the Python environment

@@ -1,0 +1,312 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>graph &mdash;
+ P2Pool 34.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'../../',
+              VERSION:'34.0',
+              LANGUAGE:'None',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: '.txt'
+          };
+
+      </script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="jsonrpc" href="jsonrpc.html" />
+    <link rel="prev" title="forest" href="forest.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> P2Pool
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../info.html">Information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../engine/info.html">P2Pool Code Documentaion</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="info.html">Util</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="cash_addr.html">cash_addr</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datachunker.html">datachunker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deferral.html">deferral</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deferred_resource.html">deferred_resource</a></li>
+<li class="toctree-l2"><a class="reference internal" href="expiring_dict.html">expiring_dict</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fixargparse.html">fixargparse</a></li>
+<li class="toctree-l2"><a class="reference internal" href="forest.html">forest</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">graph</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsonrpc.html">jsonrpc</a></li>
+<li class="toctree-l2"><a class="reference internal" href="memoize.html">memoize</a></li>
+<li class="toctree-l2"><a class="reference internal" href="math.html">math</a></li>
+<li class="toctree-l2"><a class="reference internal" href="logging.html">logging</a></li>
+<li class="toctree-l2"><a class="reference internal" href="memory.html">memory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="p2protocol.html">p2protocol</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pack.html">pack</a></li>
+<li class="toctree-l2"><a class="reference internal" href="segwit_addr.html">segwit_addr</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skiplist.html">skiplist</a></li>
+<li class="toctree-l2"><a class="reference internal" href="switchprotocol.html">switchprotocol</a></li>
+<li class="toctree-l2"><a class="reference internal" href="variable.html">variable</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">P2Pool</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;
+</li>
+        
+          <li><a href="info.html">Util</a> &raquo;
+</li>
+        
+      <li>graph</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/p2pool/utildoc/graph.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-util.graph">
+<span id="graph"></span><h1>graph<a class="headerlink" href="#module-util.graph" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="util.graph.DataStream">
+<em class="property">class </em><code class="descclassname">util.graph.</code><code class="descname">DataStream</code><span class="sig-paren">(</span><em>desc</em>, <em>dataviews</em><span class="sig-paren">)</span><a class="headerlink" href="#util.graph.DataStream" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="util.graph.DataStream.add_datum">
+<code class="descname">add_datum</code><span class="sig-paren">(</span><em>t</em>, <em>value=1</em><span class="sig-paren">)</span><a class="headerlink" href="#util.graph.DataStream.add_datum" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="util.graph.DataStreamDescription">
+<em class="property">class </em><code class="descclassname">util.graph.</code><code class="descname">DataStreamDescription</code><span class="sig-paren">(</span><em>dataview_descriptions</em>, <em>is_gauge=True</em>, <em>multivalues=False</em>, <em>multivalues_keep=20</em>, <em>multivalues_squash_key=None</em>, <em>multivalue_undefined_means_0=False</em>, <em>default_func=None</em><span class="sig-paren">)</span><a class="headerlink" href="#util.graph.DataStreamDescription" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="util.graph.DataView">
+<em class="property">class </em><code class="descclassname">util.graph.</code><code class="descname">DataView</code><span class="sig-paren">(</span><em>desc</em>, <em>ds_desc</em>, <em>last_bin_end</em>, <em>bins</em><span class="sig-paren">)</span><a class="headerlink" href="#util.graph.DataView" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="util.graph.DataView.get_data">
+<code class="descname">get_data</code><span class="sig-paren">(</span><em>t</em><span class="sig-paren">)</span><a class="headerlink" href="#util.graph.DataView.get_data" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="util.graph.DataViewDescription">
+<em class="property">class </em><code class="descclassname">util.graph.</code><code class="descname">DataViewDescription</code><span class="sig-paren">(</span><em>bin_count</em>, <em>total_width</em><span class="sig-paren">)</span><a class="headerlink" href="#util.graph.DataViewDescription" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="util.graph.HistoryDatabase">
+<em class="property">class </em><code class="descclassname">util.graph.</code><code class="descname">HistoryDatabase</code><span class="sig-paren">(</span><em>datastreams</em><span class="sig-paren">)</span><a class="headerlink" href="#util.graph.HistoryDatabase" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="classmethod">
+<dt id="util.graph.HistoryDatabase.from_obj">
+<em class="property">classmethod </em><code class="descname">from_obj</code><span class="sig-paren">(</span><em>datastream_descriptions</em>, <em>obj={}</em><span class="sig-paren">)</span><a class="headerlink" href="#util.graph.HistoryDatabase.from_obj" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="util.graph.HistoryDatabase.to_obj">
+<code class="descname">to_obj</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#util.graph.HistoryDatabase.to_obj" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="util.graph.keep_largest">
+<code class="descclassname">util.graph.</code><code class="descname">keep_largest</code><span class="sig-paren">(</span><em>n</em>, <em>squash_key=&lt;
+object object&gt;
+</em>, <em>key=&lt;
+function &lt;
+lambda&gt;
+&gt;
+</em>, <em>add_func=&lt;
+function &lt;
+lambda&gt;
+&gt;
+</em><span class="sig-paren">)</span><a class="headerlink" href="#util.graph.keep_largest" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="util.graph.make_multivalue_migrator">
+<code class="descclassname">util.graph.</code><code class="descname">make_multivalue_migrator</code><span class="sig-paren">(</span><em>multivalue_keys</em>, <em>post_func=&lt;
+function &lt;
+lambda&gt;
+&gt;
+</em><span class="sig-paren">)</span><a class="headerlink" href="#util.graph.make_multivalue_migrator" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="jsonrpc.html" class="btn btn-neutral float-right" title="jsonrpc" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="forest.html" class="btn btn-neutral float-left" title="forest" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy;
+ Copyright 2019, frstrtr
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+
+      });
+
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

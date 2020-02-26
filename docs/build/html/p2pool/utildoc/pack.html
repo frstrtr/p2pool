@@ -1,0 +1,428 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pack &mdash;
+ P2Pool 34.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'../../',
+              VERSION:'34.0',
+              LANGUAGE:'None',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: '.txt'
+          };
+
+      </script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="segwit_addr" href="segwit_addr.html" />
+    <link rel="prev" title="p2protocol" href="p2protocol.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> P2Pool
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../info.html">Information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../engine/info.html">P2Pool Code Documentaion</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="info.html">Util</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="cash_addr.html">cash_addr</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datachunker.html">datachunker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deferral.html">deferral</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deferred_resource.html">deferred_resource</a></li>
+<li class="toctree-l2"><a class="reference internal" href="expiring_dict.html">expiring_dict</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fixargparse.html">fixargparse</a></li>
+<li class="toctree-l2"><a class="reference internal" href="forest.html">forest</a></li>
+<li class="toctree-l2"><a class="reference internal" href="graph.html">graph</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsonrpc.html">jsonrpc</a></li>
+<li class="toctree-l2"><a class="reference internal" href="memoize.html">memoize</a></li>
+<li class="toctree-l2"><a class="reference internal" href="math.html">math</a></li>
+<li class="toctree-l2"><a class="reference internal" href="logging.html">logging</a></li>
+<li class="toctree-l2"><a class="reference internal" href="memory.html">memory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="p2protocol.html">p2protocol</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">pack</a></li>
+<li class="toctree-l2"><a class="reference internal" href="segwit_addr.html">segwit_addr</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skiplist.html">skiplist</a></li>
+<li class="toctree-l2"><a class="reference internal" href="switchprotocol.html">switchprotocol</a></li>
+<li class="toctree-l2"><a class="reference internal" href="variable.html">variable</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">P2Pool</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;
+</li>
+        
+          <li><a href="info.html">Util</a> &raquo;
+</li>
+        
+      <li>pack</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/p2pool/utildoc/pack.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-util.pack">
+<span id="pack"></span><h1>pack<a class="headerlink" href="#module-util.pack" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="util.pack.ComposedType">
+<em class="property">class </em><code class="descclassname">util.pack.</code><code class="descname">ComposedType</code><span class="sig-paren">(</span><em>fields</em><span class="sig-paren">)</span><a class="headerlink" href="#util.pack.ComposedType" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="util.pack.ComposedType.read">
+<code class="descname">read</code><span class="sig-paren">(</span><em>file</em><span class="sig-paren">)</span><a class="headerlink" href="#util.pack.ComposedType.read" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="util.pack.ComposedType.write">
+<code class="descname">write</code><span class="sig-paren">(</span><em>file</em>, <em>item</em><span class="sig-paren">)</span><a class="headerlink" href="#util.pack.ComposedType.write" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="exception">
+<dt id="util.pack.EarlyEnd">
+<em class="property">exception </em><code class="descclassname">util.pack.</code><code class="descname">EarlyEnd</code><a class="headerlink" href="#util.pack.EarlyEnd" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="util.pack.EnumType">
+<em class="property">class </em><code class="descclassname">util.pack.</code><code class="descname">EnumType</code><span class="sig-paren">(</span><em>inner</em>, <em>pack_to_unpack</em><span class="sig-paren">)</span><a class="headerlink" href="#util.pack.EnumType" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="util.pack.EnumType.read">
+<code class="descname">read</code><span class="sig-paren">(</span><em>file</em><span class="sig-paren">)</span><a class="headerlink" href="#util.pack.EnumType.read" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="util.pack.EnumType.write">
+<code class="descname">write</code><span class="sig-paren">(</span><em>file</em>, <em>item</em><span class="sig-paren">)</span><a class="headerlink" href="#util.pack.EnumType.write" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="util.pack.FixedStrType">
+<em class="property">class </em><code class="descclassname">util.pack.</code><code class="descname">FixedStrType</code><span class="sig-paren">(</span><em>length</em><span class="sig-paren">)</span><a class="headerlink" href="#util.pack.FixedStrType" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="util.pack.FixedStrType.read">
+<code class="descname">read</code><span class="sig-paren">(</span><em>file</em><span class="sig-paren">)</span><a class="headerlink" href="#util.pack.FixedStrType.read" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="util.pack.FixedStrType.write">
+<code class="descname">write</code><span class="sig-paren">(</span><em>file</em>, <em>item</em><span class="sig-paren">)</span><a class="headerlink" href="#util.pack.FixedStrType.write" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="util.pack.IPV6AddressType">
+<em class="property">class </em><code class="descclassname">util.pack.</code><code class="descname">IPV6AddressType</code><a class="headerlink" href="#util.pack.IPV6AddressType" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="util.pack.IPV6AddressType.read">
+<code class="descname">read</code><span class="sig-paren">(</span><em>file</em><span class="sig-paren">)</span><a class="headerlink" href="#util.pack.IPV6AddressType.read" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="util.pack.IPV6AddressType.write">
+<code class="descname">write</code><span class="sig-paren">(</span><em>file</em>, <em>item</em><span class="sig-paren">)</span><a class="headerlink" href="#util.pack.IPV6AddressType.write" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="exception">
+<dt id="util.pack.LateEnd">
+<em class="property">exception </em><code class="descclassname">util.pack.</code><code class="descname">LateEnd</code><a class="headerlink" href="#util.pack.LateEnd" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="util.pack.ListType">
+<em class="property">class </em><code class="descclassname">util.pack.</code><code class="descname">ListType</code><span class="sig-paren">(</span><em>type</em>, <em>mul=1</em><span class="sig-paren">)</span><a class="headerlink" href="#util.pack.ListType" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="util.pack.ListType.read">
+<code class="descname">read</code><span class="sig-paren">(</span><em>file</em><span class="sig-paren">)</span><a class="headerlink" href="#util.pack.ListType.read" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="util.pack.ListType.write">
+<code class="descname">write</code><span class="sig-paren">(</span><em>file</em>, <em>item</em><span class="sig-paren">)</span><a class="headerlink" href="#util.pack.ListType.write" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="util.pack.PossiblyNoneType">
+<em class="property">class </em><code class="descclassname">util.pack.</code><code class="descname">PossiblyNoneType</code><span class="sig-paren">(</span><em>none_value</em>, <em>inner</em><span class="sig-paren">)</span><a class="headerlink" href="#util.pack.PossiblyNoneType" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="util.pack.PossiblyNoneType.read">
+<code class="descname">read</code><span class="sig-paren">(</span><em>file</em><span class="sig-paren">)</span><a class="headerlink" href="#util.pack.PossiblyNoneType.read" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="util.pack.PossiblyNoneType.write">
+<code class="descname">write</code><span class="sig-paren">(</span><em>file</em>, <em>item</em><span class="sig-paren">)</span><a class="headerlink" href="#util.pack.PossiblyNoneType.write" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="util.pack.StructType">
+<em class="property">class </em><code class="descclassname">util.pack.</code><code class="descname">StructType</code><span class="sig-paren">(</span><em>desc</em><span class="sig-paren">)</span><a class="headerlink" href="#util.pack.StructType" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="util.pack.StructType.desc">
+<code class="descname">desc</code><a class="headerlink" href="#util.pack.StructType.desc" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="util.pack.StructType.length">
+<code class="descname">length</code><a class="headerlink" href="#util.pack.StructType.length" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="util.pack.StructType.read">
+<code class="descname">read</code><span class="sig-paren">(</span><em>file</em><span class="sig-paren">)</span><a class="headerlink" href="#util.pack.StructType.read" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="util.pack.StructType.write">
+<code class="descname">write</code><span class="sig-paren">(</span><em>file</em>, <em>item</em><span class="sig-paren">)</span><a class="headerlink" href="#util.pack.StructType.write" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="util.pack.Type">
+<em class="property">class </em><code class="descclassname">util.pack.</code><code class="descname">Type</code><a class="headerlink" href="#util.pack.Type" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="util.pack.Type.pack">
+<code class="descname">pack</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="headerlink" href="#util.pack.Type.pack" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="util.pack.Type.packed_size">
+<code class="descname">packed_size</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="headerlink" href="#util.pack.Type.packed_size" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="util.pack.Type.unpack">
+<code class="descname">unpack</code><span class="sig-paren">(</span><em>data</em>, <em>ignore_trailing=False</em><span class="sig-paren">)</span><a class="headerlink" href="#util.pack.Type.unpack" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="util.pack.VarIntType">
+<em class="property">class </em><code class="descclassname">util.pack.</code><code class="descname">VarIntType</code><a class="headerlink" href="#util.pack.VarIntType" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="util.pack.VarIntType.read">
+<code class="descname">read</code><span class="sig-paren">(</span><em>file</em><span class="sig-paren">)</span><a class="headerlink" href="#util.pack.VarIntType.read" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="util.pack.VarIntType.write">
+<code class="descname">write</code><span class="sig-paren">(</span><em>file</em>, <em>item</em><span class="sig-paren">)</span><a class="headerlink" href="#util.pack.VarIntType.write" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="util.pack.VarStrType">
+<em class="property">class </em><code class="descclassname">util.pack.</code><code class="descname">VarStrType</code><a class="headerlink" href="#util.pack.VarStrType" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="util.pack.VarStrType.read">
+<code class="descname">read</code><span class="sig-paren">(</span><em>file</em><span class="sig-paren">)</span><a class="headerlink" href="#util.pack.VarStrType.read" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="util.pack.VarStrType.write">
+<code class="descname">write</code><span class="sig-paren">(</span><em>file</em>, <em>item</em><span class="sig-paren">)</span><a class="headerlink" href="#util.pack.VarStrType.write" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="util.pack.get_record">
+<code class="descclassname">util.pack.</code><code class="descname">get_record</code><span class="sig-paren">(</span><em>fields</em><span class="sig-paren">)</span><a class="headerlink" href="#util.pack.get_record" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="util.pack.remaining">
+<code class="descclassname">util.pack.</code><code class="descname">remaining</code><span class="sig-paren">(</span><em>sio</em><span class="sig-paren">)</span><a class="headerlink" href="#util.pack.remaining" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="segwit_addr.html" class="btn btn-neutral float-right" title="segwit_addr" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="p2protocol.html" class="btn btn-neutral float-left" title="p2protocol" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy;
+ Copyright 2019, frstrtr
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+
+      });
+
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

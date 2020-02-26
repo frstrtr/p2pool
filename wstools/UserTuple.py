@@ -33,8 +33,10 @@ LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE REGENTS OR
 CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
 EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
-PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
-PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ LOSS OF USE, DATA, OR
+PROFITS;
+ OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
 LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
 NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
@@ -65,7 +67,8 @@ class UserTuple:
                 # immutable. (Builtin tuples behave the same.)
                 self.data = inittuple.data[:]
             else:
-                # the same applies here; (t is tuple(t)) == 1
+                # the same applies here;
+ (t is tuple(t)) == 1
                 self.data = tuple(inittuple)
     def __repr__(self): return repr(self.data)
     def __lt__(self, other): return self.data <  self.__cast(other)
@@ -83,7 +86,8 @@ class UserTuple:
     def __len__(self): return len(self.data)
     def __getitem__(self, i): return self.data[i]
     def __getslice__(self, i, j):
-        i = max(i, 0); j = max(j, 0)
+        i = max(i, 0);
+ j = max(j, 0)
         return self.__class__(self.data[i:j])
     def __add__(self, other):
         if isinstance(other, UserTuple):

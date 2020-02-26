@@ -13,7 +13,8 @@ from p2pool.util import deferral, deferred_resource, memoize
 class Error(Exception):
     def __init__(self, code, message, data=None):
         if type(self) is Error:
-            raise TypeError("can't directly instantiate Error class; use Error_for_code")
+            raise TypeError("can't directly instantiate Error class;
+ use Error_for_code")
         if not isinstance(code, int):
             raise TypeError('code must be an int')
         #if not isinstance(message, unicode):

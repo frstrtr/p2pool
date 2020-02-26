@@ -34,7 +34,9 @@ from __future__ import nested_scopes
 # ARE DISCLAIMED. IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE FOR
 # ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
 # (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-# LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+
+# LOSS OF USE, DATA, OR PROFITS;
+ OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
 # ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
@@ -142,7 +144,8 @@ class HTTPWithTimeout(HTTP):
         if port == 0:
             port = None
 
-        # Note that we may pass an empty string as the host; this will throw
+        # Note that we may pass an empty string as the host;
+ this will throw
         # an error when we attempt to connect. Presumably, the client code
         # will call connect before then, with a proper host.
         self._setup(self._connection_class(host, port, strict, timeout))
@@ -152,6 +155,7 @@ class HTTPTransport:
 
     def __init__(self):
         self.cookies = Cookie.SimpleCookie();
+
 
     def getNS(self, original_namespace, data):
         """Extract the (possibly extended) namespace from the returned
@@ -182,7 +186,8 @@ class HTTPTransport:
             value = morsel.get('domain')
             if value:
                 attrs.append('$Domain=%s' % value)
-            r.putheader('Cookie', "; ".join(attrs))
+            r.putheader('Cookie', ";
+ ".join(attrs))
     
     def call(self, addr, data, namespace, soapaction = None, encoding = None,
         http_proxy = None, config = Config, timeout=None):
@@ -211,11 +216,14 @@ class HTTPTransport:
         r.putheader("Host", addr.host)
         r.putheader("User-agent", SOAPUserAgent())
         t = 'text/xml';
+
         if encoding != None:
-            t += '; charset=%s' % encoding
+            t += ';
+ charset=%s' % encoding
         r.putheader("Content-type", t)
         r.putheader("Content-length", str(len(data)))
         self.__addcookies(r);
+
         
         # if user is not a user:passwd format
         #    we'll receive a failure from the server. . .I guess (??)
@@ -257,12 +265,14 @@ class HTTPTransport:
         code, msg, headers = r.getreply()
 
         self.cookies = Cookie.SimpleCookie();
+
         if headers:
             content_type = headers.get("content-type","text/xml")
             content_length = headers.get("Content-length")
 
             for cookie in headers.getallmatchingheaders("Set-Cookie"):
                 self.cookies.load(cookie);
+
 
         else:
             content_type=None
@@ -281,7 +291,8 @@ class HTTPTransport:
             message_len = -1
             
         if message_len < 0:
-            # Content-Length missing or invalid; just read the whole socket
+            # Content-Length missing or invalid;
+ just read the whole socket
             # This won't work with HTTP/1.1 chunked encoding
             data = r.getfile().read()
             message_len = len(data)

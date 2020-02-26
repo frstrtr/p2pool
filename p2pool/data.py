@@ -1159,6 +1159,12 @@ class ShareStore(object):
     def _add_line(self, line):
         filenames, next = self.get_filenames_and_next()
         if filenames and os.path.getsize(filenames[-1]) < 10e6:
+<<<<<<< Updated upstream
+=======
+            
+            #last in filenames less than 1.000.000 bytes (976.5625kb;
+ 0.95mb)
+>>>>>>> Stashed changes
             filename = filenames[-1]
         else:
             filename = next
