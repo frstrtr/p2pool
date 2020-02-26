@@ -92,7 +92,12 @@ class BaseShare(object):
     VERSION = 0
     VOTING_VERSION = 0
     SUCCESSOR = None
+<<<<<<< HEAD
 
+=======
+    MINIMUM_PROTOCOL_VERSION = 1400
+    
+>>>>>>> bd7434513f5d775eeeee78fd28071eb36a5926e3
     small_block_header_type = pack.ComposedType([
         ('version', pack.VarIntType()),
         ('previous_block', pack.PossiblyNoneType(0, pack.IntType(256))),
@@ -627,6 +632,8 @@ class BaseShare(object):
         if share_info != self.share_info:
             raise ValueError('share_info invalid')
         if bitcoin_data.get_txid(gentx) != self.gentx_hash:
+            print bitcoin_data.get_txid(gentx), self.gentx_hash
+            print gentx
             raise ValueError('''gentx doesn't match hash_link''')
         if self.VERSION < 34:
             # the other hash commitments are checked in the share_info assertion
@@ -712,34 +719,48 @@ class BaseShare(object):
             return None  # not all txs present
         return dict(header=self.header, txs=[self.check(tracker, other_txs)] + other_txs)
 
+<<<<<<< HEAD
+=======
+class PaddingBugfixShare(BaseShare):
+    VERSION=35
+    VOTING_VERSION = 35
+    SUCCESSOR = None
+    MINIMUM_PROTOCOL_VERSION = 3500
+>>>>>>> bd7434513f5d775eeeee78fd28071eb36a5926e3
 
 class SegwitMiningShare(BaseShare):
     VERSION = 34
     VOTING_VERSION = 34
-    SUCCESSOR = None
+    SUCCESSOR = PaddingBugfixShare
+    MINIMUM_PROTOCOL_VERSION = 3300
 
 
 class NewShare(BaseShare):
     VERSION = 33
     VOTING_VERSION = 33
-    SUCCESSOR = SegwitMiningShare
+    SUCCESSOR = PaddingBugfixShare
+    MINIMUM_PROTOCOL_VERSION = 3300
 
 
 class PreSegwitShare(BaseShare):
     VERSION = 32
     VOTING_VERSION = 32
-    SUCCESSOR = SegwitMiningShare
+    SUCCESSOR = PaddingBugfixShare
 
 
 class Share(BaseShare):
     VERSION = 17
     VOTING_VERSION = 17
-    SUCCESSOR = SegwitMiningShare
+    SUCCESSOR = PaddingBugfixShare
 
 
+<<<<<<< HEAD
 share_versions = {s.VERSION: s for s in [
     SegwitMiningShare, NewShare, PreSegwitShare, Share]}
 
+=======
+share_versions = {s.VERSION:s for s in [PaddingBugfixShare, SegwitMiningShare, NewShare, PreSegwitShare, Share]}
+>>>>>>> bd7434513f5d775eeeee78fd28071eb36a5926e3
 
 class WeightsSkipList(forest.TrackerSkipList):
     # share_count, weights, total_weight
@@ -803,8 +824,12 @@ class OkayTracker(forest.Tracker):
         if height < self.net.CHAIN_LENGTH + 1 and last is not None:
             raise AssertionError()
         try:
+<<<<<<< HEAD
             share.check(
                 self, known_txs, block_abs_height_func=block_abs_height_func, feecache=feecache)
+=======
+            share.gentx = share.check(self, known_txs, block_abs_height_func=block_abs_height_func, feecache=feecache)
+>>>>>>> bd7434513f5d775eeeee78fd28071eb36a5926e3
         except:
             log.err(None, 'Share check failed: %064x -> %064x' % (share.hash,
                                                                   share.previous_hash if share.previous_hash is not None else 0))
@@ -949,11 +974,23 @@ class OkayTracker(forest.Tracker):
                         best_share = self.items[best]
                     except:
                         traceback.print_exc()
+<<<<<<< HEAD
 
             timestamp_cutoff = min(
                 int(time.time()), best_share.timestamp) - 3600
             target_cutoff = int(2**256//(self.net.SHARE_PERIOD *
                                          best_tail_score[1] + 1) * 2 + .5) if best_tail_score[1] is not None else 2**256-1
+=======
+            
+            timestamp_cutoff = min(int(time.time()), best_share.timestamp) - 3600
+            target_cutoff = int(2**256//(self.net.SHARE_PERIOD*best_tail_score[1] + 1) * 2 + .5) if best_tail_score[1] is not None else 2**256-1
+
+            # Hard fork logic:
+            # If our best share is v34 or higher, we will correctly zero-pad output scripts
+            # Otherwise, we preserve a bug in order to avoid a chainsplit
+            self.net.PARENT.padding_bugfix = (best_share.VERSION >= 35)
+
+>>>>>>> bd7434513f5d775eeeee78fd28071eb36a5926e3
         else:
             timestamp_cutoff = int(time.time()) - 24*60*60
             target_cutoff = 2**256-1
@@ -985,6 +1022,7 @@ class OkayTracker(forest.Tracker):
 
 def update_min_protocol_version(counts, share):
     minpver = getattr(share.net, 'MINIMUM_PROTOCOL_VERSION', 1400)
+<<<<<<< HEAD
     newminpver = getattr(share.net, 'NEW_MINIMUM_PROTOCOL_VERSION', minpver)
     if (counts is not None) and (type(share) is NewShare) and (minpver < newminpver):
         if counts.get(share.VERSION, 0) >= sum(counts.itervalues())*95//100:
@@ -992,6 +1030,13 @@ def update_min_protocol_version(counts, share):
             share.net.MINIMUM_PROTOCOL_VERSION = newminpver
             print 'Setting MINIMUM_PROTOCOL_VERSION = %d' % (newminpver)
 
+=======
+    newminpver = share.MINIMUM_PROTOCOL_VERSION
+    if (counts is not None) and (minpver < newminpver):
+            if counts.get(share.VERSION, 0) >= sum(counts.itervalues())*95//100:
+                share.net.MINIMUM_PROTOCOL_VERSION = newminpver # Reject peers running obsolete nodes
+                print 'Setting MINIMUM_PROTOCOL_VERSION = %d' % (newminpver)
+>>>>>>> bd7434513f5d775eeeee78fd28071eb36a5926e3
 
 def get_pool_attempts_per_second(tracker, previous_share_hash, dist, min_work=False, integer=False):
     assert dist >= 2

@@ -381,8 +381,13 @@ def get_web_root(wb, datadir_path, bitcoind_getinfo_var, stop_event=variable.Eve
                 ),
                 gentx=dict(
                     hash='%064x' % share.gentx_hash,
+<<<<<<< HEAD
                     coinbase=share.share_data['coinbase'].ljust(
                         2, '\x00').encode('hex'),
+=======
+                    raw=bitcoin_data.tx_id_type.pack(share.gentx).encode('hex') if hasattr(share, 'gentx') else "unknown",
+                    coinbase=share.share_data['coinbase'].ljust(2, '\x00').encode('hex'),
+>>>>>>> bd7434513f5d775eeeee78fd28071eb36a5926e3
                     value=share.share_data['subsidy']*1e-8,
                     last_txout_nonce='%016x' % share.contents['last_txout_nonce'],
                 ),

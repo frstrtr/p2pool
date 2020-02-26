@@ -63,7 +63,11 @@ class StratumRPCMiningProvider(object):
             #mask from miner is mandatory but we dont use it
             miner_mask = extensionParameters['version-rolling.mask']
             #min-bit-count from miner is mandatory but we dont use it
-            minbitcount = extensionParameters['version-rolling.min-bit-count']
+            try:
+                minbitcount = extensionParameters['version-rolling.min-bit-count']
+            except:
+                log.err("A miner tried to connect with a malformed version-rolling.min-bit-count parameter. This is probably a bug in your mining software. Braiins OS is known to have this bug. You should complain to them.")
+                minbitcount = 2 # probably not needed
             #according to the spec, pool should return largest mask possible (to support mining proxies)
             return {"version-rolling" : True, "version-rolling.mask" : '{:08x}'.format(self.pool_version_mask&(int(miner_mask,16)))}
             #pool can send mining.set_version_mask at any time if the pool mask changes
