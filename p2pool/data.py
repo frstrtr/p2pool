@@ -74,9 +74,79 @@ def is_segwit_activated(version, net):
     segwit_activation_version = getattr(net, 'SEGWIT_ACTIVATION_VERSION', 0)
     return version >= segwit_activation_version and segwit_activation_version > 0
 
+""" -----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+I, Forrest Voight, am working to improve the scalability
+of P2Pool and decrease the dust payouts created by it.
+
+I control these two donation addresses:
+
+BTC: 1KxvX5Hx8nh36ig2gT5bpeEcqLQcwJsZGB
+LTC: LPfkfi2tMuGSc64PZTsP9Amt367hwAUQzY
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQIcBAEBAgAGBQJSfmA2AAoJEKgljXA1bAEgM7oQAKZwuhvmGqy/RMjiFGBrJFtK
+PN3wwn0g62cMH/JLGqfRAAYBxsjOY1l53VwGFLU1cBTB5yztigIAbjunf9UmYsgL
+r7vtOCYL6RWv5+oFx4yC1JmFJXs0LkDhrhOwtLNlCi58h8TI77aMay6XiQ9ynsh3
+W+AS6J8cQwjEtogGG0thk3SWkI1E6eZHrC9T2UjnOMUPHMsBpFqw35RXpXvtw0Yr
+jAdFPPo0qCZA4BiwuhAkwuF7nVWp56YzRAwrwgx1s5cBR2l8049kDsOum4/mnU3b
+3tDxZ9cFvO+x5AIuf/QQbguBeQ2tGaLLsDNxiLjIW4OUMO3Lw6wQJhogEZIPW1Ao
+CUmAMhdCSdqE6SmmhOMM9xyJL6XAVhYrCEEZOg5toU7+aBfzsTZPEUNJUX+fgy6v
+QjUUM0subv6rM+Ft8HgwoDdslmYog0QPlCzA0FvLMpP9MnKKvuYh02HzlVS8PnOo
+FI1rN2pHlvKht6NW4HidGyg5uTES1p8M2wt4Ls63E+ar7fXChzw6p9T9ESAY59wh
+7VaH8W01EPWpnE1w6XtlKV/rtk3PaCYWLIb54WMwLP8DeH2wB4R7PRfhZgoFWFt2
+XWT+Jt6Llywf/zMPw37aFgITreUYhamEQYWCVpc8VE6YsHfs7m0VCcBwT4fP041S
+l9N6cL309hKjUltMDrOO
+=5Vpm
+-----END PGP SIGNATURE----- """
+
+# p2pool.git 1HNeqi3pJRNvXybNX4FKzZgYJsdTSqJTbk
+
+# 1 satoshi is always donated so that a list of p2pool generated blocks can be easily found by looking at the donation address
 
 DONATION_SCRIPT = '4104ffd03de44a6e11b9917f3a29f9443283d9871c9d743ef30d5eddcd37094b64d1b3d8090496b53256786bf5c82932ec23c3b74d9f05a6f95a8b5529352656664bac'.decode(
     'hex')
+
+""" {
+  "asm": "04ffd03de44a6e11b9917f3a29f9443283d9871c9d743ef30d5eddcd37094b64d1b3d8090496b53256786bf5c82932ec23c3b74d9f05a6f95a8b5529352656664b OP_CHECKSIG",
+  "reqSigs": 1,
+  "type": "pubkey",
+  "addresses": [
+    "1Kz5QaUPDtKrj5SqW5tFkn7WZh8LmQaQi4"
+  ],
+  "p2sh": "3HW5FVVo3TpKD1rPpsHX2VeJNmfE4Lqe91"
+}
+
+Let's start from the beginning.
+
+p2pk
+
+If you look at the initial blocks on the chain, you'll notice that the coinbase transaction output goes to a pay-to-pubkey lockscript (also known as output or encumberment)
+A p2pk locking script is simply PUSH <pubkey> OP_CHECKSIG. To spend this output, one simply needs to provide a valid signature. The scriptsig would contains PUSH sig, which when combined with the locking script produces PUSH sig PUSH <pubkey> OP_CHECKSIG. If the signature provided is valid for the given pubkey, you can prove both ownership of coins and intent to spend in a single move.
+
+p2pkh
+
+p2pk was superseded (perhaps not the correct term, since Bitcoin 0.1 contained support for both p2pk and p2pkh) by pay-to-pubkey-hash. This has a couple of advantages over the vanilla p2pk. For one, it reduced the size of the locking script. Since the utxo set must contain the locking script for validation purposes, this results in direct space savings. For another, hashing the public key adds a layer of protection against any future ecdsa key recovery attacks that may be developed, as you would also need to break the HASH160 operation to recover the public key first.
+Using p2pkh comes with some additional complexity. The locking script now takes the form of OP_DUP OP_HASH160 PUSH <PubkeyHash> OP_EQUALVERIFY OP_CHECKSIG. Since we no longer have the actual public key in the script, an unlocking script must prove two things:
+That it holds the correct private key
+That it intends to spend the coins
+For 1, we must prove that the public key hash in the script corresponds to the public key hash of the key used to perform the signature. For 2, we must verify that the signature is valid against that public key.
+To achieve this, the unlocking script takes the form PUSH sig PUSH pubkey. When combined with the locking script, this yields PUSH sig PUSH pubkey OP_DUP OP_HASH160 PUSH <PubkeyHash> OP_EQUALVERIFY OP_CHECKSIG
+Now, during evaluation, the pubkey is duplicated. The duplicate is hashed and compared against the hash stored in the locking script. If the hash is valid, the signature is validated against the provided public key. This flow ensures that the same public key is used signature verification and the comparison against the hash in the locking script, thus fulfilling both requirements.
+
+p2sh
+
+pay-to-script-hash was developed to provide a standardized way of using more advanced bitcoin scripts. For this example, let us focus on the multisig p2sh. A typical, 1 of 2 multisig p2sh output's locking script will be similar to OP_HASH160 PUSH <hash> OP_EQUAL. This doesn't contain any public keys, or even a signature checking op code, so what's going on here?
+The secret lies in the redeem script. Each p2sh address is backed by a redeem script, and the hash value in the locking script is a hash of this redeem script.
+When spending from a p2sh address, you must provide an unlocking script that validates against the redeem script, and the redeem script itself. For our 1of2 multisig address, a redeem script looks like OP_1 PUSH pubkey1 PUSH pubkey2 OP_2 OP_CHECKMULTISIG. This entire script is hashed for the locking script. Note that since the pubkeys contained in this script are already hashed as part of the entire redeem script, we do not need to hash them separately, as we do with p2pkh.
+When spending the output, we would then provide: OP_0 PUSH sig PUSH redeemscript. This results in a final script of OP_0 PUSH sig PUSH redeemscript OP_HASH160 PUSH <hash> OP_EQUAL. During evaluation:
+The unlocking script and locking script are combined. This results in the signatures and the serialized redeemscript being pushed to the stack. Note that since PUSH redeemscript treats the redeemscript as normal data, the op codes inside the redeem script are not interpreted as op codes in this step.
+The serialized redeem script is hashed and validated against the locking script
+The signatures are validated against the popped stack, which contains the serialized redeem script without its push op code, and thus interprets it correctly as a bitcoin script.
+Following this order of operations provides the same guarantee as the p2pkh output - That the transaction intends to spend the coins, and that the keys involved are the same keys that were committed to during the coins' locking.
+"""
 
 
 def donation_script_to_address(net):
@@ -89,15 +159,33 @@ def donation_script_to_address(net):
 
 
 class BaseShare(object):
-    VERSION = 0
-    VOTING_VERSION = 0
-    SUCCESSOR = None
-<<<<<<< HEAD
+    """
+    Base class for Shares
 
-=======
-    MINIMUM_PROTOCOL_VERSION = 1400
+    :param object: [description]
+    :type object: [type]
+    :raises ValueError: [description]
+    :raises ValueError: [description]
+    :raises ValueError: [description]
+    :raises ValueError: [description]
+    :raises p2p.PeerMisbehavingError: [description]
+    :raises p2p.PeerMisbehavingError: [description]
+    :raises ValueError: [description]
+    :raises p2p.PeerMisbehavingError: [description]
+    :raises p2p.PeerMisbehavingError: [description]
+    :raises p2p.PeerMisbehavingError: [description]
+    :raises ValueError: [description]
+    :raises ValueError: [description]
+    :raises ValueError: [description]
+    """
+    #: Share version
+    VERSION = 0
+    #: desired version
+    VOTING_VERSION = 0
+    #: None/SegwitMiningShare
+    SUCCESSOR = None
+
     
->>>>>>> bd7434513f5d775eeeee78fd28071eb36a5926e3
     small_block_header_type = pack.ComposedType([
         ('version', pack.VarIntType()),
         ('previous_block', pack.PossiblyNoneType(0, pack.IntType(256))),
@@ -105,17 +193,91 @@ class BaseShare(object):
         ('bits', bitcoin_data.FloatingIntegerType()),
         ('nonce', pack.IntType(32)),
     ])
+    ''' 
+        :version: 2/4 bytes \n
+        :previuos_block: int 32 bytes \n
+        :timestamp: int 4 bytes \n
+        :bits: 4 bytes \n
+        :nonce: 4 bytes \n '''
     share_info_type = None
-    share_type = None
-    ref_type = None
+    ''' 
+        :share_data: \n
+        :previuos_block: int 32 bytes \n
+        :coinbase: VarStrType, maximum number of Str characters is equal to the maximum value of unsigned long long. \n
+        :nonce: 4 bytes \n
+        
+        if Share.Version >= 34: \n
+            :address: VarStrType \n
+        else \n
+            :pubkey_hash: int 20 bytes \n
 
+        :subsidy: int 8 bytes \n
+        :donation: int 2 bytes \n
+        :stale_info: orphan/doa/None | Enum 1 byte \n
+        :desired_version: unsigned (long long/int) \n
+
+        if [Segwit active in this version share [check is_segwit_activated]] \n
+            segwit_data: \n
+
+                segwit_data \n
+
+                    txid_merkle_link \n
+
+                        branch: list int 32 bytes * the number of objects in the list \n
+                        
+                        index:  always 0 \n
+                    
+                    wtxid_merkle_root: int 32 bytes \n
+                
+                txid_merkle_link: \n
+                    
+                    branch: list int 32 bytes * the number of objects in the list \n
+                    
+                    index:  0 \n
+                
+                wtxid_merkle_root: int 32 bytes \n
+                
+        
+        if Share.Version < 34: \n
+            :new_transaction_hashes: list int 32 bytes * the number of objects in the list \n
+            :transaction_hash_refs: list unsigned long long/unsigned int * the number of objects in the list \n
+        
+        :far_share_hash: int 32 bytes \n
+        :max_bits: 4 bytes \n
+        :bits: 4 bytes \n
+        :timestamp: 4 bytes \n
+        :absheight: 4 bytes \n
+        :abswork: 16 bytes \n '''
+    share_type = None
+    '''
+        :share_info: share_info_type \n
+        :ref_merkle_link: \n
+            :branch: list int 32 bytes * the number of objects in the list \n
+            :index: always 0 \n
+        :last_txout_nonce: int 8 bytes \n
+        :hash_link: \n
+            :state: FixedStr 8 bytes \n
+            :extra_data: FixedStr 0 bytes \n
+            :lenght: 4 bytes \n
+        :merkle_link: \n
+            :branch: list int 32 bytes * the number of objects in the list \n
+            :index: always 0 \n '''
+
+    ref_type = None
+    '''
+        :identifier: FixedStr, 1 byte(?)
+        :share_info: share_info_type '''
+
+    #: DONATION_SCRIPT is packed here, which is used in def generate_transaction [data.py, line 387]
     gentx_before_refhash = pack.VarStrType().pack(DONATION_SCRIPT) + pack.IntType(64).pack(0) + \
         pack.VarStrType().pack('\x6a\x28' + pack.IntType(256).pack(0) +
                                pack.IntType(64).pack(0))[:3]
 
-    gentx_size = 50000  # conservative estimate, will be overwritten during execution
+    #:conservative estimate, will be overwritten during execution
+    gentx_size = 50000  
     gentx_weight = 200000
     cached_types = None
+    
     @classmethod
     def get_dynamic_types(cls, net):
         if not cls.cached_types == None:
@@ -632,8 +794,6 @@ class BaseShare(object):
         if share_info != self.share_info:
             raise ValueError('share_info invalid')
         if bitcoin_data.get_txid(gentx) != self.gentx_hash:
-            print bitcoin_data.get_txid(gentx), self.gentx_hash
-            print gentx
             raise ValueError('''gentx doesn't match hash_link''')
         if self.VERSION < 34:
             # the other hash commitments are checked in the share_info assertion
@@ -687,7 +847,7 @@ class BaseShare(object):
 
         return [known_txs[tx_hash] for tx_hash in other_tx_hashes]
 
-    def should_punish_reason(self, previous_block, bits, tracker, known_txs):
+    def should_punish_reason(self, previous_block, bits, tracker, known_txs): #TODO
         if self.pow_hash <= self.header['bits'].target:
             return -1, 'block solution'
         if self.naughty == 1:
@@ -719,48 +879,34 @@ class BaseShare(object):
             return None  # not all txs present
         return dict(header=self.header, txs=[self.check(tracker, other_txs)] + other_txs)
 
-<<<<<<< HEAD
-=======
-class PaddingBugfixShare(BaseShare):
-    VERSION=35
-    VOTING_VERSION = 35
-    SUCCESSOR = None
-    MINIMUM_PROTOCOL_VERSION = 3500
->>>>>>> bd7434513f5d775eeeee78fd28071eb36a5926e3
 
 class SegwitMiningShare(BaseShare):
     VERSION = 34
     VOTING_VERSION = 34
-    SUCCESSOR = PaddingBugfixShare
-    MINIMUM_PROTOCOL_VERSION = 3300
+    SUCCESSOR = None
 
 
 class NewShare(BaseShare):
     VERSION = 33
     VOTING_VERSION = 33
-    SUCCESSOR = PaddingBugfixShare
-    MINIMUM_PROTOCOL_VERSION = 3300
+    SUCCESSOR = SegwitMiningShare
 
 
 class PreSegwitShare(BaseShare):
     VERSION = 32
     VOTING_VERSION = 32
-    SUCCESSOR = PaddingBugfixShare
+    SUCCESSOR = SegwitMiningShare
 
 
 class Share(BaseShare):
     VERSION = 17
     VOTING_VERSION = 17
-    SUCCESSOR = PaddingBugfixShare
+    SUCCESSOR = SegwitMiningShare
 
 
-<<<<<<< HEAD
 share_versions = {s.VERSION: s for s in [
     SegwitMiningShare, NewShare, PreSegwitShare, Share]}
 
-=======
-share_versions = {s.VERSION:s for s in [PaddingBugfixShare, SegwitMiningShare, NewShare, PreSegwitShare, Share]}
->>>>>>> bd7434513f5d775eeeee78fd28071eb36a5926e3
 
 class WeightsSkipList(forest.TrackerSkipList):
     # share_count, weights, total_weight
@@ -824,12 +970,8 @@ class OkayTracker(forest.Tracker):
         if height < self.net.CHAIN_LENGTH + 1 and last is not None:
             raise AssertionError()
         try:
-<<<<<<< HEAD
             share.check(
                 self, known_txs, block_abs_height_func=block_abs_height_func, feecache=feecache)
-=======
-            share.gentx = share.check(self, known_txs, block_abs_height_func=block_abs_height_func, feecache=feecache)
->>>>>>> bd7434513f5d775eeeee78fd28071eb36a5926e3
         except:
             log.err(None, 'Share check failed: %064x -> %064x' % (share.hash,
                                                                   share.previous_hash if share.previous_hash is not None else 0))
@@ -974,23 +1116,11 @@ class OkayTracker(forest.Tracker):
                         best_share = self.items[best]
                     except:
                         traceback.print_exc()
-<<<<<<< HEAD
 
             timestamp_cutoff = min(
                 int(time.time()), best_share.timestamp) - 3600
             target_cutoff = int(2**256//(self.net.SHARE_PERIOD *
                                          best_tail_score[1] + 1) * 2 + .5) if best_tail_score[1] is not None else 2**256-1
-=======
-            
-            timestamp_cutoff = min(int(time.time()), best_share.timestamp) - 3600
-            target_cutoff = int(2**256//(self.net.SHARE_PERIOD*best_tail_score[1] + 1) * 2 + .5) if best_tail_score[1] is not None else 2**256-1
-
-            # Hard fork logic:
-            # If our best share is v34 or higher, we will correctly zero-pad output scripts
-            # Otherwise, we preserve a bug in order to avoid a chainsplit
-            self.net.PARENT.padding_bugfix = (best_share.VERSION >= 35)
-
->>>>>>> bd7434513f5d775eeeee78fd28071eb36a5926e3
         else:
             timestamp_cutoff = int(time.time()) - 24*60*60
             target_cutoff = 2**256-1
@@ -1022,7 +1152,6 @@ class OkayTracker(forest.Tracker):
 
 def update_min_protocol_version(counts, share):
     minpver = getattr(share.net, 'MINIMUM_PROTOCOL_VERSION', 1400)
-<<<<<<< HEAD
     newminpver = getattr(share.net, 'NEW_MINIMUM_PROTOCOL_VERSION', minpver)
     if (counts is not None) and (type(share) is NewShare) and (minpver < newminpver):
         if counts.get(share.VERSION, 0) >= sum(counts.itervalues())*95//100:
@@ -1030,13 +1159,6 @@ def update_min_protocol_version(counts, share):
             share.net.MINIMUM_PROTOCOL_VERSION = newminpver
             print 'Setting MINIMUM_PROTOCOL_VERSION = %d' % (newminpver)
 
-=======
-    newminpver = share.MINIMUM_PROTOCOL_VERSION
-    if (counts is not None) and (minpver < newminpver):
-            if counts.get(share.VERSION, 0) >= sum(counts.itervalues())*95//100:
-                share.net.MINIMUM_PROTOCOL_VERSION = newminpver # Reject peers running obsolete nodes
-                print 'Setting MINIMUM_PROTOCOL_VERSION = %d' % (newminpver)
->>>>>>> bd7434513f5d775eeeee78fd28071eb36a5926e3
 
 def get_pool_attempts_per_second(tracker, previous_share_hash, dist, min_work=False, integer=False):
     assert dist >= 2
@@ -1154,11 +1276,12 @@ class ShareStore(object):
     """Store shares in files and retrieve it."""
 
     def __init__(self, prefix, net, share_cb, verified_hash_cb):
-        self.dirname = os.path.dirname(os.path.abspath(prefix))
-        self.filename = os.path.basename(os.path.abspath(prefix))
+        self.dirname = os.path.dirname(os.path.abspath(prefix)) #Path to dir with share data.
+        self.filename = os.path.basename(os.path.abspath(prefix)) #name of share data file ['shares.']
+        self.archive_dirname = os.path.abspath(self.dirname + '/archive') #path to share data archive folder   
         self.net = net
 
-        start = time.time()
+        start = time.time() # start loading time
 
         known = {}
         filenames, next = self.get_filenames_and_next()
@@ -1204,16 +1327,14 @@ class ShareStore(object):
     def _add_line(self, line):
         filenames, next = self.get_filenames_and_next()
         if filenames and os.path.getsize(filenames[-1]) < 10e6:
-<<<<<<< Updated upstream
-=======
             
-            #last in filenames less than 1.000.000 bytes (976.5625kb;
- 0.95mb)
->>>>>>> Stashed changes
+            #last in filenames less than 1.000.000 bytes (976.5625kb; 0.95mb)
             filename = filenames[-1]
         else:
+            #create new
             filename = next
 
+        #'ab' mode = opens a file for appending in binary format
         with open(filename, 'ab') as f:
             f.write(line + '\n')
 
@@ -1247,6 +1368,7 @@ class ShareStore(object):
         verified_hashes.add(share_hash)
 
     def get_filenames_and_next(self):
+        ''' The method returns a list of available files and the name of the next if available will be filled. '''
         suffixes = sorted(int(x[len(self.filename):]) for x in os.listdir(
             self.dirname) if x.startswith(self.filename) and x[len(self.filename):].isdigit())
         return [os.path.join(self.dirname, self.filename + str(suffix)) for suffix in suffixes], os.path.join(self.dirname, self.filename + (str(suffixes[-1] + 1) if suffixes else str(0)))
@@ -1264,7 +1386,16 @@ class ShareStore(object):
                 verified_hashes.remove(share_hash)
         self.check_remove()
 
+    def check_archive_dirname(self):
+        """ Checking for the existence of an archive folder, if it does not exist, creates it. """
+        
+        if not os.path.exists(self.archive_dirname):
+            os.makedirs(self.archive_dirname)
+
     def check_remove(self):
+        """
+        File check. If share_hashes and verified_hashes are empty, then the file is archived.
+        """
         to_remove = set()
         for filename, (share_hashes, verified_hashes) in self.known_desired.iteritems():
             #print filename, len(share_hashes) + len(verified_hashes)
@@ -1273,5 +1404,7 @@ class ShareStore(object):
         for filename in to_remove:
             self.known.pop(filename)
             self.known_desired.pop(filename)
-            os.remove(filename)
-            print "REMOVED", filename
+            os.rename(filename, os.path.join(self.archive_dirname, 'shares.'+ str(len(os.listdir(self.archive_dirname)))))
+            #os.remove(filename)
+            #print "REMOVED", filename
+            print "ARCHIVED", filename
