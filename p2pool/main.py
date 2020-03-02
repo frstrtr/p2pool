@@ -134,20 +134,34 @@ def main(args, net, datadir_path, merged_urls, worker_endpoint):
                 address = None
             
             if address is not None:
-                res = yield deferral.retry('Error validating cached address:', 5)(lambda: bitcoind.rpc_validateaddress(address))()
-                if not res['isvalid'] or not res['ismine']:
-                    print '    Cached address is either invalid or not controlled by local bitcoind!'
+                try:
+                    res = yield deferral.retry('Error validating cached address:', 5, 1)(lambda: bitcoind.rpc_getaddressinfo(address))()# rpc_validateaddress(address))()
+                    if not res['ismine']:
+                        print '    Cached address is not controlled by local bitcoind!'
+                        address = None
+                    # validateaddress DEPRECATION WARNING: Parts of this command have been deprecated and moved to getaddressinfo.
+                    # Clients must transition to using getaddressinfo to access this information before upgrading to v0.18.
+                    # The following deprecated fields have moved to getaddressinfo and will only be shown here with 
+                    # -deprecatedrpc=validateaddress: ismine, iswatchonly, script, hex, pubkeys, sigsrequired, pubkey, addresses, embedded, iscompressed, account, timestamp, hdkeypath, kdmasterkeyid.
+                except Exception:
+                    print '    Cached address is invalid!'
                     address = None
-
+                                
             if address is None:
-                print '    Getting payout address from bitcoind...'
-                address = yield deferral.retry('Error getting payout address from bitcoind:', 5)(lambda: bitcoind.rpc_getaccountaddress('p2pool'))()
+                print "    Getting payout address from bitcoind labeled \'p2pool\'..."
+                # you should assign label 'p2pool' to Your wallet mining address before
+                try:
+                    address = yield deferral.retry('Error getting payout address from bitcoind:', 5, 1)(lambda: bitcoind.rpc_getaccountaddress('p2pool'))()
+                except Exception:
+                    print u"\u001b[31m   Bitcoind has no \'p2pool\' labeled address! Please, specify default payout address! Exiting...\u001b[0m"
+                    exit()
 
-            with open(address_path, 'wb') as f:
-                f.write(address)
+                print "    Overwriting cached address from bitcoind \'p2pool\' labeled address"
+                with open(address_path, 'wb') as f:
+                    f.write(address)
 
             my_address = address
-            print('    ...success! Payout address: %s' % my_address)
+            print(u'\u001b[32m    ...success! Payout address: %s\u001b[0m' % my_address)
             print()
 
             pubkeys.addkey({'address': my_address})
