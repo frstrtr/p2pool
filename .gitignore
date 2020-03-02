@@ -12,3 +12,7 @@ Makefile.local
 .coverage
 build/
 ltc_scrypt.so
+/venv2/
+/.venv3/
+start.sh
+/.vscode/
