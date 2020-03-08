@@ -337,27 +337,28 @@
                                 .attr("x2", w - margin_r + 10)
                                 .attr("y2", y_abs(i/lines.length));
                             g.append("svg:text")
-                                .text(line.label)
+                                .text(line.label + " " + d3.format(".3s")(stats.mean) + unit + ((total_unit != null) ? " (" + d3.format(".3s")(stats.area) + total_unit + ") " : " ") + d3.format(".2p")(stats.area/total_area))
+                                //.text(line.label)
                                 .attr("text-anchor", "start")
                                 .attr("dominant-baseline", "central")
                                 .attr("fill", line.color)
                                 .attr("x", w - margin_r + 10)
                                 .attr("y", y_abs(i/lines.length) - 12);
-                            g.append("svg:text")
+                            /*g.append("svg:text")
                                 .text("Mean: " + d3.format(".3s")(stats.mean) + unit + " (" + d3.format(".2p")(stats.area/total_area) + ")")
                                 .attr("text-anchor", "start")
                                 .attr("dominant-baseline", "central")
                                 .attr("fill", line.color)
                                 .attr("x", w - margin_r + 10)
-                                .attr("y", y_abs(i/lines.length));
-                            if(total_unit != null)
+                                .attr("y", y_abs(i/lines.length));*/
+                            /*if(total_unit != null)
                                 g.append("svg:text")
                                     .text("Area: " + d3.format(".3s")(stats.area) + total_unit)
                                     .attr("text-anchor", "start")
                                     .attr("dominant-baseline", "central")
                                     .attr("fill", line.color)
                                     .attr("x", w - margin_r + 10)
-                                    .attr("y", y_abs(i/lines.length) + 12);
+                                    .attr("y", y_abs(i/lines.length) + 12);*/
                         }
                     }
                 }
@@ -443,6 +444,21 @@
                 lines.sort(function(a, b){ return sort_key(a) - sort_key(b) });
                 return lines;
             }
+            function mov_avg(datalist, w) {
+                var newdata = [];
+                for(var i = 0; i < datalist.length - w + 1; i++) {
+                   var l = datalist[i].length;
+                   var d = new Array(l).fill(0);
+                   for (var j = 0; j < w; j++) {
+                       for (var k = 0; k < l; k++) {
+                           d[k] += datalist[i+j][k]/w;
+                       }
+                   }
+                   newdata[i] = d;
+                }
+                return newdata;
+            }
+            var avg = 10;
             
             function change_period(period, currency_info) {
                 d3.select("#period_current").text(period);
@@ -482,17 +498,17 @@
                             div.append("svg:svg").each(function(u) {
                                 datalist = []
                                 if (workerlist[u].length == 0) {
-                                    datalist = [{"data": dead_data.map(function(d){ return [d[0], u in d[1] ? d[1][u] : d[3], d[2]] }), "color": "#FF0000", "label": "Dead"},
-                                                {"data": data.map(function(d){ return [d[0], u in d[1] ? d[1][u] : d[3], d[2]] }), "color": "#0000FF", "label": "Good"}];
+                                    datalist = [{"data": mov_avg(dead_data.map(function(d){ return [d[0], u in d[1] ? d[1][u] : d[3], d[2]] }), avg), "color": "#FF0000", "label": "Dead"},
+                                                {"data": mov_avg(data.map(function(d){ return [d[0], u in d[1] ? d[1][u] : d[3], d[2]] }), avg), "color": "#0000FF", "label": "Good"}];
                                 } else {
                                     var i = 0;
-                                    datalist.push({"data": dead_data.map(function(d){ return [d[0], 
+                                    datalist.push({"data": mov_avg(dead_data.map(function(d){ return [d[0],
                                         Object.keys(d[1]).reduce((sum,key)=> sum + (key.includes(u) ? d[1][key] : 0), 0),
-                                        d[2]] }), "color": "#FF0000", "label": "Dead"});
+                                        d[2]] }), avg), "color": "#FF0000", "label": "Dead"});
                                     
                                     var i = 1;
                                     for(var w of workerlist[u]) {
-                                       datalist.push({"data": data.map(function(d){ return [d[0], u+"."+w in d[1] ? d[1][u+"."+w] : d[3], d[2]] }), "color": d3.hsl(i/Math.min(workerlist[u].length, 6)*300, 0.5, 0.5), "label": w})
+                                       datalist.push({"data": mov_avg(data.map(function(d){ return [d[0], u+"."+w in d[1] ? d[1][u+"."+w] : d[3], d[2]] }), avg), "color": d3.hsl(i/Math.min(workerlist[u].length, 6)*300, 0.5, 0.5), "label": w})
                                        i += 1;
                                     }
                                 }
