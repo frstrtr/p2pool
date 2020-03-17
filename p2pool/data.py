@@ -51,6 +51,7 @@ share_type = pack.ComposedType([
 def load_share(share, net, peer_addr):
     assert peer_addr is None or isinstance(peer_addr, tuple)
     if share['type'] in share_versions:
+        net.PARENT.padding_bugfix = (share['type'] >= 35)
         return share_versions[share['type']](net, peer_addr, share_versions[share['type']].get_dynamic_types(net)['share_type'].unpack(share['contents']))
 
     elif share['type'] < Share.VERSION:
