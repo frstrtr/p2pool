@@ -61,6 +61,17 @@ You'll also need to install and run your bitcoind or altcoind of choice, and edi
 
 >pypy run_p2pool.py
 
+**P2pool Dockerfile
+
+The Dockerfile uses the build instruction above to create a Docker image.
+
+Build Docker image named `p2pool`
+
+>docker build -t p2pool ./
+
+Run p2pool from Docker image
+
+>docker run -it --rm p2pool --version
 
 **jtoomimnet vs mainnet**
 
