@@ -30,7 +30,7 @@ class StratumRPCMiningProvider(object):
         self.desired_pseudoshare_target = None
 
     
-    def rpc_subscribe(self, miner_version=None, session_id=None):
+    def rpc_subscribe(self, miner_version=None, session_id=None, *args):
         reactor.callLater(0, self._send_work)
         
         return [
