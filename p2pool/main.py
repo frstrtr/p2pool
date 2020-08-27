@@ -141,14 +141,14 @@ def main(args, net, datadir_path, merged_urls, worker_endpoint):
                         address = None
                     else:
                     # checks address controlled by local bitcoind
-                    res = yield deferral.retry('Error validating cached address:', 5)(lambda: bitcoind.rpc_getaddressinfo(address))()
-                    if not res['ismine']:
-                        print '    Cached address is not controlled by local bitcoind!'
-                        address = None
-                    # validateaddress DEPRECATION WARNING: Parts of this command have been deprecated and moved to getaddressinfo.
-                    # Clients must transition to using getaddressinfo to access this information before upgrading to v0.18.
-                    # The following deprecated fields have moved to getaddressinfo and will only be shown here with 
-                    # -deprecatedrpc=validateaddress: ismine, iswatchonly, script, hex, pubkeys, sigsrequired, pubkey, addresses, embedded, iscompressed, account, timestamp, hdkeypath, kdmasterkeyid.
+                        res = yield deferral.retry('Error validating cached address:', 5)(lambda: bitcoind.rpc_getaddressinfo(address))()
+                        if not res['ismine']:
+                            print '    Cached address is not controlled by local bitcoind!'
+                            address = None
+                        # validateaddress DEPRECATION WARNING: Parts of this command have been deprecated and moved to getaddressinfo.
+                        # Clients must transition to using getaddressinfo to access this information before upgrading to v0.18.
+                        # The following deprecated fields have moved to getaddressinfo and will only be shown here with 
+                        # -deprecatedrpc=validateaddress: ismine, iswatchonly, script, hex, pubkeys, sigsrequired, pubkey, addresses, embedded, iscompressed, account, timestamp, hdkeypath, kdmasterkeyid.
                 except Exception:
                     print '    Cached address is invalid!'
                     address = None
